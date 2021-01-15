@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ClassProject.Models.titleauthor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.au_ord)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.royaltyper)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.author.au_lname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title.title1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.au_ord)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.royaltyper)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.author.au_lname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title.title1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

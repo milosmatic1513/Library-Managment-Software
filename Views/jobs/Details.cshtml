@@ -1,0 +1,42 @@
+﻿@model ClassProject.Models.job
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>job</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.job_desc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.job_desc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.min_lvl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.min_lvl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.max_lvl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.max_lvl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.job_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

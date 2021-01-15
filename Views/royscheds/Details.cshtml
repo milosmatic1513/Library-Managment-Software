@@ -1,0 +1,50 @@
+﻿@model ClassProject.Models.roysched
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>roysched</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.lorange)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lorange)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hirange)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hirange)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.royalty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.royalty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title.title1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title.title1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.title_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

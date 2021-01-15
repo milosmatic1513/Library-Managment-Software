@@ -1,0 +1,58 @@
+﻿@model ClassProject.Models.sale
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>sale</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ord_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ord_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.qty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.qty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.payterms)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.payterms)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.store.stor_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.store.stor_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title.title1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title.title1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

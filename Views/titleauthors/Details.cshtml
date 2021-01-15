@@ -1,0 +1,50 @@
+﻿@model ClassProject.Models.titleauthor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>titleauthor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.au_ord)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.au_ord)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.royaltyper)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.royaltyper)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.author.au_lname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.author.au_lname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title.title1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title.title1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
