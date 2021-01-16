@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using ClassProject.Models;
@@ -15,45 +16,11 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: authors
-        public ActionResult Index(String Firstname,String Lastname,String Phone,String Address,String City,String State,String Zip)
+        public ActionResult Index()
         {
-            List<author> authors = db.authors.ToList();
-            //Filter Starting List for each provided element
-            if (!String.IsNullOrEmpty(Firstname))
-            {
-                ViewBag.Firstname = Firstname;
-                authors = authors.Where(s => s.au_fname.Contains(Firstname)).ToList();
-            }
-            if (!String.IsNullOrEmpty(Lastname))
-            {
-                ViewBag.Lastname = Lastname;
-                authors = authors.Where(s => s.au_lname.Contains(Lastname)).ToList();
-            }
-            if (!String.IsNullOrEmpty(Phone))
-            {
-                ViewBag.Phone = Phone;
-                authors = authors.Where(s => s.phone.Contains(Phone)).ToList();
-            }
-            if (!String.IsNullOrEmpty(Address))
-            {
-                ViewBag.Address = Address;
-                authors = authors.Where(s => s.address.Contains(Address)).ToList();
-            }
-            if (!String.IsNullOrEmpty(City))
-            {
-                ViewBag.City = City;
-                authors = authors.Where(s => s.city.Contains(City)).ToList();
-            }
-            if (!String.IsNullOrEmpty(Zip))
-            {
-                ViewBag.Zip = Zip;
-                authors = authors.Where(s => s.zip.Contains(Zip)).ToList();
-            }
-
-            return View(authors);
-       
+            return View(db.authors.ToList());
         }
-    
+
         // GET: authors/Details/5
         public ActionResult Details(string id)
         {
@@ -156,6 +123,16 @@ namespace ClassProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public JsonResult VerifyAuthorId(string au_id)
+        {
+            if (au_id != null && db.authors.Where(item => item.au_id == au_id).Count() != 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
     }
 }

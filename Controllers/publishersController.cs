@@ -128,5 +128,15 @@ namespace ClassProject.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [AcceptVerbs("GET", "POST")]
+        public JsonResult VerifyPublisherId(string pub_id)
+        {
+            if (pub_id != null && db.publishers.Where(item => item.pub_id == pub_id).Count() != 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

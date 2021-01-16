@@ -35,9 +35,9 @@
             @Html.DisplayFor(modelItem => item.store.stor_name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
+            @Html.ActionLink("Details", "Details", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
+            @Html.ActionLink("Delete", "Delete", new { discounttype = item.discounttype, stor_id = item.stor_id })
         </td>
     </tr>
 }

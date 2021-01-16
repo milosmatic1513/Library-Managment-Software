@@ -15,31 +15,9 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: employees
-
-        public ActionResult Index(String firstname,String minit, String lastname)
+        public ActionResult Index()
         {
-         
-            List<employee> employees = db.employees.Include(e => e.job).Include(e => e.publisher).ToList();
-            //Add Selections to Viewbag
-            var minitList = employees.Select(s => s.minit).Distinct();
-           
-            ViewBag.minitList = minitList;
-          
-            //Apply Filters 
-            if (!String.IsNullOrEmpty(firstname))
-            {
-                employees = employees.Where(s => s.fname.Contains(firstname)).ToList();
-            }
-            if (!String.IsNullOrEmpty(minit))
-            {
-                employees = employees.Where(s => s.minit.Contains(minit)).ToList();
-            }
-            if (!String.IsNullOrEmpty(lastname))
-            {
-                employees = employees.Where(s => s.lname.Contains(lastname)).ToList();
-            }
-           
-
+            var employees = db.employees.Include(e => e.job).Include(e => e.publisher);
             return View(employees.ToList());
         }
 
@@ -153,6 +131,17 @@ namespace ClassProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        [AcceptVerbs("GET", "POST")]
+        public JsonResult VerifyEmployeeId(string emp_id)
+        {
+            if (emp_id != null && db.employees.Where(item => item.emp_id == emp_id).Count() != 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace ClassProject.Models
         public short qty { get; set; }
         public string payterms { get; set; }
         public string title_id { get; set; }
+    
         public virtual store store { get; set; }
         public virtual title title { get; set; }
     }

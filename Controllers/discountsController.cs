@@ -22,17 +22,19 @@ namespace ClassProject.Controllers
         }
 
         // GET: discounts/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string discounttype, string stor_id)
         {
-            if (id == null)
+            if (discounttype == null || stor_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            discount discount = db.discounts.Find(id);
-            if (discount == null)
+            discount[] discountArray = db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).ToArray();
+            if (discountArray == null || discountArray.Length == 0)
             {
                 return HttpNotFound();
             }
+            discount discount = discountArray[0];
+            //ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
             return View(discount);
         }
 
@@ -62,17 +64,18 @@ namespace ClassProject.Controllers
         }
 
         // GET: discounts/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string discounttype, string stor_id)
         {
-            if (id == null)
+            if (discounttype == null || stor_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            discount discount = db.discounts.Find(id);
-            if (discount == null)
+            discount[] discountArray = db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).ToArray();
+            if (discountArray == null || discountArray.Length == 0)
             {
                 return HttpNotFound();
             }
+            discount discount = discountArray[0];
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
             return View(discount);
         }
@@ -95,26 +98,28 @@ namespace ClassProject.Controllers
         }
 
         // GET: discounts/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string discounttype, string stor_id)
         {
-            if (id == null)
+            if (discounttype == null || stor_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            discount discount = db.discounts.Find(id);
-            if (discount == null)
+            discount[] discountArray = db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).ToArray();
+            if (discountArray == null || discountArray.Length == 0)
             {
                 return HttpNotFound();
             }
+            discount discount = discountArray[0];
+            //ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
             return View(discount);
         }
 
         // POST: discounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string discounttype, string stor_id)
         {
-            discount discount = db.discounts.Find(id);
+            discount discount = db.discounts.Find(discounttype, stor_id);
             db.discounts.Remove(discount);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -127,6 +132,16 @@ namespace ClassProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public JsonResult VerifyDiscountKeys(string discounttype, string stor_id)
+        {
+            if (db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).Count() != 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
     }
 }

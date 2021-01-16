@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\milos\source\repos\ClassProject\ClassProject\Models\InpubModel.edmx'. 
+﻿// T4 code generation is enabled for model 'J:\documents\Dionisis\ergasies\7o\ASP NET apps\ClassProject\ClassProject\Models\InpubModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -4,121 +4,81 @@
     ViewBag.Title = "Index";
 }
 
+<h2>Index</h2>
 
-
-<br>
-<style>
-    .table_head {
-        border-radius: 5px;
-        background-color: #f4511e;
-        color: #ffffff;
-    }
-
-    .table {
-        border-radius: 5px;
-        width:100%;
-    }
-</style>
-<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
-    <form class="form" asp-controller="Authors" asp-action="Index" method="get">
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.au_lname)" value="@ViewBag.Lastname" name="Lastname" />
-            </div>
-            <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.au_fname)" value="@ViewBag.Firstname" name="Firstname" />
-            </div>
-            <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.phone)" value="@ViewBag.Phone" name="Phone" />
-            </div>
-            <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.address )" value="@ViewBag.Address" name="Address" />
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.city)" value="@ViewBag.City" name="City" />
-            </div>
-            <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.state)" value="@ViewBag.State" name="State" />
-            </div>
-            <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.zip)" value="@ViewBag.Zip" name="Zip" />
-            </div>
-        </div>
-        <div class="form-row ">
-            <div class="form-group col-md-4">
-                <input type="submit" value="Search" class="btn btn-primary">
-            </div>
-        </div>
-    </form>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+    </div>
 </div>
-<br />
-<div class="container">
-    <table class="table" >
-        <tr class="table_head">
-            <th>
-                @Html.DisplayNameFor(model => model.au_lname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.au_fname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.city)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.state)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.zip)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.contract)
-            </th>
-            <th></th>
-        </tr>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.au_lname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.au_fname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.zip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.contract)
+        </th>
+        <th></th>
+    </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.au_lname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.au_fname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.phone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.city)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.state)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.zip)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.contract)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.au_id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.au_id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.au_id })
-                </td>
-            </tr>
-        }
-    </table>
-</div>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.au_lname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.au_fname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.state)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.zip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.contract)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.au_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.au_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.au_id })
+        </td>
+    </tr>
+}
 
+</table>

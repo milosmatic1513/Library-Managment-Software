@@ -132,5 +132,15 @@ namespace ClassProject.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [AcceptVerbs("GET", "POST")]
+        public JsonResult VerifyTitleId(string title_id)
+        {
+            if (title_id != null && db.titles.Where(item => item.title_id == title_id).Count() != 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }
