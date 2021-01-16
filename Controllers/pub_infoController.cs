@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -39,7 +40,8 @@ namespace ClassProject.Controllers
         // GET: pub_info/Create
         public ActionResult Create()
         {
-            ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name");
+            var publishers = db.publishers.Where(item => item.pub_info == null);
+            ViewBag.pub_id = new SelectList(publishers, "pub_id", "pub_name");
             return View();
         }
 
@@ -48,10 +50,14 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info)
+        public ActionResult Create([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.ContentLength > 0)
+                {
+                    pub_info.logo = GetImageBytes(imageFile);
+                }
                 db.pub_info.Add(pub_info);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,10 +88,14 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info)
+        public ActionResult Edit([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
+                if (imageFile != null && imageFile.ContentLength > 0)
+                {
+                    pub_info.logo = GetImageBytes(imageFile);
+                }
                 db.Entry(pub_info).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -127,6 +137,23 @@ namespace ClassProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private byte[] GetImageBytes(HttpPostedFileBase file)
+        {
+            if (file == null)
+                return null;
+
+            byte[] fileBytes = null;
+            using (Stream fileStream = file.InputStream)
+            {
+                var mStreamer = new MemoryStream();
+                mStreamer.SetLength(fileStream.Length);
+                fileStream.Read(mStreamer.GetBuffer(), 0, (int)fileStream.Length);
+                mStreamer.Seek(0, SeekOrigin.Begin);
+                fileBytes = mStreamer.GetBuffer();
+            }
+            return fileBytes;
         }
     }
 }

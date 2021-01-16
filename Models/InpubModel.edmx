@@ -369,7 +369,7 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
             <PropertyRef Name="pub_id" />
           </Key>
           <Property Name="pub_id" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="logo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="logo" Type="Binary" />
           <Property Name="pr_info" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="publisher" Relationship="Self.FK__pub_info__pub_id__4316F928" FromRole="pub_info" ToRole="publishers" />
         </EntityType>

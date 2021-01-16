@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using ClassProject.Models;
@@ -15,10 +16,11 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: authors
-        public ActionResult Index(String Firstname,String Lastname,String Phone,String Address,String City,String State,String Zip)
+        public ActionResult Index(String Firstname, String Lastname, String Phone, String Address, String City, String State, String Zip)
         {
             List<author> authors = db.authors.ToList();
-            //Filter Starting List for each provided element
+
+            //Filter Starting List for each provided element	
             if (!String.IsNullOrEmpty(Firstname))
             {
                 ViewBag.Firstname = Firstname;
@@ -49,11 +51,9 @@ namespace ClassProject.Controllers
                 ViewBag.Zip = Zip;
                 authors = authors.Where(s => s.zip.Contains(Zip)).ToList();
             }
-
             return View(authors);
-       
         }
-    
+
         // GET: authors/Details/5
         public ActionResult Details(string id)
         {
@@ -156,6 +156,16 @@ namespace ClassProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public JsonResult VerifyAuthorId(string au_id)
+        {
+            if (au_id != null && db.authors.Where(item => item.au_id == au_id).Count() != 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
     }
 }

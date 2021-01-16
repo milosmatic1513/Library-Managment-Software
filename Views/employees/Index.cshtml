@@ -14,7 +14,7 @@
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.fname)" value="@ViewBag.minit" name="firstname" />
             </div>
             <div class="form-group col-md-3">
-               
+
                 <select name="minit" class="form-control">
                     @foreach (var item in ViewBag.minitList)
                     {
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-     
+
         <div class="form-row ">
             <div class="form-group col-md-4">
                 <input type="submit" value="Search" class="btn btn-primary">
@@ -37,6 +37,11 @@
         </div>
     </form>
 </div>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
 <table class="table">
     <tr>
         <th>
@@ -63,35 +68,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.fname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.minit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.job_lvl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.hire_date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.job.job_desc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.publisher.pub_name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.emp_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.emp_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.emp_id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.minit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.job_lvl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hire_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.job.job_desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.publisher.pub_name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.emp_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.emp_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.emp_id })
+            </td>
+        </tr>
+    }
 
 </table>

@@ -123,5 +123,15 @@ namespace ClassProject.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [AcceptVerbs("GET", "POST")]
+        public JsonResult VerifyStoreId(string stor_id)
+        {
+            if (stor_id != null && db.stores.Where(item => item.stor_id == stor_id).Count() != 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

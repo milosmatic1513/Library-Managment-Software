@@ -16,7 +16,11 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.logo)
+            @{
+                var imageBase64 = Convert.ToBase64String(Model.logo);
+                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                <img src="@imageSrc" style="max-width: 250px; height: auto;" />
+            }
         </dd>
 
         <dt>

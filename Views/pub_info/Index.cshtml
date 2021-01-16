@@ -26,7 +26,11 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.logo)
+            @{
+                var imageBase64 = Convert.ToBase64String(item.logo);
+                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                <img src="@imageSrc" style="max-width: 250px; height: auto;" alt="No Image"/>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.pr_info)

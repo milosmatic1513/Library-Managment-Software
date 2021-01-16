@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "pub_info", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>pub_info</h4>
         <hr />
@@ -26,8 +26,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.logo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.logo, new { htmlAttributes = new { @class = "form-control" } })
+                @{
+                    <input type="file" name="imageFile" onchange="previewFile()" required>
+                    <img src="" style="max-width: 300px; height: auto;" alt="No Image"/>
+                }
                 @Html.ValidationMessageFor(model => model.logo, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.logo)
             </div>
         </div>
 
@@ -54,3 +58,20 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    function previewFile() {
+        const preview = document.querySelector('img');
+        const file = document.querySelector('input[type=file]').files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            // convert image file to base64 string
+            preview.src = reader.result;
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>

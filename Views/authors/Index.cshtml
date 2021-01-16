@@ -4,8 +4,6 @@
     ViewBag.Title = "Index";
 }
 
-
-
 <br>
 <style>
     .table_head {
@@ -16,9 +14,10 @@
 
     .table {
         border-radius: 5px;
-        width:100%;
+        width: 100%;
     }
 </style>
+
 <div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
     <form class="form" asp-controller="Authors" asp-action="Index" method="get">
         <div class="form-row">
@@ -54,9 +53,13 @@
         </div>
     </form>
 </div>
-<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
 <div class="container">
-    <table class="table" >
+    <table class="table">
         <tr class="table_head">
             <th>
                 @Html.DisplayNameFor(model => model.au_lname)
@@ -121,4 +124,3 @@
         }
     </table>
 </div>
-

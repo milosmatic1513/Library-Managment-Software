@@ -10,7 +10,7 @@ namespace ClassProject.Models
     public partial class discount
     {
     }
-    [MetadataType(typeof(EmpolyeeMetadata))]
+    [MetadataType(typeof(EmployeeMetadata))]
     public partial class employee
     {
 

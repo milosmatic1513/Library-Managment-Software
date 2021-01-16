@@ -22,13 +22,13 @@ namespace ClassProject.Controllers
         }
 
         // GET: titleauthors/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string au_id, string title_id)
         {
-            if (id == null)
+            if (au_id == null || title_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            titleauthor titleauthor = db.titleauthors.Find(id);
+            titleauthor titleauthor = db.titleauthors.Find(au_id, title_id);
             if (titleauthor == null)
             {
                 return HttpNotFound();
@@ -64,13 +64,13 @@ namespace ClassProject.Controllers
         }
 
         // GET: titleauthors/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string au_id, string title_id)
         {
-            if (id == null)
+            if (au_id == null || title_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            titleauthor titleauthor = db.titleauthors.Find(id);
+            titleauthor titleauthor = db.titleauthors.Find(au_id, title_id);
             if (titleauthor == null)
             {
                 return HttpNotFound();
@@ -99,13 +99,13 @@ namespace ClassProject.Controllers
         }
 
         // GET: titleauthors/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string au_id, string title_id)
         {
-            if (id == null)
+            if (au_id == null || title_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            titleauthor titleauthor = db.titleauthors.Find(id);
+            titleauthor titleauthor = db.titleauthors.Find(au_id, title_id);
             if (titleauthor == null)
             {
                 return HttpNotFound();
@@ -116,9 +116,9 @@ namespace ClassProject.Controllers
         // POST: titleauthors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string au_id, string title_id)
         {
-            titleauthor titleauthor = db.titleauthors.Find(id);
+            titleauthor titleauthor = db.titleauthors.Find(au_id, title_id);
             db.titleauthors.Remove(titleauthor);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -131,6 +131,16 @@ namespace ClassProject.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [AcceptVerbs("GET", "POST")]
+        public JsonResult VerifyTitleAuthorId(string au_id, string title_id)
+        {
+            if (db.titleauthors.Where(item => item.au_id == au_id && item.title_id == title_id).Count() != 0)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
     }
 }
