@@ -16,9 +16,42 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: authors
-        public ActionResult Index()
+        public ActionResult Index(String Firstname, String Lastname, String Phone, String Address, String City, String State, String Zip)
         {
-            return View(db.authors.ToList());
+            List<author> authors = db.authors.ToList();
+
+            //Filter Starting List for each provided element	
+            if (!String.IsNullOrEmpty(Firstname))
+            {
+                ViewBag.Firstname = Firstname;
+                authors = authors.Where(s => s.au_fname.Contains(Firstname)).ToList();
+            }
+            if (!String.IsNullOrEmpty(Lastname))
+            {
+                ViewBag.Lastname = Lastname;
+                authors = authors.Where(s => s.au_lname.Contains(Lastname)).ToList();
+            }
+            if (!String.IsNullOrEmpty(Phone))
+            {
+                ViewBag.Phone = Phone;
+                authors = authors.Where(s => s.phone.Contains(Phone)).ToList();
+            }
+            if (!String.IsNullOrEmpty(Address))
+            {
+                ViewBag.Address = Address;
+                authors = authors.Where(s => s.address.Contains(Address)).ToList();
+            }
+            if (!String.IsNullOrEmpty(City))
+            {
+                ViewBag.City = City;
+                authors = authors.Where(s => s.city.Contains(City)).ToList();
+            }
+            if (!String.IsNullOrEmpty(Zip))
+            {
+                ViewBag.Zip = Zip;
+                authors = authors.Where(s => s.zip.Contains(Zip)).ToList();
+            }
+            return View(authors);
         }
 
         // GET: authors/Details/5
