@@ -124,9 +124,10 @@ namespace ClassProject.Models
         [Display(Name = "Minimum Level")]
         [Required]
         [Range(10, 250, ErrorMessage = "Minimum level must be an integer between 10 and 250")]
+        [MinLowerThanMax("max_lvl", "Minimum level must be lower than the Maximum level")]
         public byte min_lvl { get; set; }
 
-        [Display(Name = "Max  Level")]
+        [Display(Name = "Maximum Level")]
         [Required]
         [Range(10, 250, ErrorMessage = "Maximum level must be an integer between 10 and 250")]
         [MinLowerThanMax("min_lvl", "Minimum level must be lower than the Maximum level")]
@@ -151,15 +152,25 @@ namespace ClassProject.Models
                     // Using reflection we can get a reference to the other value property
                     var otherPropertyInfo = validationContext.ObjectType.GetProperty(this.otherPropertyName);
                     // Let's check that otherProperty is of type byte as we expect it to be
-                    if (otherPropertyInfo.PropertyType.Equals(new Byte().GetType()))
+                    if (otherPropertyInfo.PropertyType.Equals(new Byte().GetType()) && value != null)
                     {
-                        byte toValidate = (byte)value;
-                        byte referenceProperty = (byte)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+                        int toValidate = Convert.ToInt16((byte)value);
+                        int referenceProperty = Convert.ToInt16((byte)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null));
                         // if the max level is lower than the min level, then the validationResult will be set to false and return
                         // a properly formatted error message
-                        if (toValidate.CompareTo(referenceProperty) < 1)
+                        if (otherPropertyName.Equals("min_lvl"))
                         {
-                            validationResult = new ValidationResult(ErrorMessageString);
+                            if (toValidate <= referenceProperty)  // max_lvl <= min_lvl
+                            {
+                                validationResult = new ValidationResult(ErrorMessageString);
+                            }
+                        }
+                        else if (otherPropertyName.Equals("max_lvl"))
+                        {
+                            if (toValidate >= referenceProperty) // min_lvl >= max_lvl
+                            {
+                                validationResult = new ValidationResult(ErrorMessageString);
+                            }
                         }
                     }
                     else
@@ -218,21 +229,120 @@ namespace ClassProject.Models
     }
     public class RoyschedMetadata
     {
-        [Display(Name = "Title Id")]
+        [Display(Name = "Title")]
         [Required]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "lorange, hirange", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public string title_id { get; set; }
 
         [Display(Name = "Low Range")]
+        [Required]
+        [NonNegative("Low Range must be greater than 0")]
+        [MinLowerThanMax("hirange", "Low Range must lower than High Range")]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "title_id, hirange", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public Nullable<int> lorange { get; set; }
 
         [Display(Name = "High Range")]
+        [Required]
+        [MinLowerThanMax("lorange", "Low Range must lower than High Range")]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "lorange, title_id", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public Nullable<int> hirange { get; set; }
 
         [Display(Name = "Royalty")]
         public Nullable<int> royalty { get; set; }
 
+        [ForeignKey("title_id")]
         [Display(Name = "Title")]
         public virtual title title { get; set; }
+
+
+        [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+        public class MinLowerThanMax : ValidationAttribute
+        {
+            string otherPropertyName;
+
+            public MinLowerThanMax(string otherPropertyName, string errorMessage) : base(errorMessage)
+            {
+                this.otherPropertyName = otherPropertyName;
+            }
+
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                ValidationResult validationResult = ValidationResult.Success;
+                try
+                {
+                    // Using reflection we can get a reference to the other value property
+                    var otherPropertyInfo = validationContext.ObjectType.GetProperty(this.otherPropertyName);
+                    // Let's check that otherProperty is of type byte as we expect it to be
+                    if (value != null)
+                    {
+                        Nullable<int> toValidate = (Nullable<int>)value;
+                        Nullable<int> referenceProperty = (Nullable<int>)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+                        // if the max level is lower than the min level, then the validationResult will be set to false and return
+                        // a properly formatted error message
+                        if (otherPropertyName.Equals("lorange"))
+                        {
+                            if (toValidate <= referenceProperty)  // hirange <= lorange
+                            {
+                                validationResult = new ValidationResult(ErrorMessageString);
+                            }
+                        }
+                        else if (otherPropertyName.Equals("hirange"))
+                        {
+                            if (toValidate >= referenceProperty)  // lorange >= hirange
+                            {
+                                validationResult = new ValidationResult(ErrorMessageString);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        validationResult = new ValidationResult("An error occurred while validating the property");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Do stuff, i.e. log the exception
+                    // Let it go through the upper levels, something bad happened
+                    throw ex;
+                }
+                return validationResult;
+            }
+        }
+
+        [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+        public class NonNegative : ValidationAttribute
+        {
+            public NonNegative(string errorMessage) : base(errorMessage)
+            {
+            }
+
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                ValidationResult validationResult = ValidationResult.Success;
+                try
+                {
+                    if (value != null)
+                    {
+                        Nullable<int> toValidate = (Nullable<int>)value;
+                        if (toValidate < 0)
+                        {
+                            validationResult = new ValidationResult(ErrorMessageString);
+                        }
+                    }
+                    else
+                    {
+                        validationResult = new ValidationResult("An error occurred while validating the property");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Do stuff, i.e. log the exception
+                    // Let it go through the upper levels, something bad happened
+                    throw ex;
+                }
+                return validationResult;
+            }
+        }
     }
     public class SaleMetadata
     {
