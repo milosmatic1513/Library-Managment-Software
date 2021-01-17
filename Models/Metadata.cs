@@ -44,12 +44,12 @@ namespace ClassProject.Models
     {
         [Display(Name = "Discount Type")]
         [Required]
-        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "stor_id", ErrorMessage = "This Discoutn Type already exists for this Store")]
+        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "stor_id, editMode", ErrorMessage = "This Discount Type already exists for this Store")]
         public string discounttype { get; set; }
 
         [Display(Name = "Store")]
         [Required]
-        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "discounttype", ErrorMessage = "This Store already has this Discount Type")]
+        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "discounttype, editMode", ErrorMessage = "This Store already has this Discount Type")]
         public string stor_id { get; set; }
 
         [Display(Name = "Low Quality")]

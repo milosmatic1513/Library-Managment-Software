@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -34,7 +35,7 @@ namespace ClassProject.Controllers
                 return HttpNotFound();
             }
             discount discount = discountArray[0];
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
+            //ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
             return View(discount);
         }
 
@@ -54,8 +55,14 @@ namespace ClassProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.discounts.Add(discount);
-                db.SaveChanges();
+                // Insert directly into to DB since there is no pk for the model to assign values to
+                db.Database.ExecuteSqlCommand("INSERT INTO discounts VALUES ( @discounttype, @stor_id, @lowqty, @highqty, @discount1 )", 
+                    new SqlParameter("@discounttype", discount.discounttype),
+                    new SqlParameter("@stor_id", discount.stor_id),
+                    new SqlParameter("@lowqty", (object)discount.lowqty ?? DBNull.Value), // Send value or null
+                    new SqlParameter("@highqty", (object)discount.highqty ?? DBNull.Value), // Send value or null
+                    new SqlParameter("@discount1", discount.discount1)
+                    );
                 return RedirectToAction("Index");
             }
 
@@ -85,15 +92,23 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "discounttype,stor_id,lowqty,highqty,discount1")] discount discount)
+        public ActionResult Edit([Bind(Include = "discounttype,stor_id,lowqty,highqty,discount1")] discount discount, string discounttypeCurrent, string stor_idCurrent)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && discounttypeCurrent != null && stor_idCurrent != null)
             {
-                db.Entry(discount).State = EntityState.Modified;
-                db.SaveChanges();
+                // Update directly into to DB since there is no pk for the model to assign values to
+                db.Database.ExecuteSqlCommand("UPDATE discounts SET discounttype = @discounttype, stor_id = @stor_id, lowqty = @lowqty, highqty = @highqty, discount = @discount1 WHERE discounttype = @discounttypeCurrent and stor_id = @stor_idCurrent",
+                    new SqlParameter("@discounttype", discount.discounttype),
+                    new SqlParameter("@stor_id", discount.stor_id),
+                    new SqlParameter("@lowqty", (object)discount.lowqty ?? DBNull.Value), // Send value or null
+                    new SqlParameter("@highqty", (object)discount.highqty ?? DBNull.Value), // Send value or null
+                    new SqlParameter("@discount1", discount.discount1),
+                    new SqlParameter("@discounttypeCurrent", discounttypeCurrent),
+                    new SqlParameter("@stor_idCurrent", stor_idCurrent)
+                    );
                 return RedirectToAction("Index");
             }
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
+            //ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
             return View(discount);
         }
 
@@ -119,9 +134,14 @@ namespace ClassProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string discounttype, string stor_id)
         {
-            discount discount = db.discounts.Find(discounttype, stor_id);
-            db.discounts.Remove(discount);
-            db.SaveChanges();
+            if (db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).Count() == 1)
+            {
+                // Delete the entry
+                db.Database.ExecuteSqlCommand("DELETE FROM discounts WHERE discounttype = @discounttype and stor_id = @stor_id",
+                    new SqlParameter("@discounttype", discounttype),
+                    new SqlParameter("@stor_id", stor_id)
+                    );
+            }
             return RedirectToAction("Index");
         }
 
@@ -135,8 +155,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifyDiscountKeys(string discounttype, string stor_id)
+        public JsonResult VerifyDiscountKeys(string discounttype, string stor_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).Count() != 0)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
