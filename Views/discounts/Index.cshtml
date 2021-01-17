@@ -12,34 +12,46 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.discounttype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.store.stor_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.discount1)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.lowqty)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.highqty)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.store.stor_name)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.lowqty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.highqty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.store.stor_name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
-            @Html.ActionLink("Details", "Details", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
-            @Html.ActionLink("Delete", "Delete", new { discounttype = item.discounttype, stor_id = item.stor_id })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.discounttype)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.store.stor_name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.discount1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.lowqty)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.highqty)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
+        @Html.ActionLink("Details", "Details", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
+        @Html.ActionLink("Delete", "Delete", new { discounttype = item.discounttype, stor_id = item.stor_id })
+    </td>
+</tr>
 }
 
 </table>

@@ -34,7 +34,7 @@ namespace ClassProject.Controllers
                 return HttpNotFound();
             }
             discount discount = discountArray[0];
-            //ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
+            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
             return View(discount);
         }
 

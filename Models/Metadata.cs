@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace ClassProject.Models
@@ -47,6 +48,7 @@ namespace ClassProject.Models
         public string discounttype { get; set; }
 
         [Display(Name = "Store")]
+        [Required]
         [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "discounttype", ErrorMessage = "This Store already has this Discount Type")]
         public string stor_id { get; set; }
 
@@ -60,6 +62,7 @@ namespace ClassProject.Models
         [Required]
         public decimal discount1 { get; set; }
 
+        [ForeignKey("stor_id")]
         [Display(Name = "Store")]
         public virtual store store { get; set; }
     }
