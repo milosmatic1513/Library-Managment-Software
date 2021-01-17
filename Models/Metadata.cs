@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace ClassProject.Models
@@ -43,11 +44,12 @@ namespace ClassProject.Models
     {
         [Display(Name = "Discount Type")]
         [Required]
-        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "stor_id", ErrorMessage = "This Discoutn Type already exists for this Store")]
+        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "stor_id, editMode", ErrorMessage = "This Discount Type already exists for this Store")]
         public string discounttype { get; set; }
 
         [Display(Name = "Store")]
-        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "discounttype", ErrorMessage = "This Store already has this Discount Type")]
+        [Required]
+        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "discounttype, editMode", ErrorMessage = "This Store already has this Discount Type")]
         public string stor_id { get; set; }
 
         [Display(Name = "Low Quality")]
@@ -60,6 +62,7 @@ namespace ClassProject.Models
         [Required]
         public decimal discount1 { get; set; }
 
+        [ForeignKey("stor_id")]
         [Display(Name = "Store")]
         public virtual store store { get; set; }
     }
