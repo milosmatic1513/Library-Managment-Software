@@ -11,29 +11,36 @@ namespace ClassProject.Models
         [Key]
         [Display(Name = "Author Id")]
         [Required]
+        [MaxLength(11, ErrorMessage = "Author Id can't be longer than 11 characters")]
         [RegularExpression(@"^[0-9]{3}-[0-9]{2}-[0-9]{4}", ErrorMessage = "Author Id must match this format 000-00-0000")]
         [Remote("VerifyAuthorId", "authors", ErrorMessage = "Author Id already exists")]
         public string au_id { get; set; }
 
         [Display(Name = "Last Name")]
         [Required]
+        [MaxLength(40, ErrorMessage = "Last Name can't be longer than 40 characters")]
         public string au_lname { get; set; }
         
         [Display(Name = "First Name")]
         [Required]
+        [MaxLength(20, ErrorMessage = "First Name can't be longer than 20 characters")]
         public string au_fname { get; set; }
 
         [Display(Name = "Phone")]
         [Required]
+        [DataType(DataType.PhoneNumber)]
         public string phone { get; set; }
 
         [Display(Name = "Address")]
+        [MaxLength(40, ErrorMessage = "Address can't be longer than 40 characters")]
         public string address { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 2 characters")]
         public string state { get; set; }
 
         [Display(Name = "Zip")]
@@ -44,6 +51,7 @@ namespace ClassProject.Models
     {
         [Display(Name = "Discount Type")]
         [Required]
+        [MaxLength(40, ErrorMessage = "Discount Type can't be longer than 40 characters")]
         [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "stor_id, editMode", ErrorMessage = "This Discount Type already exists for this Store")]
         public string discounttype { get; set; }
 
@@ -75,14 +83,17 @@ namespace ClassProject.Models
         [Remote("VerifyEmployeeId", "employees", ErrorMessage = "Employee Id already exists")]
         public string emp_id { get; set; }
 
-        [Display(Name = "Firstname")]
+        [Display(Name = "First Name")]
         [Required]
+        [MaxLength(20, ErrorMessage = "First Name can't be longer than 20 characters")]
         public string fname { get; set; }
 
         [Display(Name = "Minit")]
+        [MaxLength(1, ErrorMessage = "Minit can't be longer than 1 characters")]
         public string minit { get; set; }
 
         [Display(Name = "Last Name")]
+        [MaxLength(30, ErrorMessage = "Last Name can't be longer than 30 characters")]
         [Required]
         public string lname { get; set; }
 
@@ -93,7 +104,7 @@ namespace ClassProject.Models
         [Display(Name = "Job Level")]
         public Nullable<byte> job_lvl { get; set; }
 
-        [Display(Name = "Publisher Id")]
+        [Display(Name = "Publisher")]
         [Required]
         public string pub_id { get; set; }
 
@@ -116,9 +127,10 @@ namespace ClassProject.Models
         [Required]
         public short job_id { get; set; }
 
-        [Display(Name = "Job Desc")]
+        [Display(Name = "Job Descreption")]
         [Required]
         [DataType(DataType.MultilineText)]
+        [MaxLength(50, ErrorMessage = "Job Description can't be longer than 50 characters")]
         public string job_desc { get; set; }
 
         [Display(Name = "Minimum Level")]
@@ -216,15 +228,19 @@ namespace ClassProject.Models
         public string pub_id { get; set; }
 
         [Display(Name = "Publisher Name")]
+        [MaxLength(40, ErrorMessage = "Publisher Name can't be longer than 40 characters")]
         public string pub_name { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 2 characters")]
         public string state { get; set; }
 
         [Display(Name = "Country")]
+        [MaxLength(30, ErrorMessage = "Country can't be longer than 30 characters")]
         public string country { get; set; }
     }
     public class RoyschedMetadata
@@ -357,6 +373,7 @@ namespace ClassProject.Models
         [Column(Order = 1)]
         [Display(Name = "Order Number")]
         [Required]
+        [MaxLength(20, ErrorMessage = "Order Number can't be longer than 20 characters")]
         [Remote("VerifySaleKeys", "sales", AdditionalFields = "stor_id, title_id", ErrorMessage = "This Order Number has already been registered by this Store for this Title")]
         public string ord_num { get; set; }
 
@@ -372,6 +389,7 @@ namespace ClassProject.Models
 
         [Display(Name = "Pay Terms")]
         [Required]
+        [MaxLength(12, ErrorMessage = "Pay Terms can't be longer than 12 characters")]
         public string payterms { get; set; }
 
         [Key]
@@ -396,15 +414,19 @@ namespace ClassProject.Models
         public string stor_id { get; set; }
 
         [Display(Name = "Store Name")]
+        [MaxLength(40, ErrorMessage = "Store Name can't be longer than 40 characters")]
         public string stor_name { get; set; }
 
         [Display(Name = "Store address")]
+        [MaxLength(40, ErrorMessage = "Store Address can't be longer than 40 characters")]
         public string stor_address { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 4 characters")]
         public string state { get; set; }
 
         [Display(Name = "Zip")]
@@ -414,20 +436,23 @@ namespace ClassProject.Models
     public class TitleMetadata 
     {
         [Key]
-        [Display(Name = "Title id")]
+        [Display(Name = "Title Id")]
         [Required]
+        [MaxLength(6, ErrorMessage = "Title Id can't be longer than 6 characters")]
         [Remote("VerifyTitleId", "titles", ErrorMessage = "Title Id already exists")]
         public string title_id { get; set; }
 
         [Display(Name = "Title")]
         [Required]
+        [MaxLength(80, ErrorMessage = "Title can't be longer than 80 characters")]
         public string title1 { get; set; }
 
         [Display(Name = "Type")]
         [Required]
+        [MaxLength(12, ErrorMessage = "Type can't be longer than 12 characters")]
         public string type { get; set; }
         
-        [Display(Name = "Publisher id")]
+        [Display(Name = "Publisher")]
         public string pub_id { get; set; }
 
         [Display(Name = "Price")]
@@ -444,6 +469,7 @@ namespace ClassProject.Models
 
         [Display(Name = "Notes")]
         [DataType(DataType.MultilineText)]
+        [MaxLength(200, ErrorMessage = "Notes can't be longer than 200 characters")]
         public string notes { get; set; }
 
         [Display(Name = "Date Published")]
