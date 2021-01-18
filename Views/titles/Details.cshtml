@@ -81,15 +81,39 @@
         <dd>
             @Html.DisplayFor(model => model.publisher.pub_name)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.roysched.title_id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.roysched.title_id)
-        </dd>
     </dl>
+
+    @if (ViewBag.Royscheds != null)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.roysched.ToArray()[0].lorange)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.roysched.ToArray()[0].hirange)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.roysched.ToArray()[0].royalty)
+                </th>
+            </tr>
+
+            @foreach (var item in Model.roysched)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lorange)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.hirange)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.royalty)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.title_id }) |

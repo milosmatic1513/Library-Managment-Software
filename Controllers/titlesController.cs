@@ -33,6 +33,12 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (title.roysched.Count != 0)
+                ViewBag.Royscheds = title.roysched.ToArray()[0];
+            else
+                ViewBag.Royscheds = null;
+
             return View(title);
         }
 
@@ -110,6 +116,12 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (title.roysched.Count != 0)
+                ViewBag.Royscheds = title.roysched.ToArray()[0];
+            else
+                ViewBag.Royscheds = null;
+
             return View(title);
         }
 

@@ -24,10 +24,10 @@ warning 6002: The table/view 'pubs.dbo.discounts' does not have a primary key de
         <EntityType Name="discounts">
           <Key>
             <PropertyRef Name="discounttype" />
-            <PropertyRef Name="discount" />
+            <PropertyRef Name="stor_id" />
           </Key>
           <Property Name="discounttype" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="stor_id" Type="char" MaxLength="4" />
+          <Property Name="stor_id" Type="char" MaxLength="4" Nullable="false"/>
           <Property Name="lowqty" Type="smallint" />
           <Property Name="highqty" Type="smallint" />
           <Property Name="discount" Type="decimal" Precision="4" Scale="2" Nullable="false" />
@@ -77,10 +77,12 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
         <EntityType Name="roysched">
           <Key>
             <PropertyRef Name="title_id" />
+            <PropertyRef Name="lorange" />
+            <PropertyRef Name="hirange" />
           </Key>
           <Property Name="title_id" Type="varchar" MaxLength="6" Nullable="false" />
-          <Property Name="lorange" Type="int" />
-          <Property Name="hirange" Type="int" />
+          <Property Name="lorange" Type="int" Nullable="false"/>
+          <Property Name="hirange" Type="int" Nullable="false"/>
           <Property Name="royalty" Type="int" />
         </EntityType>
         <EntityType Name="sales">
@@ -133,7 +135,7 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
           <Property Name="pubdate" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__discounts__stor___3B75D760">
-          <End Role="stores" Type="Self.stores" Multiplicity="0..1" />
+          <End Role="stores" Type="Self.stores" Multiplicity="1" />
           <End Role="discounts" Type="Self.discounts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="stores">
@@ -182,7 +184,7 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
         </Association>
         <Association Name="FK__roysched__title___398D8EEE">
           <End Role="titles" Type="Self.titles" Multiplicity="1" />
-          <End Role="roysched" Type="Self.roysched" Multiplicity="0..1" />
+          <End Role="roysched" Type="Self.roysched" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="titles">
               <PropertyRef Name="title_id" />
@@ -253,72 +255,76 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="pubsModelStoreContainer">
-          <EntitySet Name="authors" EntityType="Self.authors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="jobs" EntityType="Self.jobs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="pub_info" EntityType="Self.pub_info" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="publishers" EntityType="Self.publishers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="stores" EntityType="Self.stores" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="titleauthor" EntityType="Self.titleauthor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="titles" EntityType="Self.titles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="discounts" EntityType="Self.discounts" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [discounts].[discounttype] AS [discounttype], 
-    [discounts].[stor_id] AS [stor_id], 
-    [discounts].[lowqty] AS [lowqty], 
-    [discounts].[highqty] AS [highqty], 
-    [discounts].[discount] AS [discount]
-    FROM [dbo].[discounts] AS [discounts]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="roysched" EntityType="Self.roysched" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [roysched].[title_id] AS [title_id], 
-    [roysched].[lorange] AS [lorange], 
-    [roysched].[hirange] AS [hirange], 
-    [roysched].[royalty] AS [royalty]
-    FROM [dbo].[roysched] AS [roysched]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__discounts__stor___3B75D760" Association="Self.FK__discounts__stor___3B75D760">
-            <End Role="stores" EntitySet="stores" />
-            <End Role="discounts" EntitySet="discounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__employee__job_id__47DBAE45" Association="Self.FK__employee__job_id__47DBAE45">
-            <End Role="jobs" EntitySet="jobs" />
-            <End Role="employee" EntitySet="employee" />
-          </AssociationSet>
-          <AssociationSet Name="FK__employee__pub_id__4AB81AF0" Association="Self.FK__employee__pub_id__4AB81AF0">
-            <End Role="publishers" EntitySet="publishers" />
-            <End Role="employee" EntitySet="employee" />
-          </AssociationSet>
-          <AssociationSet Name="FK__pub_info__pub_id__4316F928" Association="Self.FK__pub_info__pub_id__4316F928">
-            <End Role="publishers" EntitySet="publishers" />
-            <End Role="pub_info" EntitySet="pub_info" />
-          </AssociationSet>
-          <AssociationSet Name="FK__roysched__title___398D8EEE" Association="Self.FK__roysched__title___398D8EEE">
-            <End Role="titles" EntitySet="titles" />
-            <End Role="roysched" EntitySet="roysched" />
-          </AssociationSet>
-          <AssociationSet Name="FK__sales__stor_id__36B12243" Association="Self.FK__sales__stor_id__36B12243">
-            <End Role="stores" EntitySet="stores" />
-            <End Role="sales" EntitySet="sales" />
-          </AssociationSet>
-          <AssociationSet Name="FK__sales__title_id__37A5467C" Association="Self.FK__sales__title_id__37A5467C">
-            <End Role="titles" EntitySet="titles" />
-            <End Role="sales" EntitySet="sales" />
-          </AssociationSet>
-          <AssociationSet Name="FK__titleauth__au_id__30F848ED" Association="Self.FK__titleauth__au_id__30F848ED">
-            <End Role="authors" EntitySet="authors" />
-            <End Role="titleauthor" EntitySet="titleauthor" />
-          </AssociationSet>
-          <AssociationSet Name="FK__titleauth__title__31EC6D26" Association="Self.FK__titleauth__title__31EC6D26">
-            <End Role="titles" EntitySet="titles" />
-            <End Role="titleauthor" EntitySet="titleauthor" />
-          </AssociationSet>
-          <AssociationSet Name="FK__titles__pub_id__2D27B809" Association="Self.FK__titles__pub_id__2D27B809">
-            <End Role="publishers" EntitySet="publishers" />
-            <End Role="titles" EntitySet="titles" />
-          </AssociationSet>
+            <EntitySet Name="authors" EntityType="Self.authors" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="jobs" EntityType="Self.jobs" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="pub_info" EntityType="Self.pub_info" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="publishers" EntityType="Self.publishers" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="stores" EntityType="Self.stores" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="titleauthor" EntityType="Self.titleauthor" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="titles" EntityType="Self.titles" Schema="dbo" store:Type="Tables" />
+            <EntitySet Name="discounts" EntityType="Self.discounts" store:Type="Tables" store:Schema="dbo">
+                <DefiningQuery>
+                    SELECT
+                    [discounts].[discounttype] AS [discounttype],
+                    [discounts].[stor_id] AS [stor_id],
+                    [discounts].[lowqty] AS [lowqty],
+                    [discounts].[highqty] AS [highqty],
+                    [discounts].[discount] AS [discount]
+                    FROM [dbo].[discounts] AS [discounts]
+                </DefiningQuery>
+            </EntitySet>
+            <EntitySet Name="roysched" EntityType="Self.roysched" store:Type="Tables" store:Schema="dbo">
+                <DefiningQuery>
+                    SELECT
+                    [roysched].[title_id] AS [title_id],
+                    [roysched].[lorange] AS [lorange],
+                    [roysched].[hirange] AS [hirange],
+                    [roysched].[royalty] AS [royalty]
+                    FROM [dbo].[roysched] AS [roysched]
+                </DefiningQuery>
+            </EntitySet>
+            <AssociationSet Name="FK__discounts__stor___3B75D760" Association="Self.FK__discounts__stor___3B75D760">
+                <End Role="stores" EntitySet="stores" />
+                <End Role="discounts" EntitySet="discounts" />
+            </AssociationSet>
+            <AssociationSet Name="FK__employee__job_id__47DBAE45" Association="Self.FK__employee__job_id__47DBAE45">
+                <End Role="jobs" EntitySet="jobs" />
+                <End Role="employee" EntitySet="employee" />
+            </AssociationSet>
+            <AssociationSet Name="FK__employee__pub_id__4AB81AF0" Association="Self.FK__employee__pub_id__4AB81AF0">
+                <End Role="publishers" EntitySet="publishers" />
+                <End Role="employee" EntitySet="employee" />
+            </AssociationSet>
+            <AssociationSet Name="FK__pub_info__pub_id__4316F928" Association="Self.FK__pub_info__pub_id__4316F928">
+                <End Role="publishers" EntitySet="publishers" />
+                <End Role="pub_info" EntitySet="pub_info" />
+            </AssociationSet>
+            <AssociationSet Name="FK__roysched__title___398D8EEE" Association="Self.FK__roysched__title___398D8EEE">
+                <End Role="titles" EntitySet="titles" />
+                <End Role="roysched" EntitySet="roysched" />
+            </AssociationSet>
+            <AssociationSet Name="FK__sales__stor_id__36B12243" Association="Self.FK__sales__stor_id__36B12243">
+                <End Role="stores" EntitySet="stores" />
+                <End Role="sales" EntitySet="sales" />
+            </AssociationSet>
+            <AssociationSet Name="FK__sales__title_id__37A5467C" Association="Self.FK__sales__title_id__37A5467C">
+                <End Role="titles" EntitySet="titles" />
+                <End Role="sales" EntitySet="sales" />
+            </AssociationSet>
+            <AssociationSet Name="FK__titleauth__au_id__30F848ED" Association="Self.FK__titleauth__au_id__30F848ED">
+                <End Role="authors" EntitySet="authors" />
+                <End Role="titleauthor" EntitySet="titleauthor" />
+            </AssociationSet>
+            <AssociationSet Name="FK__titleauth__title__31EC6D26" Association="Self.FK__titleauth__title__31EC6D26">
+                <End Role="titles" EntitySet="titles" />
+                <End Role="titleauthor" EntitySet="titleauthor" />
+            </AssociationSet>
+            <AssociationSet Name="FK__titles__pub_id__2D27B809" Association="Self.FK__titles__pub_id__2D27B809">
+                <End Role="publishers" EntitySet="publishers" />
+                <End Role="titles" EntitySet="titles" />
+            </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -448,10 +454,10 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
         <EntityType Name="discount">
           <Key>
             <PropertyRef Name="discounttype" />
-            <PropertyRef Name="discount1" />
+            <PropertyRef Name="stor_id" />
           </Key>
           <Property Name="discounttype" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="stor_id" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="stor_id" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="lowqty" Type="Int16" />
           <Property Name="highqty" Type="Int16" />
           <Property Name="discount1" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
@@ -460,10 +466,12 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
         <EntityType Name="roysched">
           <Key>
             <PropertyRef Name="title_id" />
+            <PropertyRef Name="lorange" />
+            <PropertyRef Name="hirange" />
           </Key>
           <Property Name="title_id" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="lorange" Type="Int32" />
-          <Property Name="hirange" Type="Int32" />
+          <Property Name="lorange" Type="Int32" Nullable="false"/>
+          <Property Name="hirange" Type="Int32" Nullable="false"/>
           <Property Name="royalty" Type="Int32" />
           <NavigationProperty Name="title" Relationship="Self.FK__roysched__title___398D8EEE" FromRole="roysched" ToRole="titles" />
         </EntityType>
@@ -552,7 +560,7 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__discounts__stor___3B75D760">
-          <End Role="stores" Type="Self.store" Multiplicity="0..1" />
+          <End Role="stores" Type="Self.store" Multiplicity="1" />
           <End Role="discounts" Type="Self.discount" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="stores">
@@ -577,7 +585,7 @@ warning 6002: The table/view 'pubs.dbo.roysched' does not have a primary key def
         </Association>
         <Association Name="FK__roysched__title___398D8EEE">
           <End Role="titles" Type="Self.title" Multiplicity="1" />
-          <End Role="roysched" Type="Self.roysched" Multiplicity="0..1" />
+          <End Role="roysched" Type="Self.roysched" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="titles">
               <PropertyRef Name="title_id" />
