@@ -153,8 +153,11 @@ namespace ClassProject.Controllers
 
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifyEmployeeId(string emp_id)
+        public JsonResult VerifyEmployeeId(string emp_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (emp_id != null && db.employees.Where(item => item.emp_id == emp_id).Count() != 0)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

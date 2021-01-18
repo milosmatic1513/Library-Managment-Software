@@ -11,29 +11,36 @@ namespace ClassProject.Models
         [Key]
         [Display(Name = "Author Id")]
         [Required]
+        [MaxLength(11, ErrorMessage = "Author Id can't be longer than 11 characters")]
         [RegularExpression(@"^[0-9]{3}-[0-9]{2}-[0-9]{4}", ErrorMessage = "Author Id must match this format 000-00-0000")]
-        [Remote("VerifyAuthorId", "authors", ErrorMessage = "Author Id already exists")]
+        [Remote("VerifyAuthorId", "authors", AdditionalFields = "editMode", ErrorMessage = "Author Id already exists")]
         public string au_id { get; set; }
 
         [Display(Name = "Last Name")]
         [Required]
+        [MaxLength(40, ErrorMessage = "Last Name can't be longer than 40 characters")]
         public string au_lname { get; set; }
         
         [Display(Name = "First Name")]
         [Required]
+        [MaxLength(20, ErrorMessage = "First Name can't be longer than 20 characters")]
         public string au_fname { get; set; }
 
         [Display(Name = "Phone")]
         [Required]
+        [DataType(DataType.PhoneNumber)]
         public string phone { get; set; }
 
         [Display(Name = "Address")]
+        [MaxLength(40, ErrorMessage = "Address can't be longer than 40 characters")]
         public string address { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 2 characters")]
         public string state { get; set; }
 
         [Display(Name = "Zip")]
@@ -44,6 +51,7 @@ namespace ClassProject.Models
     {
         [Display(Name = "Discount Type")]
         [Required]
+        [MaxLength(40, ErrorMessage = "Discount Type can't be longer than 40 characters")]
         [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "stor_id, editMode", ErrorMessage = "This Discount Type already exists for this Store")]
         public string discounttype { get; set; }
 
@@ -72,17 +80,20 @@ namespace ClassProject.Models
         [Display(Name = "Employee Id")]
         [Required]
         [RegularExpression(@"^[A-Z][A-Z|-][A-Z][1-9][0-9]{4}[FM]$", ErrorMessage = "Employee Id must match one of these formats AAA[1-9]0000[F or M] or A-A[1-9]0000[F or M]")]
-        [Remote("VerifyEmployeeId", "employees", ErrorMessage = "Employee Id already exists")]
+        [Remote("VerifyEmployeeId", "employees", AdditionalFields = "editMode", ErrorMessage = "Employee Id already exists")]
         public string emp_id { get; set; }
 
-        [Display(Name = "Firstname")]
+        [Display(Name = "First Name")]
         [Required]
+        [MaxLength(20, ErrorMessage = "First Name can't be longer than 20 characters")]
         public string fname { get; set; }
 
         [Display(Name = "Minit")]
+        [MaxLength(1, ErrorMessage = "Minit can't be longer than 1 characters")]
         public string minit { get; set; }
 
         [Display(Name = "Last Name")]
+        [MaxLength(30, ErrorMessage = "Last Name can't be longer than 30 characters")]
         [Required]
         public string lname { get; set; }
 
@@ -93,7 +104,7 @@ namespace ClassProject.Models
         [Display(Name = "Job Level")]
         public Nullable<byte> job_lvl { get; set; }
 
-        [Display(Name = "Publisher Id")]
+        [Display(Name = "Publisher")]
         [Required]
         public string pub_id { get; set; }
 
@@ -116,9 +127,10 @@ namespace ClassProject.Models
         [Required]
         public short job_id { get; set; }
 
-        [Display(Name = "Job Desc")]
+        [Display(Name = "Job Descreption")]
         [Required]
         [DataType(DataType.MultilineText)]
+        [MaxLength(50, ErrorMessage = "Job Description can't be longer than 50 characters")]
         public string job_desc { get; set; }
 
         [Display(Name = "Minimum Level")]
@@ -212,39 +224,43 @@ namespace ClassProject.Models
         [Display(Name = "Publisher Id")]
         [Required]
         [RegularExpression(@"1389|0736|0877|1622|1756|99[0-9][0-9]", ErrorMessage = "Publisher Id must match this format 99[0-9][0-9] or be one of these 1389, 0736, 0877, 1622, 1756")]
-        [Remote("VerifyPublisherId", "publishers", ErrorMessage = "Publisher Id already exists")]
+        [Remote("VerifyPublisherId", "publishers", AdditionalFields = "editMode", ErrorMessage = "Publisher Id already exists")]
         public string pub_id { get; set; }
 
         [Display(Name = "Publisher Name")]
+        [MaxLength(40, ErrorMessage = "Publisher Name can't be longer than 40 characters")]
         public string pub_name { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 2 characters")]
         public string state { get; set; }
 
         [Display(Name = "Country")]
+        [MaxLength(30, ErrorMessage = "Country can't be longer than 30 characters")]
         public string country { get; set; }
     }
     public class RoyschedMetadata
     {
         [Display(Name = "Title")]
         [Required]
-        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "lorange, hirange", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "lorange, hirange, editMode", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public string title_id { get; set; }
 
         [Display(Name = "Low Range")]
         [Required]
         [NonNegative("Low Range must be greater than 0")]
         [MinLowerThanMax("hirange", "Low Range must lower than High Range")]
-        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "title_id, hirange", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "title_id, hirange, editMode", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public Nullable<int> lorange { get; set; }
 
         [Display(Name = "High Range")]
         [Required]
         [MinLowerThanMax("lorange", "Low Range must lower than High Range")]
-        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "lorange, title_id", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "lorange, title_id, editMode", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public Nullable<int> hirange { get; set; }
 
         [Display(Name = "Royalty")]
@@ -350,14 +366,15 @@ namespace ClassProject.Models
         [Column(Order = 0)]
         [Display(Name = "Store")]
         [Required]
-        [Remote("VerifySaleKeys", "sales", AdditionalFields = "ord_num, title_id", ErrorMessage = "This Store has already registered this Order Number for this Title")]
+        [Remote("VerifySaleKeys", "sales", AdditionalFields = "ord_num, title_id, editMode", ErrorMessage = "This Store has already registered this Order Number for this Title")]
         public string stor_id { get; set; }
 
         [Key]
         [Column(Order = 1)]
         [Display(Name = "Order Number")]
         [Required]
-        [Remote("VerifySaleKeys", "sales", AdditionalFields = "stor_id, title_id", ErrorMessage = "This Order Number has already been registered by this Store for this Title")]
+        [MaxLength(20, ErrorMessage = "Order Number can't be longer than 20 characters")]
+        [Remote("VerifySaleKeys", "sales", AdditionalFields = "stor_id, title_id, editMode", ErrorMessage = "This Order Number has already been registered by this Store for this Title")]
         public string ord_num { get; set; }
 
         [Display(Name = "Order Date")]
@@ -372,12 +389,13 @@ namespace ClassProject.Models
 
         [Display(Name = "Pay Terms")]
         [Required]
+        [MaxLength(12, ErrorMessage = "Pay Terms can't be longer than 12 characters")]
         public string payterms { get; set; }
 
         [Key]
         [Column(Order = 2)]
         [Display(Name = "Title")]
-        [Remote("VerifySaleKeys", "sales", AdditionalFields = "ord_num, stor_id", ErrorMessage = "This Title has already been registered by this Store with this Order Number")]
+        [Remote("VerifySaleKeys", "sales", AdditionalFields = "ord_num, stor_id, editMode", ErrorMessage = "This Title has already been registered by this Store with this Order Number")]
         [Required]
         public string title_id { get; set; }
 
@@ -392,19 +410,23 @@ namespace ClassProject.Models
         [Display(Name = "Store Id")]
         [Required]
         [StringLength(4, MinimumLength = 4, ErrorMessage = "Store Id must have length 4")]
-        [Remote("VerifyStoreId", "stores", ErrorMessage = "Store Id already exists")]
+        [Remote("VerifyStoreId", "stores", AdditionalFields = "editMode", ErrorMessage = "Store Id already exists")]
         public string stor_id { get; set; }
 
         [Display(Name = "Store Name")]
+        [MaxLength(40, ErrorMessage = "Store Name can't be longer than 40 characters")]
         public string stor_name { get; set; }
 
         [Display(Name = "Store address")]
+        [MaxLength(40, ErrorMessage = "Store Address can't be longer than 40 characters")]
         public string stor_address { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 4 characters")]
         public string state { get; set; }
 
         [Display(Name = "Zip")]
@@ -414,20 +436,23 @@ namespace ClassProject.Models
     public class TitleMetadata 
     {
         [Key]
-        [Display(Name = "Title id")]
+        [Display(Name = "Title Id")]
         [Required]
-        [Remote("VerifyTitleId", "titles", ErrorMessage = "Title Id already exists")]
+        [MaxLength(6, ErrorMessage = "Title Id can't be longer than 6 characters")]
+        [Remote("VerifyTitleId", "titles", AdditionalFields = "editMode", ErrorMessage = "Title Id already exists")]
         public string title_id { get; set; }
 
         [Display(Name = "Title")]
         [Required]
+        [MaxLength(80, ErrorMessage = "Title can't be longer than 80 characters")]
         public string title1 { get; set; }
 
         [Display(Name = "Type")]
         [Required]
+        [MaxLength(12, ErrorMessage = "Type can't be longer than 12 characters")]
         public string type { get; set; }
         
-        [Display(Name = "Publisher id")]
+        [Display(Name = "Publisher")]
         public string pub_id { get; set; }
 
         [Display(Name = "Price")]
@@ -444,6 +469,7 @@ namespace ClassProject.Models
 
         [Display(Name = "Notes")]
         [DataType(DataType.MultilineText)]
+        [MaxLength(200, ErrorMessage = "Notes can't be longer than 200 characters")]
         public string notes { get; set; }
 
         [Display(Name = "Date Published")]
@@ -461,14 +487,14 @@ namespace ClassProject.Models
         [Column(Order = 0)]
         [Display(Name = "Author")]
         [Required]
-        [Remote("VerifyTitleAuthorId", "titleauthors", AdditionalFields = nameof(title_id), ErrorMessage = "This Author has already registered this Title")]
+        [Remote("VerifyTitleAuthorId", "titleauthors", AdditionalFields = "title_id, editMode", ErrorMessage = "This Author has already registered this Title")]
         public string au_id { get; set; }
 
         [Key]
         [Column(Order = 1)]
         [Display(Name = "Title")]
         [Required]
-        [Remote("VerifyTitleAuthorId", "titleauthors", AdditionalFields = nameof(au_id), ErrorMessage = "This Title is already registered by this Author")]
+        [Remote("VerifyTitleAuthorId", "titleauthors", AdditionalFields = "title_id, editMode", ErrorMessage = "This Title is already registered by this Author")]
         public string title_id { get; set; }
 
         [Display(Name = "Author Order")]

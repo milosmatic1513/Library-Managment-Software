@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>sale</h4>
         <hr />
@@ -44,6 +44,7 @@
         </div>
 
         @Html.HiddenFor(model => model.title_id)
+        <input type="hidden" value="edit" name="editMode" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
