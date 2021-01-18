@@ -19,6 +19,7 @@ namespace ClassProject.Models
         {
             this.sales = new HashSet<sale>();
             this.titleauthors = new HashSet<titleauthor>();
+            this.roysched = new HashSet<roysched>();
         }
     
         public string title_id { get; set; }
@@ -37,6 +38,7 @@ namespace ClassProject.Models
         public virtual ICollection<sale> sales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<titleauthor> titleauthors { get; set; }
-        public virtual roysched roysched { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<roysched> roysched { get; set; }
     }
 }
