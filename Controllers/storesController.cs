@@ -126,8 +126,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifyStoreId(string stor_id)
+        public JsonResult VerifyStoreId(string stor_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (stor_id != null && db.stores.Where(item => item.stor_id == stor_id).Count() != 0)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

@@ -25,7 +25,7 @@
                     string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
 
                     <input type="file" name="imageFile" onchange="previewFile()">
-                    <img src="@imageSrc" style="max-width: 300px; height: auto;" alt="No Image"/>
+                    <img src="@imageSrc" style="max-width: 300px; height: auto;" alt="No Image" />
                 }
                 @Html.ValidationMessageFor(model => model.logo, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.logo)
@@ -39,6 +39,8 @@
                 @Html.ValidationMessageFor(model => model.pr_info, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <input type="hidden" value="edit" name="editMode" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

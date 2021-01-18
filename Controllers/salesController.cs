@@ -134,8 +134,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifySaleKeys(string stor_id, string ord_num, string title_id)
+        public JsonResult VerifySaleKeys(string stor_id, string ord_num, string title_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (db.sales.Find(stor_id, ord_num, title_id) != null)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

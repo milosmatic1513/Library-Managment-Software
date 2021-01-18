@@ -134,8 +134,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifyTitleAuthorId(string au_id, string title_id)
+        public JsonResult VerifyTitleAuthorId(string au_id, string title_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (db.titleauthors.Where(item => item.au_id == au_id && item.title_id == title_id).Count() != 0)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

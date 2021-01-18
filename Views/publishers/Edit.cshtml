@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>publisher</h4>
         <hr />
@@ -48,6 +48,8 @@
                 @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <input type="hidden" value="edit" name="editMode" />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
