@@ -110,7 +110,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(short id)
         {
             job job = db.jobs.Find(id);
-            db.jobs.Remove(job);
+            job.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

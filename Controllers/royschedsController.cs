@@ -127,15 +127,8 @@ namespace ClassProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string title_id, int? lorange, int? hirange)
         {
-            if (db.royscheds.Where(item => item.title_id == title_id && item.lorange == lorange && item.hirange == hirange).Count() == 1)
-            {
-                // Delete the entry
-                db.Database.ExecuteSqlCommand("DELETE FROM roysched WHERE title_id = @title_id and lorange = @lorange and hirange = @hirange",
-                    new SqlParameter("@title_id", title_id),
-                    new SqlParameter("@lorange", lorange),
-                    new SqlParameter("@hirange", hirange)
-                    );
-            }
+            roysched roysched = db.royscheds.Where(item => item.title_id == title_id && item.lorange == lorange && item.hirange == hirange).First();
+            roysched.Delete(db);
             return RedirectToAction("Index");
         }
 

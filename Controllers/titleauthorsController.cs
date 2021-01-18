@@ -119,7 +119,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string au_id, string title_id)
         {
             titleauthor titleauthor = db.titleauthors.Find(au_id, title_id);
-            db.titleauthors.Remove(titleauthor);
+            titleauthor.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

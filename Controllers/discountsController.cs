@@ -134,14 +134,8 @@ namespace ClassProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string discounttype, string stor_id)
         {
-            if (db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).Count() == 1)
-            {
-                // Delete the entry
-                db.Database.ExecuteSqlCommand("DELETE FROM discounts WHERE discounttype = @discounttype and stor_id = @stor_id",
-                    new SqlParameter("@discounttype", discounttype),
-                    new SqlParameter("@stor_id", stor_id)
-                    );
-            }
+            discount discount = db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).First();
+            discount.Delete(db);
             return RedirectToAction("Index");
         }
 
