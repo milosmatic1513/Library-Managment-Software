@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -110,7 +111,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             store store = db.stores.Find(id);
-            db.stores.Remove(store);
+            store.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -35,7 +36,7 @@ namespace ClassProject.Controllers
             }
 
             if (title.roysched.Count != 0)
-                ViewBag.Royscheds = title.roysched.ToArray()[0];
+                ViewBag.Royscheds = title.roysched.First();
             else
                 ViewBag.Royscheds = null;
 
@@ -118,7 +119,7 @@ namespace ClassProject.Controllers
             }
 
             if (title.roysched.Count != 0)
-                ViewBag.Royscheds = title.roysched.ToArray()[0];
+                ViewBag.Royscheds = title.roysched.First();
             else
                 ViewBag.Royscheds = null;
 
@@ -131,7 +132,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             title title = db.titles.Find(id);
-            db.titles.Remove(title);
+            title.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

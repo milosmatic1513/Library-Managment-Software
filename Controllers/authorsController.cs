@@ -144,7 +144,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             author author = db.authors.Find(id);
-            db.authors.Remove(author);
+            author.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

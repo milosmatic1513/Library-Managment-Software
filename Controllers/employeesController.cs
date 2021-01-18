@@ -137,7 +137,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             employee employee = db.employees.Find(id);
-            db.employees.Remove(employee);
+            employee.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -115,7 +115,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             publisher publisher = db.publishers.Find(id);
-            db.publishers.Remove(publisher);
+            publisher.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

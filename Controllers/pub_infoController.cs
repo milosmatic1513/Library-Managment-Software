@@ -125,7 +125,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             pub_info pub_info = db.pub_info.Find(id);
-            db.pub_info.Remove(pub_info);
+            pub_info.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
