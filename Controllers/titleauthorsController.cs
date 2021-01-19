@@ -37,9 +37,13 @@ namespace ClassProject.Controllers
         }
 
         // GET: titleauthors/Create
-        public ActionResult Create()
+        public ActionResult Create(string au_id)
         {
-            ViewBag.au_id = new SelectList(db.authors, "au_id", "au_lname");
+            if (au_id != null)
+                ViewBag.au_id = new SelectList(db.authors.Where(item => item.au_id == au_id), "au_id", "au_lname");
+            else
+                ViewBag.au_id = new SelectList(db.authors, "au_id", "au_lname");
+
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
             return View();
         }
