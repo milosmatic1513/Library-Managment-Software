@@ -75,11 +75,17 @@
         </dd>
     </dl>
 
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.au_id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+    <hr />
+
     <h3>Author's Titles</h3>
     <p>
         @Html.ActionLink("Create New", "Create", "titleauthors", new { au_id = Model.au_id }, null)
     </p>
-
     @if (Model.titleauthors.Count != 0)
     {
         <table class="table">
@@ -119,8 +125,3 @@
         </table>
     }
 </div>
-
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.au_id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
