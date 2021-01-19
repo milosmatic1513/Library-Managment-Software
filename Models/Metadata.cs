@@ -228,6 +228,7 @@ namespace ClassProject.Models
         public string pub_id { get; set; }
 
         [Display(Name = "Publisher Name")]
+        [Required]
         [MaxLength(40, ErrorMessage = "Publisher Name can't be longer than 40 characters")]
         public string pub_name { get; set; }
 

@@ -38,10 +38,15 @@ namespace ClassProject.Controllers
         }
 
         // GET: pub_info/Create
-        public ActionResult Create()
+        public ActionResult Create(string pub_id)
         {
-            var publishers = db.publishers.Where(item => item.pub_info == null);
-            ViewBag.pub_id = new SelectList(publishers, "pub_id", "pub_name");
+            if (pub_id != null)
+                ViewBag.pub_id = new SelectList(db.publishers.Where(item => item.pub_id == pub_id), "pub_id", "pub_name");
+            else
+            {
+                var publishers = db.publishers.Where(item => item.pub_info == null);
+                ViewBag.pub_id = new SelectList(publishers, "pub_id", "pub_name");
+            }
             return View();
         }
 
