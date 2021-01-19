@@ -38,9 +38,13 @@ namespace ClassProject.Controllers
         }
 
         // GET: royscheds/Create
-        public ActionResult Create()
+        public ActionResult Create(string title_id)
         {
-            ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
+            if (title_id != null)
+                ViewBag.title_id = new SelectList(db.titles.Where(item => item.title_id == title_id), "title_id", "title1");
+            else
+                ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
+
             return View();
         }
 

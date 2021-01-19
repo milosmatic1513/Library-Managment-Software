@@ -84,40 +84,6 @@
         </dd>
     </dl>
 
-
-    @if (ViewBag.Royscheds != null)
-    {
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.roysched.First().lorange)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.roysched.First().hirange)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.roysched.First().royalty)
-                </th>
-            </tr>
-
-            @foreach (var item in Model.roysched)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.lorange)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.hirange)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.royalty)
-                    </td>
-                </tr>
-            }
-        </table>
-    }
-
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

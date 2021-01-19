@@ -117,12 +117,6 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
-
-            if (title.roysched.Count != 0)
-                ViewBag.Royscheds = title.roysched.First();
-            else
-                ViewBag.Royscheds = null;
-
             return View(title);
         }
 
