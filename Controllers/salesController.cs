@@ -37,9 +37,12 @@ namespace ClassProject.Controllers
         }
 
         // GET: sales/Create
-        public ActionResult Create()
+        public ActionResult Create(string stor_id)
         {
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
+            if (stor_id != null)
+                ViewBag.stor_id = new SelectList(db.stores.Where(item => item.stor_id == stor_id), "stor_id", "stor_name");
+            else
+                ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
             return View();
         }

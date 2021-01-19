@@ -55,10 +55,15 @@ namespace ClassProject.Controllers
         }
 
         // GET: employees/Create
-        public ActionResult Create()
+        public ActionResult Create(string pub_id)
         {
             ViewBag.job_id = new SelectList(db.jobs, "job_id", "job_desc");
-            ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name");
+
+            if (pub_id != null)
+                ViewBag.pub_id = new SelectList(db.publishers.Where(item => item.pub_id == pub_id), "pub_id", "pub_name");
+            else
+                ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name");
+
             return View();
         }
 

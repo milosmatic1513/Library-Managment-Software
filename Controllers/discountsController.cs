@@ -40,9 +40,12 @@ namespace ClassProject.Controllers
         }
 
         // GET: discounts/Create
-        public ActionResult Create()
+        public ActionResult Create(string stor_id)
         {
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
+            if (stor_id != null)
+                ViewBag.stor_id = new SelectList(db.stores.Where(item => item.stor_id == stor_id), "stor_id", "stor_name");
+            else
+                ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
             return View();
         }
 

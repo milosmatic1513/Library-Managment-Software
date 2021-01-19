@@ -42,6 +42,27 @@
             @Html.DisplayFor(model => model.country)
         </dd>
 
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pub_info.logo)
+        </dt>
+
+        <dd>
+            @{
+                string imageSrc;
+                if (Model.pub_info == null)
+                {
+                    imageSrc = "";
+                }
+                else
+                {
+                    var imageBase64 = Convert.ToBase64String(Model.pub_info.logo);
+                    imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                }
+                <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image" />
+            }
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.pub_info.pr_info)
         </dt>
@@ -49,10 +70,152 @@
         <dd>
             @Html.DisplayFor(model => model.pub_info.pr_info)
         </dd>
-
     </dl>
+
+    <p>
+        @Html.ActionLink("Edit Publisher", "Edit", new { id = Model.pub_id }) |
+
+
+        @if (Model.pub_info == null)
+        {
+            @Html.ActionLink("Create Info", "Create", "pub_info", new { id = Model.pub_id }, null)
+        } |
+
+        @if (Model.pub_info != null)
+        {
+            @Html.ActionLink("Edit Info", "Edit", "pub_info", new { id = Model.pub_id }, null)
+        } |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+    <hr />
+
+    <h3>Titles</h3>
+    <p>
+        @Html.ActionLink("Create New", "Create", "titles", new { pub_id = Model.pub_id }, null)
+    </p>
+    @if (Model.titles.Count != 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.titles.First().title1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titles.First().type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titles.First().price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titles.First().advance)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titles.First().royalty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titles.First().ytd_sales)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titles.First().pubdate)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.titles)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.title1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.advance)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.royalty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ytd_sales)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.pubdate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "titles", new { id = item.title_id }, null) |
+                        @Html.ActionLink("Details", "Details", "titles", new { id = item.title_id }, null) |
+                        @Html.ActionLink("Delete", "Delete", "titles", new { id = item.title_id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+
+    <hr />
+
+    <h3>Employees</h3>
+    <p>
+        @Html.ActionLink("Create New", "Create", "employees", new { pub_id = Model.pub_id }, null)
+    </p>
+    @if (Model.employees.Count != 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.employees.First().fname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.employees.First().minit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.employees.First().lname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.employees.First().job_lvl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.employees.First().hire_date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.employees.First().job.job_desc)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.employees)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.minit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.job_lvl)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.hire_date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.job.job_desc)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "employees", new { id = item.emp_id }, null) |
+                        @Html.ActionLink("Details", "Details", "employees", new { id = item.emp_id }, null) |
+                        @Html.ActionLink("Delete", "Delete", "employees", new { id = item.emp_id }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.pub_id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

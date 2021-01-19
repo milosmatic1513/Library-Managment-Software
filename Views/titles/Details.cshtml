@@ -83,7 +83,12 @@
         </dd>
     </dl>
 
-    @if (ViewBag.Royscheds != null)
+    <h3>Royscheds</h3>
+    <p>
+        @Html.ActionLink("Create New", "Create", "royscheds", new { title_id = Model.title_id }, null)
+    </p>
+
+    @if (Model.roysched.Count != 0)
     {
         <table class="table">
             <tr>
@@ -96,6 +101,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.roysched.First().royalty)
                 </th>
+                <th></th>
             </tr>
 
             @foreach (var item in Model.roysched)
@@ -109,6 +115,11 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.royalty)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, null) |
+                        @Html.ActionLink("Details", "Details", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, null) |
+                        @Html.ActionLink("Delete", "Delete", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, null)
                     </td>
                 </tr>
             }

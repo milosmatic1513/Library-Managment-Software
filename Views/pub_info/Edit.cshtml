@@ -21,11 +21,19 @@
             @Html.LabelFor(model => model.logo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @{
-                    var imageBase64 = Convert.ToBase64String(Model.logo);
-                    string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                    string imageSrc;
+                    if (Model.logo == null)
+                    {
+                        imageSrc = "";
+                    }
+                    else
+                    {
+                        var imageBase64 = Convert.ToBase64String(Model.logo);
+                        imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                    }
 
                     <input type="file" name="imageFile" onchange="previewFile()">
-                    <img src="@imageSrc" style="max-width: 300px; height: auto;" alt="No Image" />
+                    <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image" />
                 }
                 @Html.ValidationMessageFor(model => model.logo, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.logo)
