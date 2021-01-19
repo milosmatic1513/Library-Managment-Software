@@ -415,6 +415,7 @@ namespace ClassProject.Models
         public string stor_id { get; set; }
 
         [Display(Name = "Store Name")]
+        [Required]
         [MaxLength(40, ErrorMessage = "Store Name can't be longer than 40 characters")]
         public string stor_name { get; set; }
 
