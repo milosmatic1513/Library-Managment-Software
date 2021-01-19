@@ -19,7 +19,6 @@ namespace ClassProject.Models
                     titleauthor.Delete(db);
                 // Remove author
                 db.authors.Remove(this);
-
                 return true;
             }
             catch
@@ -135,6 +134,8 @@ namespace ClassProject.Models
         {
             try
             {
+                // Remove titles
+                Models.title.Delete(db, this.pub_id);
                 // Remove employees
                 var employees = db.employees.Where(item => item.pub_id == this.pub_id);
                 foreach (var employee in employees)
@@ -168,6 +169,7 @@ namespace ClassProject.Models
                     new SqlParameter("@lorange", this.lorange),
                     new SqlParameter("@hirange", this.hirange)
                     );
+
                 return true;
             }
             catch
@@ -257,6 +259,28 @@ namespace ClassProject.Models
                     titleauthor.Delete(db);
                 // Remove title
                 db.titles.Remove(this);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
+        public static bool Delete(pubsEntities db, string pub_id)
+        {
+            try
+            {
+                // Delete the royscheds
+                db.Database.ExecuteSqlCommand("DELETE FROM roysched FROM roysched JOIN titles ON roysched.title_id = titles.title_id WHERE pub_id = @pub_id",
+                    new SqlParameter("@pub_id", pub_id)
+                    );
+
+                // Delete the entry
+                var titles = db.titles.Where(item => item.pub_id == pub_id);
+                foreach (var title in titles)
+                    title.Delete(db);
+
                 return true;
             }
             catch
