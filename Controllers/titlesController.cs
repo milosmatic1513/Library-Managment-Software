@@ -35,7 +35,7 @@ namespace ClassProject.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.ReferUrl = Request.UrlReferrer == null ? "" : Request.UrlReferrer.ToString();
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(title);
         }
 
@@ -49,7 +49,7 @@ namespace ClassProject.Controllers
 
             ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id");
 
-            ViewBag.ReferUrl = Request.UrlReferrer == null ? "" : Request.UrlReferrer.ToString();
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View();
         }
 
@@ -65,10 +65,7 @@ namespace ClassProject.Controllers
                 db.titles.Add(title);
                 db.SaveChanges();
 
-                if (string.IsNullOrWhiteSpace(referUrl))
-                    return RedirectToAction("Index"); // if referUrl is missing redirect to Index
-                else
-                    return Redirect(referUrl); // else redirect to referUrl
+                return RedirectUrl(referUrl);
             }
 
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
@@ -91,7 +88,7 @@ namespace ClassProject.Controllers
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
             ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
 
-            ViewBag.ReferUrl = Request.UrlReferrer == null ? "" : Request.UrlReferrer.ToString();
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(title);
         }
 
@@ -107,10 +104,7 @@ namespace ClassProject.Controllers
                 db.Entry(title).State = EntityState.Modified;
                 db.SaveChanges();
 
-                if (string.IsNullOrWhiteSpace(referUrl))
-                    return RedirectToAction("Index"); // if referUrl is missing redirect to Index
-                else
-                    return Redirect(referUrl); // else redirect to referUrl
+                return RedirectUrl(referUrl);
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
             ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
@@ -130,7 +124,7 @@ namespace ClassProject.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.ReferUrl = Request.UrlReferrer == null ? "" : Request.UrlReferrer.ToString();
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(title);
         }
 
@@ -143,10 +137,7 @@ namespace ClassProject.Controllers
             title.Delete(db);
             db.SaveChanges();
 
-            if (string.IsNullOrWhiteSpace(referUrl))
-                return RedirectToAction("Index"); // if referUrl is missing redirect to Index
-            else
-                return Redirect(referUrl); // else redirect to referUrl
+            return RedirectUrl(referUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -169,6 +160,15 @@ namespace ClassProject.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [NonAction]
+        private ActionResult RedirectUrl(string referUrl)
+        {
+            if (string.IsNullOrWhiteSpace(referUrl))
+                return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+            else
+                return Redirect(referUrl); // else redirect to referUrl
         }
     }
 }

@@ -137,6 +137,7 @@
     <Compile Include="Controllers\jobsController.cs" />
     <Compile Include="Controllers\publishersController.cs" />
     <Compile Include="Controllers\pub_infoController.cs" />
+    <Compile Include="Controllers\ReferenceUrl.cs" />
     <Compile Include="Controllers\royschedsController.cs" />
     <Compile Include="Controllers\salesController.cs" />
     <Compile Include="Controllers\storesController.cs" />
