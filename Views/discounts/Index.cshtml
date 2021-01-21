@@ -5,41 +5,148 @@
 }
 
 <h2>Index</h2>
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
+    <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+              
+                <select name="discounttype" class="form-control">
+                    <option></option>
+                    @foreach (var item in ViewBag.discounttypes)
+                    {
+                        <option>@item</option>
+                    }
 
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <select name="storename" class="form-control">
+                    <option></option>
+                    @foreach (var item in ViewBag.stores)
+                    {
+                        <option>@item</option>
+                    }
+                </select>
+            </div> 
+            <div class="form-group col-md-3">
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.discount1) From" value="@ViewBag.discount_from" name="discount_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.discount1) To" value="@ViewBag.discount_to" name="discount_to" />
+            </div>
+            <div class="form-group col-md-3">
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.lowqty) From" value="@ViewBag.lowqty" name="lowqty" />
+            </div>
+            <div class="form-group col-md-3">
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.highqty) To" value="@ViewBag.highqty" name="highqty" />
+            </div>
+        </div>
+
+
+        <div class="form-row ">
+            <div class="form-group col-md-4">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </div>
+</form>
+</div>
+
+<br>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
+<br>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.lowqty)
+            <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+                <input type="text" value="discounttype" hidden name="orderby" />
+                <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
+                <input type="text" value="@ViewBag.storename" hidden name="storename" />
+                <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
+                <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
+                <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
+                <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
+                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.discounttype)">
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.highqty)
+            <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+                <input type="text" value="storename" hidden name="orderby" />
+                <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
+                <input type="text" value="@ViewBag.storename" hidden name="storename" />
+                <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
+                <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
+                <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
+                <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
+                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.store.stor_name)">
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.store.stor_name)
+            <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+                <input type="text" value="discount" hidden name="orderby" />
+                <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
+                <input type="text" value="@ViewBag.storename" hidden name="storename" />
+                <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
+                <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
+                <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
+                <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
+                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.discount1)">
+            </form>
         </th>
-        <th></th>
+        <th>
+            <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+                <input type="text" value="lowqty" hidden name="orderby" />
+                <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
+                <input type="text" value="@ViewBag.storename" hidden name="storename" />
+                <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
+                <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
+                <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
+                <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
+                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.lowqty)">
+            </form>
+        </th>
+        <th>
+            <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+                <input type="text" value="highqty" hidden name="orderby" />
+                <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
+                <input type="text" value="@ViewBag.storename" hidden name="storename" />
+                <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
+                <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
+                <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
+                <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
+                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.highqty)">
+            </form>
+        </th>
+        <th>
+
+        </th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.lowqty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.highqty)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.store.stor_name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
-            @Html.ActionLink("Details", "Details", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
-            @Html.ActionLink("Delete", "Delete", new { discounttype = item.discounttype, stor_id = item.stor_id })
-        </td>
-    </tr>
+<tr>
+    <td>
+       @Html.DisplayFor(modelItem => item.discounttype)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.store.stor_name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.discount1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.lowqty)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.highqty)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
+        @Html.ActionLink("Details", "Details", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
+        @Html.ActionLink("Delete", "Delete", new { discounttype = item.discounttype, stor_id = item.stor_id })
+    </td>
+</tr>
 }
 
 </table>
