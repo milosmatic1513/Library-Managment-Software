@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -37,9 +38,13 @@ namespace ClassProject.Controllers
         }
 
         // GET: titles/Create
-        public ActionResult Create()
+        public ActionResult Create(string pub_id)
         {
-            ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name");
+            if (pub_id != null)
+                ViewBag.pub_id = new SelectList(db.publishers.Where(item => item.pub_id == pub_id), "pub_id", "pub_name");
+            else
+                ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name");
+
             ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id");
             return View();
         }
@@ -119,7 +124,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             title title = db.titles.Find(id);
-            db.titles.Remove(title);
+            title.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -134,8 +139,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifyTitleId(string title_id)
+        public JsonResult VerifyTitleId(string title_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (title_id != null && db.titles.Where(item => item.title_id == title_id).Count() != 0)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

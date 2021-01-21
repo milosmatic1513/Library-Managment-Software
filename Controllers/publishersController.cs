@@ -115,7 +115,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             publisher publisher = db.publishers.Find(id);
-            db.publishers.Remove(publisher);
+            publisher.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -130,8 +130,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifyPublisherId(string pub_id)
+        public JsonResult VerifyPublisherId(string pub_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (pub_id != null && db.publishers.Where(item => item.pub_id == pub_id).Count() != 0)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

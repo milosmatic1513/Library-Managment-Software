@@ -37,10 +37,18 @@ namespace ClassProject.Controllers
         }
 
         // GET: sales/Create
-        public ActionResult Create()
+        public ActionResult Create(string stor_id, string title_id)
         {
-            ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
-            ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
+            if (stor_id != null)
+                ViewBag.stor_id = new SelectList(db.stores.Where(item => item.stor_id == stor_id), "stor_id", "stor_name");
+            else
+                ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
+
+            if (title_id != null)
+                ViewBag.title_id = new SelectList(db.titles.Where(item => item.title_id == title_id), "title_id", "title1");
+            else
+                ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
+
             return View();
         }
 
@@ -119,7 +127,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string stor_id, string ord_num, string title_id)
         {
             sale sale = db.sales.Find(stor_id, ord_num, title_id);
-            db.sales.Remove(sale);
+            sale.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -134,8 +142,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifySaleKeys(string stor_id, string ord_num, string title_id)
+        public JsonResult VerifySaleKeys(string stor_id, string ord_num, string title_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (db.sales.Find(stor_id, ord_num, title_id) != null)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

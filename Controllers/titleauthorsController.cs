@@ -37,9 +37,13 @@ namespace ClassProject.Controllers
         }
 
         // GET: titleauthors/Create
-        public ActionResult Create()
+        public ActionResult Create(string au_id)
         {
-            ViewBag.au_id = new SelectList(db.authors, "au_id", "au_lname");
+            if (au_id != null)
+                ViewBag.au_id = new SelectList(db.authors.Where(item => item.au_id == au_id), "au_id", "au_lname");
+            else
+                ViewBag.au_id = new SelectList(db.authors, "au_id", "au_lname");
+
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
             return View();
         }
@@ -119,7 +123,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string au_id, string title_id)
         {
             titleauthor titleauthor = db.titleauthors.Find(au_id, title_id);
-            db.titleauthors.Remove(titleauthor);
+            titleauthor.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -134,8 +138,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifyTitleAuthorId(string au_id, string title_id)
+        public JsonResult VerifyTitleAuthorId(string au_id, string title_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (db.titleauthors.Where(item => item.au_id == au_id && item.title_id == title_id).Count() != 0)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

@@ -11,6 +11,30 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.discounttype)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.discounttype)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.store.stor_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.store.stor_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.discount1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.discount1)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.lowqty)
         </dt>
 
@@ -25,15 +49,6 @@
         <dd>
             @Html.DisplayFor(model => model.highqty)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.store.stor_name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.store.stor_name)
-        </dd>
-
     </dl>
 </div>
 <p>

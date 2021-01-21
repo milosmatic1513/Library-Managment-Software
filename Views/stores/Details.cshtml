@@ -51,8 +51,108 @@
         </dd>
 
     </dl>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.stor_id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+    <hr />
+
+    <h3>Sales</h3>
+    <p>
+        @Html.ActionLink("Create New", "Create", "sales", new { stor_id = Model.stor_id }, null)
+    </p>
+    @if (Model.sales.Count != 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.sales.First().title.title1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sales.First().ord_date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sales.First().qty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sales.First().payterms)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.sales)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.title.title1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ord_date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.qty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.payterms)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null) |
+                        @Html.ActionLink("Details", "Details", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null) |
+                        @Html.ActionLink("Delete", "Delete", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+    <h3>Discounts</h3>
+    <p>
+        @Html.ActionLink("Create New", "Create", "discounts", new { stor_id = Model.stor_id }, null)
+    </p>
+    @if (Model.discounts.Count != 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.discounts.First().discounttype)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.discounts.First().discount1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.discounts.First().lowqty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.discounts.First().highqty)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.discounts)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.discounttype)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.discount1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lowqty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.highqty)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, null) |
+                        @Html.ActionLink("Details", "Details", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, null) |
+                        @Html.ActionLink("Delete", "Delete", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.stor_id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

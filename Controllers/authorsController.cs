@@ -144,7 +144,7 @@ namespace ClassProject.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             author author = db.authors.Find(id);
-            db.authors.Remove(author);
+            author.Delete(db);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -159,8 +159,11 @@ namespace ClassProject.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public JsonResult VerifyAuthorId(string au_id)
+        public JsonResult VerifyAuthorId(string au_id, string editMode)
         {
+            if (editMode == "edit")
+                return Json(true, JsonRequestBehavior.AllowGet);
+
             if (au_id != null && db.authors.Where(item => item.au_id == au_id).Count() != 0)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);

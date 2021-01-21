@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace ClassProject.Models
@@ -10,29 +11,36 @@ namespace ClassProject.Models
         [Key]
         [Display(Name = "Author Id")]
         [Required]
+        [MaxLength(11, ErrorMessage = "Author Id can't be longer than 11 characters")]
         [RegularExpression(@"^[0-9]{3}-[0-9]{2}-[0-9]{4}", ErrorMessage = "Author Id must match this format 000-00-0000")]
-        [Remote("VerifyAuthorId", "authors", ErrorMessage = "Author Id already exists")]
+        [Remote("VerifyAuthorId", "authors", AdditionalFields = "editMode", ErrorMessage = "Author Id already exists")]
         public string au_id { get; set; }
 
         [Display(Name = "Last Name")]
         [Required]
+        [MaxLength(40, ErrorMessage = "Last Name can't be longer than 40 characters")]
         public string au_lname { get; set; }
         
         [Display(Name = "First Name")]
         [Required]
+        [MaxLength(20, ErrorMessage = "First Name can't be longer than 20 characters")]
         public string au_fname { get; set; }
 
         [Display(Name = "Phone")]
         [Required]
+        [DataType(DataType.PhoneNumber)]
         public string phone { get; set; }
 
         [Display(Name = "Address")]
+        [MaxLength(40, ErrorMessage = "Address can't be longer than 40 characters")]
         public string address { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 2 characters")]
         public string state { get; set; }
 
         [Display(Name = "Zip")]
@@ -43,11 +51,13 @@ namespace ClassProject.Models
     {
         [Display(Name = "Discount Type")]
         [Required]
-        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "stor_id", ErrorMessage = "This Discoutn Type already exists for this Store")]
+        [MaxLength(40, ErrorMessage = "Discount Type can't be longer than 40 characters")]
+        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "stor_id, editMode", ErrorMessage = "This Discount Type already exists for this Store")]
         public string discounttype { get; set; }
 
         [Display(Name = "Store")]
-        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "discounttype", ErrorMessage = "This Store already has this Discount Type")]
+        [Required]
+        [Remote("VerifyDiscountKeys", "discounts", AdditionalFields = "discounttype, editMode", ErrorMessage = "This Store already has this Discount Type")]
         public string stor_id { get; set; }
 
         [Display(Name = "Low Quality")]
@@ -60,6 +70,7 @@ namespace ClassProject.Models
         [Required]
         public decimal discount1 { get; set; }
 
+        [ForeignKey("stor_id")]
         [Display(Name = "Store")]
         public virtual store store { get; set; }
     }
@@ -69,17 +80,20 @@ namespace ClassProject.Models
         [Display(Name = "Employee Id")]
         [Required]
         [RegularExpression(@"^[A-Z][A-Z|-][A-Z][1-9][0-9]{4}[FM]$", ErrorMessage = "Employee Id must match one of these formats AAA[1-9]0000[F or M] or A-A[1-9]0000[F or M]")]
-        [Remote("VerifyEmployeeId", "employees", ErrorMessage = "Employee Id already exists")]
+        [Remote("VerifyEmployeeId", "employees", AdditionalFields = "editMode", ErrorMessage = "Employee Id already exists")]
         public string emp_id { get; set; }
 
-        [Display(Name = "Firstname")]
+        [Display(Name = "First Name")]
         [Required]
+        [MaxLength(20, ErrorMessage = "First Name can't be longer than 20 characters")]
         public string fname { get; set; }
 
         [Display(Name = "Minit")]
+        [MaxLength(1, ErrorMessage = "Minit can't be longer than 1 characters")]
         public string minit { get; set; }
 
         [Display(Name = "Last Name")]
+        [MaxLength(30, ErrorMessage = "Last Name can't be longer than 30 characters")]
         [Required]
         public string lname { get; set; }
 
@@ -90,7 +104,7 @@ namespace ClassProject.Models
         [Display(Name = "Job Level")]
         public Nullable<byte> job_lvl { get; set; }
 
-        [Display(Name = "Publisher Id")]
+        [Display(Name = "Publisher")]
         [Required]
         public string pub_id { get; set; }
 
@@ -113,17 +127,19 @@ namespace ClassProject.Models
         [Required]
         public short job_id { get; set; }
 
-        [Display(Name = "Job Desc")]
+        [Display(Name = "Job Descreption")]
         [Required]
         [DataType(DataType.MultilineText)]
+        [MaxLength(50, ErrorMessage = "Job Description can't be longer than 50 characters")]
         public string job_desc { get; set; }
 
         [Display(Name = "Minimum Level")]
         [Required]
         [Range(10, 250, ErrorMessage = "Minimum level must be an integer between 10 and 250")]
+        [MinLowerThanMax("max_lvl", "Minimum level must be lower than the Maximum level")]
         public byte min_lvl { get; set; }
 
-        [Display(Name = "Max  Level")]
+        [Display(Name = "Maximum Level")]
         [Required]
         [Range(10, 250, ErrorMessage = "Maximum level must be an integer between 10 and 250")]
         [MinLowerThanMax("min_lvl", "Minimum level must be lower than the Maximum level")]
@@ -148,15 +164,25 @@ namespace ClassProject.Models
                     // Using reflection we can get a reference to the other value property
                     var otherPropertyInfo = validationContext.ObjectType.GetProperty(this.otherPropertyName);
                     // Let's check that otherProperty is of type byte as we expect it to be
-                    if (otherPropertyInfo.PropertyType.Equals(new Byte().GetType()))
+                    if (otherPropertyInfo.PropertyType.Equals(new Byte().GetType()) && value != null)
                     {
-                        byte toValidate = (byte)value;
-                        byte referenceProperty = (byte)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+                        int toValidate = Convert.ToInt16((byte)value);
+                        int referenceProperty = Convert.ToInt16((byte)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null));
                         // if the max level is lower than the min level, then the validationResult will be set to false and return
                         // a properly formatted error message
-                        if (toValidate.CompareTo(referenceProperty) < 1)
+                        if (otherPropertyName.Equals("min_lvl"))
                         {
-                            validationResult = new ValidationResult(ErrorMessageString);
+                            if (toValidate <= referenceProperty)  // max_lvl <= min_lvl
+                            {
+                                validationResult = new ValidationResult(ErrorMessageString);
+                            }
+                        }
+                        else if (otherPropertyName.Equals("max_lvl"))
+                        {
+                            if (toValidate >= referenceProperty) // min_lvl >= max_lvl
+                            {
+                                validationResult = new ValidationResult(ErrorMessageString);
+                            }
                         }
                     }
                     else
@@ -198,38 +224,142 @@ namespace ClassProject.Models
         [Display(Name = "Publisher Id")]
         [Required]
         [RegularExpression(@"1389|0736|0877|1622|1756|99[0-9][0-9]", ErrorMessage = "Publisher Id must match this format 99[0-9][0-9] or be one of these 1389, 0736, 0877, 1622, 1756")]
-        [Remote("VerifyPublisherId", "publishers", ErrorMessage = "Publisher Id already exists")]
+        [Remote("VerifyPublisherId", "publishers", AdditionalFields = "editMode", ErrorMessage = "Publisher Id already exists")]
         public string pub_id { get; set; }
 
         [Display(Name = "Publisher Name")]
+        [Required]
+        [MaxLength(40, ErrorMessage = "Publisher Name can't be longer than 40 characters")]
         public string pub_name { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 2 characters")]
         public string state { get; set; }
 
         [Display(Name = "Country")]
+        [MaxLength(30, ErrorMessage = "Country can't be longer than 30 characters")]
         public string country { get; set; }
     }
     public class RoyschedMetadata
     {
-        [Display(Name = "Title Id")]
+        [Display(Name = "Title")]
         [Required]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "lorange, hirange, editMode", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public string title_id { get; set; }
 
         [Display(Name = "Low Range")]
+        [Required]
+        [NonNegative("Low Range must be greater than 0")]
+        [MinLowerThanMax("hirange", "Low Range must lower than High Range")]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "title_id, hirange, editMode", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public Nullable<int> lorange { get; set; }
 
         [Display(Name = "High Range")]
+        [Required]
+        [MinLowerThanMax("lorange", "Low Range must lower than High Range")]
+        [Remote("VerifyRoychedKeys", "royscheds", AdditionalFields = "lorange, title_id, editMode", ErrorMessage = "Royched with for this Title with these Ranges already exists")]
         public Nullable<int> hirange { get; set; }
 
         [Display(Name = "Royalty")]
         public Nullable<int> royalty { get; set; }
 
+        [ForeignKey("title_id")]
         [Display(Name = "Title")]
         public virtual title title { get; set; }
+
+
+        [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+        public class MinLowerThanMax : ValidationAttribute
+        {
+            string otherPropertyName;
+
+            public MinLowerThanMax(string otherPropertyName, string errorMessage) : base(errorMessage)
+            {
+                this.otherPropertyName = otherPropertyName;
+            }
+
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                ValidationResult validationResult = ValidationResult.Success;
+                try
+                {
+                    // Using reflection we can get a reference to the other value property
+                    var otherPropertyInfo = validationContext.ObjectType.GetProperty(this.otherPropertyName);
+                    // Let's check that otherProperty is of type byte as we expect it to be
+                    if (value != null)
+                    {
+                        Nullable<int> toValidate = (Nullable<int>)value;
+                        Nullable<int> referenceProperty = (Nullable<int>)otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+                        // if the max level is lower than the min level, then the validationResult will be set to false and return
+                        // a properly formatted error message
+                        if (otherPropertyName.Equals("lorange"))
+                        {
+                            if (toValidate <= referenceProperty)  // hirange <= lorange
+                            {
+                                validationResult = new ValidationResult(ErrorMessageString);
+                            }
+                        }
+                        else if (otherPropertyName.Equals("hirange"))
+                        {
+                            if (toValidate >= referenceProperty)  // lorange >= hirange
+                            {
+                                validationResult = new ValidationResult(ErrorMessageString);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        validationResult = new ValidationResult("An error occurred while validating the property");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Do stuff, i.e. log the exception
+                    // Let it go through the upper levels, something bad happened
+                    throw ex;
+                }
+                return validationResult;
+            }
+        }
+
+        [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+        public class NonNegative : ValidationAttribute
+        {
+            public NonNegative(string errorMessage) : base(errorMessage)
+            {
+            }
+
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                ValidationResult validationResult = ValidationResult.Success;
+                try
+                {
+                    if (value != null)
+                    {
+                        Nullable<int> toValidate = (Nullable<int>)value;
+                        if (toValidate < 0)
+                        {
+                            validationResult = new ValidationResult(ErrorMessageString);
+                        }
+                    }
+                    else
+                    {
+                        validationResult = new ValidationResult("An error occurred while validating the property");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Do stuff, i.e. log the exception
+                    // Let it go through the upper levels, something bad happened
+                    throw ex;
+                }
+                return validationResult;
+            }
+        }
     }
     public class SaleMetadata
     {
@@ -237,14 +367,15 @@ namespace ClassProject.Models
         [Column(Order = 0)]
         [Display(Name = "Store")]
         [Required]
-        [Remote("VerifySaleKeys", "sales", AdditionalFields = "ord_num, title_id", ErrorMessage = "This Store has already registered this Order Number for this Title")]
+        [Remote("VerifySaleKeys", "sales", AdditionalFields = "ord_num, title_id, editMode", ErrorMessage = "This Store has already registered this Order Number for this Title")]
         public string stor_id { get; set; }
 
         [Key]
         [Column(Order = 1)]
         [Display(Name = "Order Number")]
         [Required]
-        [Remote("VerifySaleKeys", "sales", AdditionalFields = "stor_id, title_id", ErrorMessage = "This Order Number has already been registered by this Store for this Title")]
+        [MaxLength(20, ErrorMessage = "Order Number can't be longer than 20 characters")]
+        [Remote("VerifySaleKeys", "sales", AdditionalFields = "stor_id, title_id, editMode", ErrorMessage = "This Order Number has already been registered by this Store for this Title")]
         public string ord_num { get; set; }
 
         [Display(Name = "Order Date")]
@@ -259,12 +390,13 @@ namespace ClassProject.Models
 
         [Display(Name = "Pay Terms")]
         [Required]
+        [MaxLength(12, ErrorMessage = "Pay Terms can't be longer than 12 characters")]
         public string payterms { get; set; }
 
         [Key]
         [Column(Order = 2)]
         [Display(Name = "Title")]
-        [Remote("VerifySaleKeys", "sales", AdditionalFields = "ord_num, stor_id", ErrorMessage = "This Title has already been registered by this Store with this Order Number")]
+        [Remote("VerifySaleKeys", "sales", AdditionalFields = "ord_num, stor_id, editMode", ErrorMessage = "This Title has already been registered by this Store with this Order Number")]
         [Required]
         public string title_id { get; set; }
 
@@ -279,19 +411,24 @@ namespace ClassProject.Models
         [Display(Name = "Store Id")]
         [Required]
         [StringLength(4, MinimumLength = 4, ErrorMessage = "Store Id must have length 4")]
-        [Remote("VerifyStoreId", "stores", ErrorMessage = "Store Id already exists")]
+        [Remote("VerifyStoreId", "stores", AdditionalFields = "editMode", ErrorMessage = "Store Id already exists")]
         public string stor_id { get; set; }
 
         [Display(Name = "Store Name")]
+        [Required]
+        [MaxLength(40, ErrorMessage = "Store Name can't be longer than 40 characters")]
         public string stor_name { get; set; }
 
         [Display(Name = "Store address")]
+        [MaxLength(40, ErrorMessage = "Store Address can't be longer than 40 characters")]
         public string stor_address { get; set; }
 
         [Display(Name = "City")]
+        [MaxLength(20, ErrorMessage = "City can't be longer than 20 characters")]
         public string city { get; set; }
 
         [Display(Name = "State")]
+        [MaxLength(2, ErrorMessage = "State can't be longer than 4 characters")]
         public string state { get; set; }
 
         [Display(Name = "Zip")]
@@ -301,20 +438,23 @@ namespace ClassProject.Models
     public class TitleMetadata 
     {
         [Key]
-        [Display(Name = "Title id")]
+        [Display(Name = "Title Id")]
         [Required]
-        [Remote("VerifyTitleId", "titles", ErrorMessage = "Title Id already exists")]
+        [MaxLength(6, ErrorMessage = "Title Id can't be longer than 6 characters")]
+        [Remote("VerifyTitleId", "titles", AdditionalFields = "editMode", ErrorMessage = "Title Id already exists")]
         public string title_id { get; set; }
 
         [Display(Name = "Title")]
         [Required]
+        [MaxLength(80, ErrorMessage = "Title can't be longer than 80 characters")]
         public string title1 { get; set; }
 
         [Display(Name = "Type")]
         [Required]
+        [MaxLength(12, ErrorMessage = "Type can't be longer than 12 characters")]
         public string type { get; set; }
         
-        [Display(Name = "Publisher id")]
+        [Display(Name = "Publisher")]
         public string pub_id { get; set; }
 
         [Display(Name = "Price")]
@@ -331,6 +471,7 @@ namespace ClassProject.Models
 
         [Display(Name = "Notes")]
         [DataType(DataType.MultilineText)]
+        [MaxLength(200, ErrorMessage = "Notes can't be longer than 200 characters")]
         public string notes { get; set; }
 
         [Display(Name = "Date Published")]
@@ -348,14 +489,14 @@ namespace ClassProject.Models
         [Column(Order = 0)]
         [Display(Name = "Author")]
         [Required]
-        [Remote("VerifyTitleAuthorId", "titleauthors", AdditionalFields = nameof(title_id), ErrorMessage = "This Author has already registered this Title")]
+        [Remote("VerifyTitleAuthorId", "titleauthors", AdditionalFields = "title_id, editMode", ErrorMessage = "This Author has already registered this Title")]
         public string au_id { get; set; }
 
         [Key]
         [Column(Order = 1)]
         [Display(Name = "Title")]
         [Required]
-        [Remote("VerifyTitleAuthorId", "titleauthors", AdditionalFields = nameof(au_id), ErrorMessage = "This Title is already registered by this Author")]
+        [Remote("VerifyTitleAuthorId", "titleauthors", AdditionalFields = "title_id, editMode", ErrorMessage = "This Title is already registered by this Author")]
         public string title_id { get; set; }
 
         [Display(Name = "Author Order")]

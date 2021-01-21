@@ -124,10 +124,10 @@
   <EntityType Name="discount">
     <Key>
       <PropertyRef Name="discounttype" />
-      <PropertyRef Name="discount1" />
+      <PropertyRef Name="stor_id" />
     </Key>
     <Property Name="discounttype" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="stor_id" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="stor_id" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="lowqty" Type="Int16" />
     <Property Name="highqty" Type="Int16" />
     <Property Name="discount1" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
@@ -136,10 +136,12 @@
   <EntityType Name="roysched">
     <Key>
       <PropertyRef Name="title_id" />
+      <PropertyRef Name="lorange" />
+      <PropertyRef Name="hirange" />
     </Key>
     <Property Name="title_id" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="lorange" Type="Int32" />
-    <Property Name="hirange" Type="Int32" />
+    <Property Name="lorange" Type="Int32" Nullable="false" />
+    <Property Name="hirange" Type="Int32" Nullable="false" />
     <Property Name="royalty" Type="Int32" />
     <NavigationProperty Name="title" Relationship="Self.FK__roysched__title___398D8EEE" FromRole="roysched" ToRole="titles" />
   </EntityType>
@@ -228,7 +230,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__discounts__stor___3B75D760">
-    <End Role="stores" Type="Self.store" Multiplicity="0..1" />
+    <End Role="stores" Type="Self.store" Multiplicity="1" />
     <End Role="discounts" Type="Self.discount" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="stores">
@@ -253,7 +255,7 @@
   </Association>
   <Association Name="FK__roysched__title___398D8EEE">
     <End Role="titles" Type="Self.title" Multiplicity="1" />
-    <End Role="roysched" Type="Self.roysched" Multiplicity="0..1" />
+    <End Role="roysched" Type="Self.roysched" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="titles">
         <PropertyRef Name="title_id" />

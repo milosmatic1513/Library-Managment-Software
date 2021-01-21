@@ -16,9 +16,17 @@
 
         <dd>
             @{
-                var imageBase64 = Convert.ToBase64String(Model.logo);
-                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                <img src="@imageSrc" style="max-width: 250px; height: auto;"/>
+                string imageSrc;
+                if (Model.logo == null)
+                {
+                    imageSrc = "";
+                }
+                else
+                {
+                    var imageBase64 = Convert.ToBase64String(Model.logo);
+                    imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                }
+                <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image" />
             }
         </dd>
 

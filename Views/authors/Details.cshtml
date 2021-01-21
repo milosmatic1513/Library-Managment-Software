@@ -73,10 +73,55 @@
         <dd>
             @Html.DisplayFor(model => model.contract)
         </dd>
-
     </dl>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.au_id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+    <hr />
+
+    <h3>Author's Titles</h3>
+    <p>
+        @Html.ActionLink("Create New", "Create", "titleauthors", new { au_id = Model.au_id }, null)
+    </p>
+    @if (Model.titleauthors.Count != 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.titleauthors.First().au_ord)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titleauthors.First().royaltyper)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.titleauthors.First().title.title1)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.titleauthors)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.au_ord)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.royaltyper)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.title.title1)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, null) |
+                        @Html.ActionLink("Details", "Details", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, null) |
+                        @Html.ActionLink("Delete", "Delete", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.au_id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

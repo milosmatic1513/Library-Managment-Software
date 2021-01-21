@@ -38,9 +38,6 @@
         <th>
             @Html.DisplayNameFor(model => model.publisher.pub_name)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.roysched.title_id)
-        </th>
         <th></th>
     </tr>
 
@@ -72,9 +69,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.publisher.pub_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.roysched.title_id)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.title_id }) |

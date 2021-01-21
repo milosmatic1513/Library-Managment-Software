@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>roysched</h4>
         <hr />
@@ -47,6 +47,11 @@
             </div>
         </div>
     </div>
+
+    <input type="hidden" value="@Model.title_id" name="title_idCurrent" />
+    <input type="hidden" value="@Model.lorange" name="lorangeCurrent" />
+    <input type="hidden" value="@Model.hirange" name="hirangeCurrent" />
+    <input type="hidden" value="edit" name="editMode" />
 }
 
 <div>
