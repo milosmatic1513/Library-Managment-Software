@@ -78,11 +78,13 @@
         @if (Model.pub_info == null)
         {
             @Html.ActionLink("Create Info", "Create", "pub_info", new { id = Model.pub_id }, null)
-        } |
+        }
         @if (Model.pub_info != null)
         {
             @Html.ActionLink("Edit Info", "Edit", "pub_info", new { id = Model.pub_id }, null)
-        } |
+        } 
+
+        |
 
         @Html.ActionLink("Back to List", "Index")
     </p>

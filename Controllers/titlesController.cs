@@ -34,6 +34,8 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = Request.UrlReferrer == null ? "" : Request.UrlReferrer.ToString();
             return View(title);
         }
 
@@ -46,6 +48,8 @@ namespace ClassProject.Controllers
                 ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name");
 
             ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id");
+
+            ViewBag.ReferUrl = Request.UrlReferrer == null ? "" : Request.UrlReferrer.ToString();
             return View();
         }
 
@@ -54,13 +58,17 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "title_id,title1,type,pub_id,price,advance,royalty,ytd_sales,notes,pubdate")] title title)
+        public ActionResult Create([Bind(Include = "title_id,title1,type,pub_id,price,advance,royalty,ytd_sales,notes,pubdate")] title title, string referUrl)
         {
             if (ModelState.IsValid)
             {
                 db.titles.Add(title);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (string.IsNullOrWhiteSpace(referUrl))
+                    return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+                else
+                    return Redirect(referUrl); // else redirect to referUrl
             }
 
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
@@ -82,6 +90,8 @@ namespace ClassProject.Controllers
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
             ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
+
+            ViewBag.ReferUrl = Request.UrlReferrer == null ? "" : Request.UrlReferrer.ToString();
             return View(title);
         }
 
@@ -90,13 +100,17 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "title_id,title1,type,pub_id,price,advance,royalty,ytd_sales,notes,pubdate")] title title)
+        public ActionResult Edit([Bind(Include = "title_id,title1,type,pub_id,price,advance,royalty,ytd_sales,notes,pubdate")] title title, string referUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(title).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (string.IsNullOrWhiteSpace(referUrl))
+                    return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+                else
+                    return Redirect(referUrl); // else redirect to referUrl
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", title.pub_id);
             ViewBag.title_id = new SelectList(db.royscheds, "title_id", "title_id", title.title_id);
@@ -115,18 +129,24 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = Request.UrlReferrer == null ? "" : Request.UrlReferrer.ToString();
             return View(title);
         }
 
         // POST: titles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string id, string referUrl)
         {
             title title = db.titles.Find(id);
             title.Delete(db);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            if (string.IsNullOrWhiteSpace(referUrl))
+                return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+            else
+                return Redirect(referUrl); // else redirect to referUrl
         }
 
         protected override void Dispose(bool disposing)
