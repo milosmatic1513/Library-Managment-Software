@@ -16,10 +16,79 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: discounts
-        public ActionResult Index()
+        public ActionResult Index(string discounttype,string storename,string discount_from,string discount_to,string lowqty,string highqty,string orderby)
         {
-            var discounts = db.discounts.Include(d => d.store);
-            return View(discounts.ToList());
+           
+            //set a list of available discounts
+            var discounts = db.discounts.Include(d => d.store).ToList();
+            //set a list of all available  stores
+            var stores = discounts.Select(s => s.store).Distinct();
+            //set a list of all available discount types 
+            var discounttypes = discounts.Select(s => s.discounttype).Distinct();
+
+            //add The list to the Viewbag
+            ViewBag.stores = stores;
+            ViewBag.discounttypes = discounttypes;
+
+            //Apply Filters 	
+            if (!String.IsNullOrEmpty(discounttype))
+            {
+                discounts = discounts.Where(s => s.discounttype.Contains(discounttype)).ToList();
+                ViewBag.discounttype = discounttype;
+            }
+            if (!String.IsNullOrEmpty(storename))
+            {
+                discounts = discounts.Where(s => s.store.stor_name.Contains(storename)).ToList();
+                ViewBag.storename = storename;
+            }
+            if (!String.IsNullOrEmpty(discount_from) || !String.IsNullOrEmpty(discount_to))
+            {
+                if (!String.IsNullOrEmpty(discount_from))
+                {
+                    discounts = discounts.Where(s => s.discount1 >= Int32.Parse(discount_from)).ToList();
+                }
+                else if (!String.IsNullOrEmpty(discount_to))
+                {
+                    discounts = discounts.Where(s => s.discount1 <= Int32.Parse(discount_to)).ToList();
+                }
+              
+                ViewBag.discount_from = discount_from;
+                ViewBag.discount_to = discount_to;
+            }
+            if (!String.IsNullOrEmpty(lowqty))
+            {
+                discounts = discounts.Where(s => s.lowqty>=Int32.Parse(lowqty)).ToList();
+                ViewBag.lowqty = lowqty;
+            }
+            if (!String.IsNullOrEmpty(highqty))
+            {
+                discounts = discounts.Where(s => s.highqty <= Int32.Parse(highqty)).ToList();
+                ViewBag.highqty = highqty;
+            }
+      
+            //Ordering 
+            if (orderby == "discounttype")
+            {
+                discounts = discounts.OrderBy(s => s.discounttype).ToList();
+            }
+            else if(orderby == "storename")
+            {
+                discounts = discounts.OrderBy(s => s.store.stor_name).ToList();
+            }  
+            else if (orderby == "discount")
+            {
+                discounts = discounts.OrderBy(s => s.discount1).ToList();
+            }
+            else if (orderby == "highqty")
+            {
+                discounts = discounts.OrderBy(s => s.highqty).ToList();
+            }
+            else if (orderby == "lowqty")
+            {
+                discounts = discounts.OrderBy(s => s.lowqty).ToList();
+            }
+           
+            return View(discounts);
         }
 
         // GET: discounts/Details/5
