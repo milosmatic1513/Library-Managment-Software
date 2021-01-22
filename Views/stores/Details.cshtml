@@ -52,7 +52,7 @@
 
     </dl>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.stor_id }) |
+        @Html.ActionLink("Edit", "Edit", new { id = Model.stor_id }, new { @class = "btn btn-primary" })
         @Html.Partial("../Shared/BackToList")
     </p>
 
@@ -62,7 +62,7 @@
 
     <h3>Sales</h3>
     <p>
-        @Html.ActionLink("Create New", "Create", "sales", new { stor_id = Model.stor_id }, null)
+        @Html.ActionLink("Create New", "Create", "sales", new { stor_id = Model.stor_id }, new { @class = "btn btn-primary" })
     </p>
     @if (Model.sales.Count != 0)
     {
@@ -99,9 +99,9 @@
                         @Html.DisplayFor(modelItem => item.payterms)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null) |
-                        @Html.ActionLink("Details", "Details", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null) |
-                        @Html.ActionLink("Delete", "Delete", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null)
+                        @Html.ActionLink("Edit", "Edit", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }
@@ -110,7 +110,7 @@
 
     <h3>Discounts</h3>
     <p>
-        @Html.ActionLink("Create New", "Create", "discounts", new { stor_id = Model.stor_id }, null)
+        @Html.ActionLink("Create New", "Create", "discounts", new { stor_id = Model.stor_id }, new { @class = "btn btn-primary" })
     </p>
     @if (Model.discounts.Count != 0)
     {
@@ -147,9 +147,9 @@
                         @Html.DisplayFor(modelItem => item.highqty)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, null) |
-                        @Html.ActionLink("Details", "Details", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, null) |
-                        @Html.ActionLink("Delete", "Delete", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, null)
+                        @Html.ActionLink("Edit", "Edit", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", "discounts", new { discounttype = item.discounttype, stor_id = item.stor_id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }

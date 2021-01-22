@@ -78,7 +78,7 @@
     <input type="hidden" value="@ViewBag.ReferUrl" name="referUrl" />
 
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.au_id }) |
+        @Html.ActionLink("Edit", "Edit", new { id = Model.au_id }, new { @class = "btn btn-primary" } )
         @Html.Partial("../Shared/BackToList")
     </p>
 
@@ -117,9 +117,9 @@
                         @Html.DisplayFor(modelItem => item.title.title1)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, null) |
-                        @Html.ActionLink("Details", "Details", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, null) |
-                        @Html.ActionLink("Delete", "Delete", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, null)
+                        @Html.ActionLink("Edit", "Edit", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", "titleauthors", new { au_id = item.au_id, title_id = item.title_id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }

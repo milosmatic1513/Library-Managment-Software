@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -23,23 +23,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.job_desc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.min_lvl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.max_lvl)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.job_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.job_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.job_id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.job_desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.min_lvl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.max_lvl)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.job_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Details", "Details", new { id = item.job_id }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.job_id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 
 </table>

@@ -84,7 +84,7 @@
     </dl>
 
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.title_id }) |
+        @Html.ActionLink("Edit", "Edit", new { id = Model.title_id }, new { @class = "btn btn-primary" })
         @Html.Partial("../Shared/BackToList")
     </p>
 
@@ -94,7 +94,7 @@
 
     <h3>Sales</h3>
     <p>
-        @Html.ActionLink("Create New", "Create", "sales", new { title_id = Model.title_id }, null)
+        @Html.ActionLink("Create New", "Create", "sales", new { title_id = Model.title_id }, new { @class = "btn btn-primary" })
     </p>
     @if (Model.sales.Count != 0)
     {
@@ -131,9 +131,9 @@
                         @Html.DisplayFor(modelItem => item.store.stor_name)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null) |
-                        @Html.ActionLink("Details", "Details", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null) |
-                        @Html.ActionLink("Delete", "Delete", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, null)
+                        @Html.ActionLink("Edit", "Edit", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", "sales", new { stor_id = item.stor_id, ord_num = item.ord_num, title_id = item.title_id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }
@@ -143,7 +143,7 @@
 
     <h3>Royscheds</h3>
     <p>
-        @Html.ActionLink("Create New", "Create", "royscheds", new { title_id = Model.title_id }, null)
+        @Html.ActionLink("Create New", "Create", "royscheds", new { title_id = Model.title_id }, new { @class = "btn btn-primary" })
     </p>
     @if (Model.roysched.Count != 0)
     {
@@ -174,9 +174,9 @@
                         @Html.DisplayFor(modelItem => item.royalty)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, null) |
-                        @Html.ActionLink("Details", "Details", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, null) |
-                        @Html.ActionLink("Delete", "Delete", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, null)
+                        @Html.ActionLink("Edit", "Edit", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", "royscheds", new { title_id = item.title_id, lorange = item.lorange, hirange = item.hirange }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }
