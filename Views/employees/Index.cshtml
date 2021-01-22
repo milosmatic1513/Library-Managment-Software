@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<br>
 <div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
     <form class="form" asp-controller="Employee" asp-action="Index" method="get">
         <div class="form-row">
@@ -11,24 +11,73 @@
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.lname)" value="@ViewBag.lastname" name="lastname" />
             </div>
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.fname)" value="@ViewBag.minit" name="firstname" />
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.fname)" value="@ViewBag.firstname" name="firstname" />
             </div>
             <div class="form-group col-md-3">
 
                 <select name="minit" class="form-control">
+                    <option value="">-- All --</option>
                     @foreach (var item in ViewBag.minitList)
                     {
-                        <option>@item</option>
+                        if (item == ViewBag.minit)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
                     }
 
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="" value="" name="Address" />
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.job_lvl)" value="@ViewBag.job_lvl" name="job_lvl" />
+            </div>
+
+        </div>
+        <div class="form-row ">
+            <div class="form-group col-md-3">
+                <input class="form-control" type="date" placeholder="@Html.DisplayNameFor(model => model.hire_date)" value="@ViewBag.hire_date" name="hire_date" />
+            </div>
+            <div class="form-group col-md-3">
+                <select name="job_desc" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.joblist)
+                    {
+                        if (item == ViewBag.job_desc)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <select name="pub_name" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.pub_names)
+                    {
+                        if (item == ViewBag.pub_name)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+
+                </select>
             </div>
         </div>
-
-
         <div class="form-row ">
             <div class="form-group col-md-4">
                 <input type="submit" value="Search" class="btn btn-primary">
@@ -37,32 +86,193 @@
     </form>
 </div>
 
+<br>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
+<br>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.fname)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                <input type="text" value="firstname" hidden name="orderby" />
+                <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                <input type="text" value="@ViewBag.minit" hidden name="minit" />
+                <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
+                <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
+                <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+                
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.fname) ">
+
+                    @if (ViewBag.orderby == "firstname")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.minit)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                <input type="text" value="minit" hidden name="orderby" />
+                <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                <input type="text" value="@ViewBag.minit" hidden name="minit" />
+                <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
+                <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
+                <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.minit) ">
+
+                    @if (ViewBag.orderby == "minit")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.lname)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                <input type="text" value="lastname" hidden name="orderby" />
+                <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                <input type="text" value="@ViewBag.minit" hidden name="minit" />
+                <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
+                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
+                <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
+                <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.lname) ">
+
+                    @if (ViewBag.orderby == "lastname")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.job_lvl)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                <input type="text" value="job_lvl" hidden name="orderby" />
+                <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                <input type="text" value="@ViewBag.minit" hidden name="minit" />
+                <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
+                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
+                <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
+                <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.job_lvl) ">
+
+                    @if (ViewBag.orderby == "job_lvl")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.hire_date)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                <input type="text" value="hire_date" hidden name="orderby" />
+                <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                <input type="text" value="@ViewBag.minit" hidden name="minit" />
+                <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
+                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
+                <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
+                <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.hire_date) ">
+
+                    @if (ViewBag.orderby == "hire_date")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.job.job_desc)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                <input type="text" value="job_desc" hidden name="orderby" />
+                <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                <input type="text" value="@ViewBag.minit" hidden name="minit" />
+                <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
+                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
+                <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
+                <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.job.job_desc) ">
+
+                    @if (ViewBag.orderby == "job_desc")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.publisher.pub_name)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                <input type="text" value="pub_name" hidden name="orderby" />
+                <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                <input type="text" value="@ViewBag.minit" hidden name="minit" />
+                <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
+                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
+                <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
+                <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.publisher.pub_name) ">
+
+                    @if (ViewBag.orderby == "pub_name")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th></th>
     </tr>
@@ -92,9 +302,9 @@
                 @Html.DisplayFor(modelItem => item.publisher.pub_name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.emp_id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.emp_id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.emp_id })
+                @Html.ActionLink("Edit", "Edit", new { id = item.emp_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Details", "Details", new { id = item.emp_id }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.emp_id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }

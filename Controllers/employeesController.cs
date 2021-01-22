@@ -15,27 +15,94 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: employees
-        public ActionResult Index(String firstname,String minit, String lastname)
+        public ActionResult Index(String firstname,String minit, String lastname,String job_lvl,String hire_date,String job_desc,String pub_name ,String orderby)
         {
             List<employee> employees = db.employees.Include(e => e.job).Include(e => e.publisher).ToList();
-            //Add Selections to Viewbag	
+         
+            //set a list of available minit
             var minitList = employees.Select(s => s.minit).Distinct();
+            //set a list of available job Descriptions
+            var joblist = employees.Select(s => s.job.job_desc).Distinct();
+            //set a list of available job Descriptions
+            var pub_names = employees.Select(s => s.publisher.pub_name).Distinct();
 
+            //Add Selections to Viewbag	
             ViewBag.minitList = minitList;
+            ViewBag.joblist = joblist;
+            ViewBag.pub_names = pub_names;
+
+            //add orderby value to viebag
+            ViewBag.orderby = orderby;
 
             //Apply Filters 	
             if (!String.IsNullOrEmpty(firstname))
             {
                 employees = employees.Where(s => s.fname.Contains(firstname)).ToList();
+                ViewBag.firstname = firstname;
             }
             if (!String.IsNullOrEmpty(minit))
             {
                 employees = employees.Where(s => s.minit.Contains(minit)).ToList();
+                ViewBag.minit = minit;
+
             }
             if (!String.IsNullOrEmpty(lastname))
             {
                 employees = employees.Where(s => s.lname.Contains(lastname)).ToList();
+                ViewBag.lastname = lastname;
             }
+            if (!String.IsNullOrEmpty(job_lvl))
+            {
+                employees = employees.Where(s => s.job_lvl == Int32.Parse(job_lvl)).ToList();
+                ViewBag.job_lvl = job_lvl;
+            }
+            if (!String.IsNullOrEmpty(hire_date))
+            {
+                employees = employees.Where(s => s.hire_date.ToString().Contains(hire_date)).ToList();
+                ViewBag.hire_date = hire_date;
+            }
+            if (!String.IsNullOrEmpty(job_desc))
+            {
+                employees = employees.Where(s => s.job.job_desc.Contains(job_desc)).ToList();
+                ViewBag.job_desc = job_desc;
+            }
+            if (!String.IsNullOrEmpty(pub_name))
+            {
+                employees = employees.Where(s => s.publisher.pub_name.Contains(pub_name)).ToList();
+                ViewBag.pub_name = pub_name;
+            }
+
+
+            //Ordering 
+            if (orderby == "firstname")
+            {
+                employees = employees.OrderBy(s => s.fname).ToList();
+            }
+            else if (orderby == "lastname")
+            {
+                employees = employees.OrderBy(s => s.lname).ToList();
+            }
+            else if (orderby == "minit")
+            {
+                employees = employees.OrderBy(s => s.minit).ToList();
+            }
+            else if (orderby == "job_lvl")
+            {
+                employees = employees.OrderBy(s => s.job_lvl).ToList();
+            }
+            else if (orderby == "hire_date")
+            {
+                employees = employees.OrderBy(s => s.hire_date).ToList();
+            }
+            else if (orderby == "job_desc")
+            {
+                employees = employees.OrderBy(s => s.job.job_desc).ToList();
+            }
+            else if (orderby == "pub_name")
+            {
+                employees = employees.OrderBy(s => s.publisher.pub_name).ToList();
+            }
+
             return View(employees.ToList());
         }
 
