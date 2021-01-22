@@ -46,7 +46,7 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { title_id = Model.title_id, lorange = Model.lorange, hirange = Model.hirange }) |
+    @Html.ActionLink("Edit", "Edit", new { title_id = Model.title_id, lorange = Model.lorange, hirange = Model.hirange }, new { @class = "btn btn-primary" })
     @Html.Partial("../Shared/BackToList")
 </p>
 

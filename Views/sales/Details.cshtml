@@ -54,7 +54,7 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { stor_id = Model.stor_id, ord_num = Model.ord_num, title_id = Model.title_id }) |
+    @Html.ActionLink("Edit", "Edit", new { stor_id = Model.stor_id, ord_num = Model.ord_num, title_id = Model.title_id }, new { @class = "btn btn-primary" })
     @Html.Partial("../Shared/BackToList")
 </p>
 

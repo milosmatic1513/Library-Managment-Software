@@ -73,19 +73,16 @@
     </dl>
 
     <p>
-        @Html.ActionLink("Edit Publisher", "Edit", new { id = Model.pub_id }) |
+        @Html.ActionLink("Edit Publisher", "Edit", new { id = Model.pub_id }, new { @class = "btn btn-primary" })
 
         @if (Model.pub_info == null)
         {
-            @Html.ActionLink("Create Info", "Create", "pub_info", new { id = Model.pub_id }, null)
+            @Html.ActionLink("Create Info", "Create", "pub_info", new { id = Model.pub_id }, new { @class = "btn btn-primary" })
         }
         @if (Model.pub_info != null)
         {
-            @Html.ActionLink("Edit Info", "Edit", "pub_info", new { id = Model.pub_id }, null)
+            @Html.ActionLink("Edit Info", "Edit", "pub_info", new { id = Model.pub_id }, new { @class = "btn btn-warning" })
         }
-
-        |
-
         @Html.Partial("../Shared/BackToList")
     </p>
 
@@ -95,7 +92,7 @@
 
     <h3>Titles</h3>
     <p>
-        @Html.ActionLink("Create New", "Create", "titles", new { pub_id = Model.pub_id }, null)
+        @Html.ActionLink("Create New", "Create", "titles", new { pub_id = Model.pub_id }, new { @class = "btn btn-primary" })
     </p>
     @if (Model.titles.Count != 0)
     {
@@ -150,9 +147,9 @@
                         @Html.DisplayFor(modelItem => item.pubdate)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "titles", new { id = item.title_id }, null) |
-                        @Html.ActionLink("Details", "Details", "titles", new { id = item.title_id }, null) |
-                        @Html.ActionLink("Delete", "Delete", "titles", new { id = item.title_id }, null)
+                        @Html.ActionLink("Edit", "Edit", "titles", new { id = item.title_id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", "titles", new { id = item.title_id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", "titles", new { id = item.title_id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }
@@ -162,7 +159,7 @@
 
     <h3>Employees</h3>
     <p>
-        @Html.ActionLink("Create New", "Create", "employees", new { pub_id = Model.pub_id }, null)
+        @Html.ActionLink("Create New", "Create", "employees", new { pub_id = Model.pub_id }, new { @class = "btn btn-primary" })
     </p>
     @if (Model.employees.Count != 0)
     {
@@ -211,9 +208,9 @@
                         @Html.DisplayFor(modelItem => item.job.job_desc)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "employees", new { id = item.emp_id }, null) |
-                        @Html.ActionLink("Details", "Details", "employees", new { id = item.emp_id }, null) |
-                        @Html.ActionLink("Delete", "Delete", "employees", new { id = item.emp_id }, null)
+                        @Html.ActionLink("Edit", "Edit", "employees", new { id = item.emp_id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", "employees", new { id = item.emp_id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Delete", "Delete", "employees", new { id = item.emp_id }, new { @class = "btn btn-danger" })
                     </td>
                 </tr>
             }
