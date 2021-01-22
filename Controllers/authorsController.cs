@@ -19,7 +19,7 @@ namespace ClassProject.Controllers
         public ActionResult Index(String firstname, String lastname, String phone, String address, String city, String state, String zip,String orderby,String order)
         {
             List<author> authors = db.authors.ToList();
-        
+
             //find all distinct states
             var states = authors.Select(s => s.state).Distinct();
             ViewBag.states = states;

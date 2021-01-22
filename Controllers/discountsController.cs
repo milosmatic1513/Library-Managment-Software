@@ -17,7 +17,6 @@ namespace ClassProject.Controllers
         // GET: discounts
         public ActionResult Index(string discounttype,string storename,string discount_from,string discount_to,string lowqty,string highqty,string orderby)
         {
-           
             //set a list of available discounts
             var discounts = db.discounts.Include(d => d.store).ToList();
             //set a list of all available  stores

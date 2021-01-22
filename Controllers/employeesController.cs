@@ -18,7 +18,6 @@ namespace ClassProject.Controllers
         public ActionResult Index(String firstname,String minit, String lastname,String job_lvl,String hire_date,String job_desc,String pub_name ,String orderby)
         {
             List<employee> employees = db.employees.Include(e => e.job).Include(e => e.publisher).ToList();
-         
             //set a list of available minit
             var minitList = employees.Select(s => s.minit).Distinct();
             //set a list of available job Descriptions
