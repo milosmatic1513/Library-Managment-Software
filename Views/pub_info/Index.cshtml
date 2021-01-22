@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -23,35 +23,36 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @{
-                string imageSrc;
-                if (item.logo == null)
-                {
-                    imageSrc = "";
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    string imageSrc;
+                    if (item.logo == null)
+                    {
+                        imageSrc = "";
+                    }
+                    else
+                    {
+                        var imageBase64 = Convert.ToBase64String(item.logo);
+                        imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                    }
+                    <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image" />
                 }
-                else
-                {
-                    var imageBase64 = Convert.ToBase64String(item.logo);
-                    imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                }
-                <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image"/>
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pr_info)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.publisher.pub_name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.pub_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.pub_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.pub_id })
-        </td>
-    </tr>
-}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pr_info)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.publisher.pub_name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.pub_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Details", "Details", new { id = item.pub_id }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.pub_id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 
 </table>
