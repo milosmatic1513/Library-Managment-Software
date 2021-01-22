@@ -25,7 +25,7 @@ namespace ClassProject.Controllers
             //set a list of all available discount types 
             var discounttypes = discounts.Select(s => s.discounttype).Distinct();
 
-            //add The list to the Viewbag
+            //add The lists to the Viewbag
             ViewBag.stores = stores;
             ViewBag.discounttypes = discounttypes;
             //add orderby value to viebag
