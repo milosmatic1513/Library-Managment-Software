@@ -28,7 +28,8 @@ namespace ClassProject.Controllers
             //add The list to the Viewbag
             ViewBag.stores = stores;
             ViewBag.discounttypes = discounttypes;
-
+            //add orderby value to viebag
+            ViewBag.orderby = orderby;
             //Apply Filters 	
             if (!String.IsNullOrEmpty(discounttype))
             {
