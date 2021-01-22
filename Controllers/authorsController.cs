@@ -29,7 +29,44 @@ namespace ClassProject.Controllers
             //add orderby value to viebag
             ViewBag.orderby = orderby;
             //Filter Starting List for each provided element	
-            if (!String.IsNullOrEmpty(Firstname))
+            if (!String.IsNullOrEmpty(firstname))
+            {
+                ViewBag.firstname = firstname;
+                authors = authors.Where(s => s.au_fname.Contains(firstname)).ToList();
+            }
+            if (!String.IsNullOrEmpty(lastname))
+            {
+                ViewBag.lastname = lastname;
+                authors = authors.Where(s => s.au_lname.Contains(lastname)).ToList();
+            }
+            if (!String.IsNullOrEmpty(phone))
+            {
+                ViewBag.phone = phone;
+                authors = authors.Where(s => s.phone.Contains(phone)).ToList();
+            }
+            if (!String.IsNullOrEmpty(address))
+            {
+                ViewBag.address = address;
+                authors = authors.Where(s => s.address.Contains(address)).ToList();
+            }
+            if (!String.IsNullOrEmpty(city))
+            {
+                ViewBag.city = city;
+                authors = authors.Where(s => s.city.Contains(city)).ToList();
+            }
+            if (!String.IsNullOrEmpty(state))
+            {
+                ViewBag.state = state;
+                authors = authors.Where(s => s.state.Contains(state)).ToList();
+            }
+            if (!String.IsNullOrEmpty(zip))
+            {
+                ViewBag.zip = zip;
+                authors = authors.Where(s => s.zip.Contains(zip)).ToList();
+            }
+
+            //Ordering 
+            if (orderby == "lastname")
             {
                 authors = authors.OrderBy(s => s.au_lname).ToList();
             }
