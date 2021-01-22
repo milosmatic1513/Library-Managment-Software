@@ -51,6 +51,8 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(employee);
         }
 
@@ -64,6 +66,7 @@ namespace ClassProject.Controllers
             else
                 ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name");
 
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View();
         }
 
@@ -72,13 +75,14 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "emp_id,fname,minit,lname,job_id,job_lvl,pub_id,hire_date")] employee employee)
+        public ActionResult Create([Bind(Include = "emp_id,fname,minit,lname,job_id,job_lvl,pub_id,hire_date")] employee employee, string referUrl)
         {
             if (ModelState.IsValid)
             {
                 db.employees.Add(employee);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
 
             ViewBag.job_id = new SelectList(db.jobs, "job_id", "job_desc", employee.job_id);
@@ -100,6 +104,8 @@ namespace ClassProject.Controllers
             }
             ViewBag.job_id = new SelectList(db.jobs, "job_id", "job_desc", employee.job_id);
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", employee.pub_id);
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(employee);
         }
 
@@ -108,13 +114,14 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "emp_id,fname,minit,lname,job_id,job_lvl,pub_id,hire_date")] employee employee)
+        public ActionResult Edit([Bind(Include = "emp_id,fname,minit,lname,job_id,job_lvl,pub_id,hire_date")] employee employee, string referUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
             ViewBag.job_id = new SelectList(db.jobs, "job_id", "job_desc", employee.job_id);
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", employee.pub_id);
@@ -133,18 +140,21 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(employee);
         }
 
         // POST: employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string id, string referUrl)
         {
             employee employee = db.employees.Find(id);
             employee.Delete(db);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectUrl(referUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -168,6 +178,15 @@ namespace ClassProject.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [NonAction]
+        private ActionResult RedirectUrl(string referUrl)
+        {
+            if (string.IsNullOrWhiteSpace(referUrl))
+                return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+            else
+                return Redirect(referUrl); // else redirect to referUrl
         }
     }
 }

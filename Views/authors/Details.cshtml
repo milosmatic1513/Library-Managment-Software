@@ -75,9 +75,11 @@
         </dd>
     </dl>
 
+    <input type="hidden" value="@ViewBag.ReferUrl" name="referUrl" />
+
     <p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.au_id }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.Partial("../Shared/BackToList")
     </p>
 
     <hr />

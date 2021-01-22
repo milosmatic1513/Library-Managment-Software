@@ -52,7 +52,10 @@
 
     </dl>
 </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { stor_id = Model.stor_id, ord_num = Model.ord_num, title_id = Model.title_id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.Partial("../Shared/BackToList")
 </p>
+
+<input type="hidden" value="@ViewBag.ReferUrl" name="referUrl" />

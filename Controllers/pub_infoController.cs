@@ -34,6 +34,8 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(pub_info);
         }
 
@@ -47,6 +49,8 @@ namespace ClassProject.Controllers
                 var publishers = db.publishers.Where(item => item.pub_info == null);
                 ViewBag.pub_id = new SelectList(publishers, "pub_id", "pub_name");
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View();
         }
 
@@ -55,7 +59,7 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info, HttpPostedFileBase imageFile)
+        public ActionResult Create([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info, HttpPostedFileBase imageFile, string referUrl)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +69,8 @@ namespace ClassProject.Controllers
                 }
                 db.pub_info.Add(pub_info);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
 
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", pub_info.pub_id);
@@ -85,6 +90,8 @@ namespace ClassProject.Controllers
                 return HttpNotFound();
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", pub_info.pub_id);
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(pub_info);
         }
 
@@ -93,7 +100,7 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info, HttpPostedFileBase imageFile)
+        public ActionResult Edit([Bind(Include = "pub_id,logo,pr_info")] pub_info pub_info, HttpPostedFileBase imageFile, string referUrl)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +110,8 @@ namespace ClassProject.Controllers
                 }
                 db.Entry(pub_info).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
             ViewBag.pub_id = new SelectList(db.publishers, "pub_id", "pub_name", pub_info.pub_id);
             return View(pub_info);
@@ -121,18 +129,21 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(pub_info);
         }
 
         // POST: pub_info/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string id, string referUrl)
         {
             pub_info pub_info = db.pub_info.Find(id);
             pub_info.Delete(db);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectUrl(referUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -159,6 +170,15 @@ namespace ClassProject.Controllers
                 fileBytes = mStreamer.GetBuffer();
             }
             return fileBytes;
+        }
+
+        [NonAction]
+        private ActionResult RedirectUrl(string referUrl)
+        {
+            if (string.IsNullOrWhiteSpace(referUrl))
+                return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+            else
+                return Redirect(referUrl); // else redirect to referUrl
         }
     }
 }

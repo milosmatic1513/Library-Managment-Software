@@ -33,6 +33,8 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(sale);
         }
 
@@ -49,6 +51,7 @@ namespace ClassProject.Controllers
             else
                 ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
 
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View();
         }
 
@@ -57,13 +60,14 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "stor_id,ord_num,ord_date,qty,payterms,title_id")] sale sale)
+        public ActionResult Create([Bind(Include = "stor_id,ord_num,ord_date,qty,payterms,title_id")] sale sale, string referUrl)
         {
             if (ModelState.IsValid)
             {
                 db.sales.Add(sale);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
 
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", sale.stor_id);
@@ -85,6 +89,8 @@ namespace ClassProject.Controllers
             }
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", sale.stor_id);
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", sale.title_id);
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(sale);
         }
 
@@ -93,13 +99,14 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "stor_id,ord_num,ord_date,qty,payterms,title_id")] sale sale)
+        public ActionResult Edit([Bind(Include = "stor_id,ord_num,ord_date,qty,payterms,title_id")] sale sale, string referUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(sale).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", sale.stor_id);
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", sale.title_id);
@@ -118,18 +125,21 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(sale);
         }
 
         // POST: sales/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string stor_id, string ord_num, string title_id)
+        public ActionResult DeleteConfirmed(string stor_id, string ord_num, string title_id, string referUrl)
         {
             sale sale = db.sales.Find(stor_id, ord_num, title_id);
             sale.Delete(db);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectUrl(referUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -152,6 +162,15 @@ namespace ClassProject.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [NonAction]
+        private ActionResult RedirectUrl(string referUrl)
+        {
+            if (string.IsNullOrWhiteSpace(referUrl))
+                return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+            else
+                return Redirect(referUrl); // else redirect to referUrl
         }
     }
 }
