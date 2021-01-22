@@ -14,7 +14,6 @@ namespace ClassProject.Controllers
     public class discountsController : Controller
     {
         private pubsEntities db = new pubsEntities();
-
         // GET: discounts
         public ActionResult Index(string discounttype,string storename,string discount_from,string discount_to,string lowqty,string highqty,string orderby)
         {
@@ -22,14 +21,15 @@ namespace ClassProject.Controllers
             //set a list of available discounts
             var discounts = db.discounts.Include(d => d.store).ToList();
             //set a list of all available  stores
-            var stores = discounts.Select(s => s.store).Distinct();
+            var stores = discounts.Select(s => s.store.stor_name).Distinct();
             //set a list of all available discount types 
             var discounttypes = discounts.Select(s => s.discounttype).Distinct();
 
             //add The list to the Viewbag
             ViewBag.stores = stores;
             ViewBag.discounttypes = discounttypes;
-
+            //add orderby value to viebag
+            ViewBag.orderby = orderby;
             //Apply Filters 	
             if (!String.IsNullOrEmpty(discounttype))
             {

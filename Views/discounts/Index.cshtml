@@ -9,23 +9,36 @@
     <form class="form" asp-controller="Discount" asp-action="Index" method="get">
         <div class="form-row">
             <div class="form-group col-md-3">
-              
                 <select name="discounttype" class="form-control">
-                    <option></option>
+                    <option value="">-- All --</option>
                     @foreach (var item in ViewBag.discounttypes)
                     {
-                        <option>@item</option>
+                        if (item == ViewBag.discounttype)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+                        
                     }
-
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <select name="storename" class="form-control">
-                    <option></option>
+                    <option value="">-- All --</option>
                     @foreach (var item in ViewBag.stores)
                     {
-                        <option>@item</option>
-                    }
+                        if (item == ViewBag.storename)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+                    }  
                 </select>
             </div> 
             <div class="form-group col-md-3">
@@ -69,7 +82,23 @@
                 <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
                 <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
                 <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
-                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.discounttype)">
+
+
+                <div>
+                
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.discounttype) ">
+                 
+                    @if (ViewBag.orderby == "discounttype")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+             
+
+                </div>
+
+
             </form>
         </th>
         <th>
@@ -81,7 +110,20 @@
                 <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
                 <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
                 <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
-                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.store.stor_name)">
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.store.stor_name) ">
+
+                    @if (ViewBag.orderby == "storename")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+                
+
+                </div>
+
             </form>
         </th>
         <th>
@@ -93,7 +135,19 @@
                 <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
                 <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
                 <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
-                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.discount1)">
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.discount1) ">
+
+                    @if (ViewBag.orderby == "discount")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
             </form>
         </th>
         <th>
@@ -105,7 +159,19 @@
                 <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
                 <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
                 <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
-                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.lowqty)">
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.lowqty) ">
+
+                    @if (ViewBag.orderby == "lowqty")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
             </form>
         </th>
         <th>
@@ -117,7 +183,19 @@
                 <input type="text" value="@ViewBag.discount_to" hidden name="discount_to" />
                 <input type="text" value="@ViewBag.lowqty" hidden name="lowqty" />
                 <input type="text" value="@ViewBag.highqty" hidden name="highqty" />
-                <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.highqty)">
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.highqty) ">
+
+                    @if (ViewBag.orderby == "highqty")
+                    {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                        </svg>
+                    }
+
+
+                </div>
             </form>
         </th>
         <th>
@@ -146,9 +224,9 @@
         @Html.DisplayFor(modelItem => item.highqty)
     </td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
-        @Html.ActionLink("Details", "Details", new { discounttype = item.discounttype, stor_id = item.stor_id }) |
-        @Html.ActionLink("Delete", "Delete", new { discounttype = item.discounttype, stor_id = item.stor_id })
+        @Html.ActionLink("Edit", "Edit", new { discounttype = item.discounttype, stor_id = item.stor_id }, new { @class = "btn btn-warning" })
+        @Html.ActionLink("Details", "Details", new { discounttype = item.discounttype, stor_id = item.stor_id }, new { @class = "btn btn-info" })
+        @Html.ActionLink("Delete", "Delete", new { discounttype = item.discounttype, stor_id = item.stor_id }, new { @class = "btn btn-danger" })
     </td>
 </tr>
 }
