@@ -16,7 +16,7 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: authors
-        public ActionResult Index(String firstname, String lastname, String phone, String address, String city, String state, String zip,String orderby)
+        public ActionResult Index(String firstname, String lastname, String phone, String address, String city, String state, String zip,String orderby,String order)
         {
             List<author> authors = db.authors.ToList();
         
@@ -28,6 +28,8 @@ namespace ClassProject.Controllers
             ViewBag.cities = cities;
             //add orderby value to viebag
             ViewBag.orderby = orderby;
+            //add order value to viebag
+            ViewBag.order = order;
             //Filter Starting List for each provided element	
             if (!String.IsNullOrEmpty(firstname))
             {
@@ -69,6 +71,7 @@ namespace ClassProject.Controllers
             if (orderby == "lastname")
             {
                 authors = authors.OrderBy(s => s.au_lname).ToList();
+               
             }
             else if (orderby == "firstname")
             {
@@ -89,6 +92,11 @@ namespace ClassProject.Controllers
             else if (orderby == "state")
             {
                 authors = authors.OrderBy(s => s.state).ToList();
+            }
+            //check the order of the list
+            if (order == "desc")
+            {
+                authors.Reverse();
             }
             return View(authors);
         }
