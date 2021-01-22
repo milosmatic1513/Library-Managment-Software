@@ -5,45 +5,62 @@
 }
 
 <br>
-<style>
-    .table_head {
-        border-radius: 5px;
-        background-color: #f4511e;
-        color: #ffffff;
-    }
 
-    .table {
-        border-radius: 5px;
-        width: 100%;
-    }
-</style>
 
 <div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
     <form class="form" asp-controller="Authors" asp-action="Index" method="get">
         <div class="form-row">
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.au_lname)" value="@ViewBag.Lastname" name="Lastname" />
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.au_lname)" value="@ViewBag.lastname" name="lastname" />
             </div>
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.au_fname)" value="@ViewBag.Firstname" name="Firstname" />
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.au_fname)" value="@ViewBag.firstname" name="firstname" />
             </div>
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.phone)" value="@ViewBag.Phone" name="Phone" />
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.phone)" value="@ViewBag.phone" name="phone" />
             </div>
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.address )" value="@ViewBag.Address" name="Address" />
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.address )" value="@ViewBag.address" name="address" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.city)" value="@ViewBag.City" name="City" />
+                <select name="city" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.cities)
+                    {
+                        if (item == ViewBag.city)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+                </select>
             </div>
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.state)" value="@ViewBag.State" name="State" />
+                <select name="state" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.states)
+                    {
+                        if (item == ViewBag.state)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+                 </select>
             </div>
             <div class="form-group col-md-3">
-                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.zip)" value="@ViewBag.Zip" name="Zip" />
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.zip)" value="@ViewBag.zip" name="zip" />
             </div>
         </div>
         <div class="form-row ">
@@ -54,36 +71,174 @@
     </form>
 </div>
 
+<br>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-primary" })
 </p>
+<br>
 
 <div class="container">
     <table class="table">
         <tr class="table_head">
             <th>
-                @Html.DisplayNameFor(model => model.au_lname)
+                <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                    <input type="text" value="lastname" hidden name="orderby" />
+                    <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                    <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                    <input type="text" value="@ViewBag.phone" hidden name="phone" />
+                    <input type="text" value="@ViewBag.address" hidden name="address" />
+                    <input type="text" value="@ViewBag.city" hidden name="city" />
+                    <input type="text" value="@ViewBag.state" hidden name="state" />
+                    <input type="text" value="@ViewBag.zip" hidden name="zip" />
+                    <div>
+
+                        <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.au_lname) ">
+
+                        @if (ViewBag.orderby == "lastname")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        }
+
+
+                    </div>
+                </form>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.au_fname)
+                <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                    <input type="text" value="firstname" hidden name="orderby" />
+                    <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                    <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                    <input type="text" value="@ViewBag.phone" hidden name="phone" />
+                    <input type="text" value="@ViewBag.address" hidden name="address" />
+                    <input type="text" value="@ViewBag.city" hidden name="city" />
+                    <input type="text" value="@ViewBag.state" hidden name="state" />
+                    <input type="text" value="@ViewBag.zip" hidden name="zip" />
+                    <div>
+
+                        <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.au_fname) ">
+
+                        @if (ViewBag.orderby == "firstname")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        }
+
+
+                    </div>
+                </form>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.phone)
+                <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                    <input type="text" value="phone" hidden name="orderby" />
+                    <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                    <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                    <input type="text" value="@ViewBag.phone" hidden name="phone" />
+                    <input type="text" value="@ViewBag.address" hidden name="address" />
+                    <input type="text" value="@ViewBag.city" hidden name="city" />
+                    <input type="text" value="@ViewBag.state" hidden name="state" />
+                    <input type="text" value="@ViewBag.zip" hidden name="zip" />
+                    <div>
+
+                        <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.phone) ">
+
+                        @if (ViewBag.orderby == "phone")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        }
+
+
+                    </div>
+                </form>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.address)
+                <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                    <input type="text" value="address" hidden name="orderby" />
+                    <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                    <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                    <input type="text" value="@ViewBag.phone" hidden name="phone" />
+                    <input type="text" value="@ViewBag.address" hidden name="address" />
+                    <input type="text" value="@ViewBag.city" hidden name="city" />
+                    <input type="text" value="@ViewBag.state" hidden name="state" />
+                    <input type="text" value="@ViewBag.zip" hidden name="zip" />
+                    <div>
+
+                        <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.address) ">
+
+                        @if (ViewBag.orderby == "address")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        }
+
+
+                    </div>
+                </form>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.city)
+                <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                    <input type="text" value="city" hidden name="orderby" />
+                    <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                    <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                    <input type="text" value="@ViewBag.phone" hidden name="phone" />
+                    <input type="text" value="@ViewBag.address" hidden name="address" />
+                    <input type="text" value="@ViewBag.city" hidden name="city" />
+                    <input type="text" value="@ViewBag.state" hidden name="state" />
+                    <input type="text" value="@ViewBag.zip" hidden name="zip" />
+                    <div>
+
+                        <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.city) ">
+
+                        @if (ViewBag.orderby == "city")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        }
+
+
+                    </div>
+                </form>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.state)
+                <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+                    <input type="text" value="state" hidden name="orderby" />
+                    <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
+                    <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+                    <input type="text" value="@ViewBag.phone" hidden name="phone" />
+                    <input type="text" value="@ViewBag.address" hidden name="address" />
+                    <input type="text" value="@ViewBag.city" hidden name="city" />
+                    <input type="text" value="@ViewBag.state" hidden name="state" />
+                    <input type="text" value="@ViewBag.zip" hidden name="zip" />
+                    <div>
+
+                        <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.state) ">
+
+                        @if (ViewBag.orderby == "state")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        }
+
+
+                    </div>
+                </form>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.zip)
+                <div class="btn" style="cursor: not-allowed">
+                    @Html.DisplayNameFor(model => model.zip)
+                </div>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.contract)
+                <div class="btn" style="cursor: not-allowed">
+                    @Html.DisplayNameFor(model => model.contract)
+                </div>
             </th>
             <th></th>
         </tr>
@@ -116,9 +271,9 @@
                     @Html.DisplayFor(modelItem => item.contract)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.au_id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.au_id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.au_id })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.au_id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Details", "Details", new { id = item.au_id }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.au_id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }

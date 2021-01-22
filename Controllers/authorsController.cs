@@ -16,40 +16,42 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: authors
-        public ActionResult Index(String Firstname, String Lastname, String Phone, String Address, String City, String State, String Zip)
+        public ActionResult Index(String firstname, String lastname, String phone, String address, String city, String state, String zip,String orderby)
         {
             List<author> authors = db.authors.ToList();
-
+        
+            //find all distinct states
+            var states = authors.Select(s => s.state).Distinct();
+            ViewBag.states = states;
+            //find all distinct cities
+            var cities = authors.Select(s => s.city).Distinct();
+            ViewBag.cities = cities;
+            //add orderby value to viebag
+            ViewBag.orderby = orderby;
             //Filter Starting List for each provided element	
             if (!String.IsNullOrEmpty(Firstname))
             {
-                ViewBag.Firstname = Firstname;
-                authors = authors.Where(s => s.au_fname.Contains(Firstname)).ToList();
+                authors = authors.OrderBy(s => s.au_lname).ToList();
             }
-            if (!String.IsNullOrEmpty(Lastname))
+            else if (orderby == "firstname")
             {
-                ViewBag.Lastname = Lastname;
-                authors = authors.Where(s => s.au_lname.Contains(Lastname)).ToList();
+                authors = authors.OrderBy(s => s.au_fname).ToList();
             }
-            if (!String.IsNullOrEmpty(Phone))
+            else if (orderby == "phone")
             {
-                ViewBag.Phone = Phone;
-                authors = authors.Where(s => s.phone.Contains(Phone)).ToList();
+                authors = authors.OrderBy(s => s.phone).ToList();
             }
-            if (!String.IsNullOrEmpty(Address))
+            else if (orderby == "address")
             {
-                ViewBag.Address = Address;
-                authors = authors.Where(s => s.address.Contains(Address)).ToList();
+                authors = authors.OrderBy(s => s.address).ToList();
             }
-            if (!String.IsNullOrEmpty(City))
+            else if (orderby == "city")
             {
-                ViewBag.City = City;
-                authors = authors.Where(s => s.city.Contains(City)).ToList();
+                authors = authors.OrderBy(s => s.city).ToList();
             }
-            if (!String.IsNullOrEmpty(Zip))
+            else if (orderby == "state")
             {
-                ViewBag.Zip = Zip;
-                authors = authors.Where(s => s.zip.Contains(Zip)).ToList();
+                authors = authors.OrderBy(s => s.state).ToList();
             }
             return View(authors);
         }
