@@ -44,7 +44,10 @@
 
     </dl>
 </div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { au_id = Model.au_id, title_id = Model.title_id}) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { au_id = Model.au_id, title_id = Model.title_id }) |
+    @Html.Partial("../Shared/BackToList")
 </p>
+
+<input type="hidden" value="@ViewBag.ReferUrl" name="referUrl" />

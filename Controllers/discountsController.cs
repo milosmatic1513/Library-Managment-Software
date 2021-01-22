@@ -105,6 +105,7 @@ namespace ClassProject.Controllers
             }
             discount discount = discountArray[0];
             //ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(discount);
         }
 
@@ -115,6 +116,8 @@ namespace ClassProject.Controllers
                 ViewBag.stor_id = new SelectList(db.stores.Where(item => item.stor_id == stor_id), "stor_id", "stor_name");
             else
                 ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name");
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View();
         }
 
@@ -123,7 +126,7 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "discounttype,stor_id,lowqty,highqty,discount1")] discount discount)
+        public ActionResult Create([Bind(Include = "discounttype,stor_id,lowqty,highqty,discount1")] discount discount, string referUrl)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +138,8 @@ namespace ClassProject.Controllers
                     new SqlParameter("@highqty", (object)discount.highqty ?? DBNull.Value), // Send value or null
                     new SqlParameter("@discount1", discount.discount1)
                     );
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
 
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
@@ -156,6 +160,8 @@ namespace ClassProject.Controllers
             }
             discount discount = discountArray[0];
             ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(discount);
         }
 
@@ -164,7 +170,7 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "discounttype,stor_id,lowqty,highqty,discount1")] discount discount, string discounttypeCurrent, string stor_idCurrent)
+        public ActionResult Edit([Bind(Include = "discounttype,stor_id,lowqty,highqty,discount1")] discount discount, string discounttypeCurrent, string stor_idCurrent, string referUrl)
         {
             if (ModelState.IsValid && discounttypeCurrent != null && stor_idCurrent != null)
             {
@@ -178,7 +184,8 @@ namespace ClassProject.Controllers
                     new SqlParameter("@discounttypeCurrent", discounttypeCurrent),
                     new SqlParameter("@stor_idCurrent", stor_idCurrent)
                     );
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
             //ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
             return View(discount);
@@ -198,17 +205,19 @@ namespace ClassProject.Controllers
             }
             discount discount = discountArray[0];
             //ViewBag.stor_id = new SelectList(db.stores, "stor_id", "stor_name", discount.stor_id);
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(discount);
         }
 
         // POST: discounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string discounttype, string stor_id)
+        public ActionResult DeleteConfirmed(string discounttype, string stor_id, string referUrl)
         {
             discount discount = db.discounts.Where(item => item.discounttype == discounttype && item.stor_id == stor_id).First();
             discount.Delete(db);
-            return RedirectToAction("Index");
+
+            return RedirectUrl(referUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -231,6 +240,15 @@ namespace ClassProject.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [NonAction]
+        private ActionResult RedirectUrl(string referUrl)
+        {
+            if (string.IsNullOrWhiteSpace(referUrl))
+                return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+            else
+                return Redirect(referUrl); // else redirect to referUrl
         }
     }
 }

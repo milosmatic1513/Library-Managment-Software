@@ -1,0 +1,10 @@
+﻿
+
+@if (ViewBag.ReferUrl == "" || ViewBag.ReferUrl == null)
+{
+    @Html.ActionLink("Back to List", "Index");
+}
+else
+{
+    <a href="@ViewBag.ReferUrl">Back To List</a>
+}

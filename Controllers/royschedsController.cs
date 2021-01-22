@@ -34,6 +34,8 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(royschedArray[0]);
         }
 
@@ -45,6 +47,7 @@ namespace ClassProject.Controllers
             else
                 ViewBag.title_id = new SelectList(db.titles, "title_id", "title1");
 
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "title_id,lorange,hirange,royalty")] roysched roysched)
+        public ActionResult Create([Bind(Include = "title_id,lorange,hirange,royalty")] roysched roysched, string referUrl)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +67,8 @@ namespace ClassProject.Controllers
                     new SqlParameter("@hirange", roysched.hirange),
                     new SqlParameter("@royalty", (object)roysched.royalty ?? DBNull.Value) // Send value or null
                     );
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", roysched.title_id);
             return View(roysched);
@@ -83,6 +87,8 @@ namespace ClassProject.Controllers
                 return HttpNotFound();
             }
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", royschedArray[0].title_id);
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(royschedArray[0]);
         }
 
@@ -91,7 +97,7 @@ namespace ClassProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "title_id,lorange,hirange,royalty")] roysched roysched, string title_idCurrent, int? lorangeCurrent, int? hirangeCurrent)
+        public ActionResult Edit([Bind(Include = "title_id,lorange,hirange,royalty")] roysched roysched, string title_idCurrent, int? lorangeCurrent, int? hirangeCurrent, string referUrl)
         {
             if (ModelState.IsValid && title_idCurrent != null && lorangeCurrent != null && hirangeCurrent != null)
             {
@@ -105,7 +111,8 @@ namespace ClassProject.Controllers
                     new SqlParameter("@lorangeCurrent", lorangeCurrent),
                     new SqlParameter("@hirangeCurrent", hirangeCurrent)
                     );
-                return RedirectToAction("Index");
+
+                return RedirectUrl(referUrl);
             }
             ViewBag.title_id = new SelectList(db.titles, "title_id", "title1", roysched.title_id);
             return View(roysched);
@@ -123,17 +130,20 @@ namespace ClassProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ReferUrl = ReferenceUrl.ReferUrl(Request);
             return View(royschedArray[0]);
         }
 
         // POST: royscheds/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string title_id, int? lorange, int? hirange)
+        public ActionResult DeleteConfirmed(string title_id, int? lorange, int? hirange, string referUrl)
         {
             roysched roysched = db.royscheds.Where(item => item.title_id == title_id && item.lorange == lorange && item.hirange == hirange).First();
             roysched.Delete(db);
-            return RedirectToAction("Index");
+
+            return RedirectUrl(referUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -156,6 +166,15 @@ namespace ClassProject.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [NonAction]
+        private ActionResult RedirectUrl(string referUrl)
+        {
+            if (string.IsNullOrWhiteSpace(referUrl))
+                return RedirectToAction("Index"); // if referUrl is missing redirect to Index
+            else
+                return Redirect(referUrl); // else redirect to referUrl
         }
     }
 }

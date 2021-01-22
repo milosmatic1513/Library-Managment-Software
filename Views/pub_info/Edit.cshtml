@@ -56,10 +56,12 @@
             </div>
         </div>
     </div>
+
+    <input type="hidden" value="@ViewBag.ReferUrl" name="referUrl" />
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.Partial("../Shared/BackToList")
 </div>
 
 @section Scripts {
