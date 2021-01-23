@@ -15,7 +15,7 @@ namespace ClassProject.Controllers
     {
         private pubsEntities db = new pubsEntities();
         // GET: discounts
-        public ActionResult Index(string discounttype,string storename,string discount_from,string discount_to,string lowqty,string highqty,string orderby)
+        public ActionResult Index(string discounttype,string storename,string discount_from,string discount_to,string lowqty,string highqty, string orderby, string order)
         {
             //set a list of available discounts
             var discounts = db.discounts.Include(d => d.store).ToList();
@@ -29,6 +29,9 @@ namespace ClassProject.Controllers
             ViewBag.discounttypes = discounttypes;
             //add orderby value to viebag
             ViewBag.orderby = orderby;
+            //add order value to viebag
+            ViewBag.order = order;
+
             //Apply Filters 	
             if (!String.IsNullOrEmpty(discounttype))
             {
@@ -86,7 +89,13 @@ namespace ClassProject.Controllers
             {
                 discounts = discounts.OrderBy(s => s.lowqty).ToList();
             }
-           
+
+            //check the order of the list
+            if (order == "desc")
+            {
+                discounts.Reverse();
+            }
+
             return View(discounts);
         }
 

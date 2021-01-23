@@ -75,7 +75,16 @@
         <th>
 
             <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+
                 <input type="text" value="discounttype" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
                 <input type="text" value="@ViewBag.storename" hidden name="storename" />
                 <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
@@ -85,16 +94,14 @@
 
 
                 <div>
-                
+
                     <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.discounttype) ">
-                 
+
                     @if (ViewBag.orderby == "discounttype")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
-             
+
 
                 </div>
 
@@ -103,7 +110,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+
                 <input type="text" value="storename" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
                 <input type="text" value="@ViewBag.storename" hidden name="storename" />
                 <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
@@ -116,11 +132,9 @@
 
                     @if (ViewBag.orderby == "storename")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
-                
+
 
                 </div>
 
@@ -128,7 +142,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+
                 <input type="text" value="discount" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
                 <input type="text" value="@ViewBag.storename" hidden name="storename" />
                 <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
@@ -141,9 +164,7 @@
 
                     @if (ViewBag.orderby == "discount")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
@@ -152,7 +173,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+
                 <input type="text" value="lowqty" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
                 <input type="text" value="@ViewBag.storename" hidden name="storename" />
                 <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
@@ -165,9 +195,7 @@
 
                     @if (ViewBag.orderby == "lowqty")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
@@ -176,7 +204,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Discount" asp-action="Index" method="get">
+
                 <input type="text" value="highqty" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.discounttype" hidden name="discounttype" />
                 <input type="text" value="@ViewBag.storename" hidden name="storename" />
                 <input type="text" value="@ViewBag.discount_from" hidden name="discount_from" />
@@ -189,9 +226,7 @@
 
                     @if (ViewBag.orderby == "highqty")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
