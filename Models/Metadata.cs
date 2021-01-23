@@ -110,7 +110,7 @@ namespace ClassProject.Models
 
         [Display(Name = "Hire Date")]
         [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime hire_date { get; set; }
 
@@ -380,7 +380,7 @@ namespace ClassProject.Models
 
         [Display(Name = "Order Date")]
         [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime ord_date { get; set; }
 
@@ -476,7 +476,7 @@ namespace ClassProject.Models
 
         [Display(Name = "Date Published")]
         [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime pubdate { get; set; }
 
