@@ -59,7 +59,7 @@ namespace ClassProject.Controllers
             }
             if (!String.IsNullOrEmpty(hire_date))
             {
-                employees = employees.Where(s => s.hire_date.ToString().Contains(hire_date)).ToList();
+                employees = employees.Where(s => DateTime.Compare(s.hire_date, DateTime.ParseExact(hire_date, "yyyy-MM-dd", null)) >= 0 ).ToList();  // s.hire_date is later or the same date as hire_date
                 ViewBag.hire_date = hire_date;
             }
             if (!String.IsNullOrEmpty(job_desc))
