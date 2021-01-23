@@ -96,23 +96,30 @@
     <tr>
         <th>
             <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
                 <input type="text" value="firstname" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
                 <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
                 <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
                 <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
-                
+
                 <div>
 
                     <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.fname) ">
 
                     @if (ViewBag.orderby == "firstname")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
@@ -121,7 +128,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
                 <input type="text" value="minit" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
@@ -135,9 +151,7 @@
 
                     @if (ViewBag.orderby == "minit")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
@@ -146,7 +160,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
                 <input type="text" value="lastname" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
@@ -161,9 +184,7 @@
 
                     @if (ViewBag.orderby == "lastname")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
@@ -172,7 +193,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
                 <input type="text" value="job_lvl" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
@@ -187,9 +217,7 @@
 
                     @if (ViewBag.orderby == "job_lvl")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
@@ -198,7 +226,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
                 <input type="text" value="hire_date" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
@@ -213,9 +250,7 @@
 
                     @if (ViewBag.orderby == "hire_date")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
@@ -224,7 +259,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
                 <input type="text" value="job_desc" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
@@ -239,9 +283,7 @@
 
                     @if (ViewBag.orderby == "job_desc")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 
@@ -250,7 +292,16 @@
         </th>
         <th>
             <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
                 <input type="text" value="pub_name" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
                 <input type="text" value="@ViewBag.firstname" hidden name="firstname" />
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
@@ -265,9 +316,7 @@
 
                     @if (ViewBag.orderby == "pub_name")
                     {
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                        </svg>
+                        @Html.Partial("../Shared/SortArrows")
                     }
 
 

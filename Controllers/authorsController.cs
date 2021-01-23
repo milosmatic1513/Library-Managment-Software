@@ -16,20 +16,24 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: authors
-        public ActionResult Index(String firstname, String lastname, String phone, String address, String city, String state, String zip,String orderby,String order)
+        public ActionResult Index(string firstname, string lastname, string phone, string address, string city, string state, string zip, string orderby, string order)
         {
             List<author> authors = db.authors.ToList();
 
             //find all distinct states
             var states = authors.Select(s => s.state).Distinct();
-            ViewBag.states = states;
             //find all distinct cities
             var cities = authors.Select(s => s.city).Distinct();
+
+            //add to viewbag
+            ViewBag.states = states;
             ViewBag.cities = cities;
+
             //add orderby value to viebag
             ViewBag.orderby = orderby;
             //add order value to viebag
             ViewBag.order = order;
+
             //Filter Starting List for each provided element	
             if (!String.IsNullOrEmpty(firstname))
             {

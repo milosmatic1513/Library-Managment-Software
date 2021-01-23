@@ -15,7 +15,7 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: employees
-        public ActionResult Index(String firstname,String minit, String lastname,String job_lvl,String hire_date,String job_desc,String pub_name ,String orderby)
+        public ActionResult Index(string firstname, string minit, string lastname, string job_lvl, string hire_date, string job_desc, string pub_name, string orderby, string order)
         {
             List<employee> employees = db.employees.Include(e => e.job).Include(e => e.publisher).ToList();
             //set a list of available minit
@@ -32,6 +32,8 @@ namespace ClassProject.Controllers
 
             //add orderby value to viebag
             ViewBag.orderby = orderby;
+            //add order value to viebag
+            ViewBag.order = order;
 
             //Apply Filters 	
             if (!String.IsNullOrEmpty(firstname))
@@ -100,6 +102,12 @@ namespace ClassProject.Controllers
             else if (orderby == "pub_name")
             {
                 employees = employees.OrderBy(s => s.publisher.pub_name).ToList();
+            }
+
+            //check the order of the list
+            if (order == "desc")
+            {
+                employees.Reverse();
             }
 
             return View(employees.ToList());
