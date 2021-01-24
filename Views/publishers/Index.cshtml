@@ -1,34 +1,123 @@
 ﻿@model IEnumerable<ClassProject.Models.publisher>
+<br>
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
+    <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="name">@Html.DisplayNameFor(model => model.pub_name)</label>
+                <select name="name" class="form-control">
+                    <option value="">--All--</option>
+                    @foreach (var item in ViewBag.publisher_names)
+                    {
+                        if (item == ViewBag.name)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
 
-@{
-    ViewBag.Title = "Index";
-}
+                    }
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="city">@Html.DisplayNameFor(model => model.city)</label>
+                <select name="city" class="form-control">
+                    <option value="">--All--</option>
+                    @foreach (var item in ViewBag.publisher_cities)
+                    {
+                        if (item == ViewBag.city)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
 
-<h2>Index</h2>
+                    }
+                </select>
+            </div>   <div class="form-group col-md-3">
+                <label for="state">@Html.DisplayNameFor(model => model.state)</label>
+                <select name="state" class="form-control">
+                    <option value="">--All--</option>
+                    @foreach (var item in ViewBag.publisher_states)
+                    {
+                        if (item == ViewBag.state)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
 
+                    }
+                </select>
+            </div>   <div class="form-group col-md-3">
+                <label for="country">@Html.DisplayNameFor(model => model.country)</label>
+                <select name="country" class="form-control">
+                    <option value="">--All--</option>
+                    @foreach (var item in ViewBag.publisher_countries)
+                    {
+                        if (item == ViewBag.country)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+                </select>
+            </div>
+            <div class="form-row ">
+                <div class="form-group col-md-12">
+                    <input type="submit" value="Search" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<br>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<br>
+<table class="table" style="table-layout:fixed">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.pub_name)
+            <div class="btn" style="cursor: not-allowed">
+                @Html.DisplayNameFor(model => model.pub_name)
+            </div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.city)
+            <div class="btn" style="cursor: not-allowed">
+                @Html.DisplayNameFor(model => model.city)
+            </div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.state)
+            <div class="btn" style="cursor: not-allowed">
+                @Html.DisplayNameFor(model => model.state)
+            </div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.country)
+            <div class="btn" style="cursor: not-allowed">
+                @Html.DisplayNameFor(model => model.country)
+            </div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.pub_info.pr_info)
+            <div class="btn" style="cursor: not-allowed">
+                @Html.DisplayNameFor(model => model.pub_info.pr_info)
+            </div>
         </th>
         <th></th>
     </tr>
 
+<<<<<<< Updated upstream
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -53,5 +142,39 @@
         </td>
     </tr>
 }
+=======
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.pub_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.city)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.state)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.country)
+            </td>
+            <td>
+                @{
+                    string info_text = item.pub_info.pr_info;
+                    if (info_text.Length > 100)
+                    {
+                        info_text = info_text.Substring(0, 100) + "...";
+                    }
+                }
+                @info_text
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.pub_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Details", "Details", new { id = item.pub_id }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.pub_id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+>>>>>>> Stashed changes
 
 </table>
