@@ -15,9 +15,39 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: jobs
-        public ActionResult Index()
+        public ActionResult Index(string job_desc,string min_lvl_from,string min_lvl_to,string max_lvl_from,string max_lvl_to )
         {
-            return View(db.jobs.ToList());
+
+            var jobs = db.jobs.ToList();
+            var job_descs = jobs.Select(j => j.job_desc).Distinct().ToList();
+
+            ViewBag.job_descs = job_descs;
+            if (!String.IsNullOrEmpty(job_desc))
+            {
+                jobs = jobs.Where(j => j.job_desc.Contains(job_desc)).ToList();
+                ViewBag.job_desc = job_desc;
+            }
+            if (!String.IsNullOrEmpty(min_lvl_from))
+            {
+                jobs=jobs.Where(j=>j.min_lvl>=Int32.Parse(min_lvl_from)).ToList();
+                ViewBag.min_lvl_from = min_lvl_from;
+            }
+            if (!String.IsNullOrEmpty(min_lvl_to))
+            {
+                jobs = jobs.Where(j => j.min_lvl <= Int32.Parse(min_lvl_to)).ToList();
+                ViewBag.min_lvl_to = min_lvl_to;
+            }
+            if (!String.IsNullOrEmpty(max_lvl_from))
+            {
+                jobs = jobs.Where(j => j.max_lvl >= Int32.Parse(max_lvl_from)).ToList();
+                ViewBag.max_lvl_from = max_lvl_from;
+            }
+            if (!String.IsNullOrEmpty(max_lvl_to))
+            {
+                jobs = jobs.Where(j => j.max_lvl <= Int32.Parse(max_lvl_to)).ToList();
+                ViewBag.max_lvl_to = max_lvl_to;
+            }
+            return View(jobs);
         }
 
         // GET: jobs/Details/5

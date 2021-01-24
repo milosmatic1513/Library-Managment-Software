@@ -16,10 +16,74 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: royscheds
-        public ActionResult Index()
+        public ActionResult Index(string title,int? low_range_from , int? low_range_to , int? high_range_from, int? high_range_to, int? royalty_from, int? royalty_to,string orderby,bool? asc,string order)
         {
-            var royscheds = db.royscheds.Include(r => r.title);
-            return View(royscheds.ToList());
+            var royscheds = db.royscheds.Include(r => r.title).ToList();
+            ViewBag.titles = royscheds.Select(r => r.title.title1).Distinct().ToList();
+            ViewBag.orderby = orderby;
+            ViewBag.order = order;
+            if (!String.IsNullOrEmpty(title))
+            {
+                royscheds = royscheds.Where(r => r.title.title1.Contains(title)).ToList();
+                ViewBag.title = title;
+            }
+            if (low_range_from != null)
+            {
+                royscheds = royscheds.Where(r => r.lorange >= low_range_from).ToList();
+                ViewBag.low_range_from = low_range_from;
+            }
+            if (low_range_to != null)
+            {
+                royscheds = royscheds.Where(r => r.lorange <= low_range_to).ToList();
+                ViewBag.low_range_to = low_range_to;
+            }
+            if (high_range_from != null)
+            {
+                royscheds = royscheds.Where(r => r.hirange >= high_range_from).ToList();
+                ViewBag.high_range_from = high_range_from;
+            }
+            if (high_range_to != null)
+            {
+                royscheds = royscheds.Where(r => r.hirange <= high_range_to).ToList();
+                ViewBag.high_range_to = high_range_to;
+            }
+            if (royalty_from != null)
+            {
+                royscheds = royscheds.Where(r => r.royalty >= royalty_from).ToList();
+                ViewBag.royalty_from = royalty_from;
+            }
+            if (royalty_to != null)
+            {
+                royscheds = royscheds.Where(r => r.royalty <= royalty_to).ToList();
+                ViewBag.royalty_to = royalty_to;
+            }
+          
+            if (orderby == "title")
+            {
+                royscheds = royscheds.OrderBy(s => s.title.title1).ToList();
+            }
+            else if (orderby == "low_range")
+            {
+                royscheds = royscheds.OrderBy(s => s.lorange).ToList();
+            }
+            else if(orderby == "high_range")
+            {
+                royscheds = royscheds.OrderBy(s => s.hirange).ToList();
+            }
+            else if (orderby == "royalty")
+            {
+                royscheds = royscheds.OrderBy(s => s.royalty).ToList();
+            }
+
+
+            if (!String.IsNullOrEmpty(order))
+            {
+                if (order == "desc")
+                {
+                    royscheds.Reverse();
+                }
+            }
+            return View(royscheds);
         }
 
         // GET: royscheds/Details/5

@@ -11,21 +11,26 @@
     <form class="form" asp-controller="Authors" asp-action="Index" method="get">
         <div class="form-row">
             <div class="form-group col-md-3">
+                <label for="lastname">@Html.DisplayNameFor(model => model.au_lname)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.au_lname)" value="@ViewBag.lastname" name="lastname" />
             </div>
             <div class="form-group col-md-3">
+                <label for="firstname">@Html.DisplayNameFor(model => model.au_fname)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.au_fname)" value="@ViewBag.firstname" name="firstname" />
             </div>
             <div class="form-group col-md-3">
+                <label for="phone">@Html.DisplayNameFor(model => model.phone)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.phone)" value="@ViewBag.phone" name="phone" />
             </div>
             <div class="form-group col-md-3">
+                <label for="address">@Html.DisplayNameFor(model => model.address)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.address )" value="@ViewBag.address" name="address" />
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-3">
+                <label for="city">@Html.DisplayNameFor(model => model.city)</label>
                 <select name="city" class="form-control">
                     <option value="">-- All --</option>
                     @foreach (var item in ViewBag.cities)
@@ -43,6 +48,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
+                <label for="state">@Html.DisplayNameFor(model => model.state)</label>
                 <select name="state" class="form-control">
                     <option value="">-- All --</option>
                     @foreach (var item in ViewBag.states)
@@ -57,14 +63,16 @@
                         }
 
                     }
-                 </select>
+                </select>
             </div>
             <div class="form-group col-md-3">
+                <label for="zip">@Html.DisplayNameFor(model => model.zip)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.zip)" value="@ViewBag.zip" name="zip" />
             </div>
         </div>
         <div class="form-row ">
             <div class="form-group col-md-4">
+             
                 <input type="submit" value="Search" class="btn btn-primary">
             </div>
         </div>

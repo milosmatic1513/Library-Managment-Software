@@ -8,13 +8,15 @@
     <form class="form" asp-controller="Employee" asp-action="Index" method="get">
         <div class="form-row">
             <div class="form-group col-md-3">
+                <label for="lastname">@Html.DisplayNameFor(model => model.lname)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.lname)" value="@ViewBag.lastname" name="lastname" />
             </div>
             <div class="form-group col-md-3">
+                <label for="firstname">@Html.DisplayNameFor(model => model.fname)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.fname)" value="@ViewBag.firstname" name="firstname" />
             </div>
             <div class="form-group col-md-3">
-
+                <label for="minit">@Html.DisplayNameFor(model => model.minit)</label>
                 <select name="minit" class="form-control">
                     <option value="">-- All --</option>
                     @foreach (var item in ViewBag.minitList)
@@ -33,15 +35,18 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
+                <label for="job_lvl">@Html.DisplayNameFor(model => model.job_lvl)</label>
                 <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.job_lvl)" value="@ViewBag.job_lvl" name="job_lvl" />
             </div>
 
         </div>
         <div class="form-row ">
             <div class="form-group col-md-3">
+                <label for="hire_date">@Html.DisplayNameFor(model => model.hire_date)</label>
                 <input class="form-control" type="date" placeholder="@Html.DisplayNameFor(model => model.hire_date)" value="@ViewBag.hire_date" name="hire_date" />
             </div>
             <div class="form-group col-md-3">
+                <label for="job_desc">@Html.DisplayNameFor(model => model.job.job_desc)</label>
                 <select name="job_desc" class="form-control">
                     <option value="">-- All --</option>
                     @foreach (var item in ViewBag.joblist)
@@ -60,6 +65,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
+                <label for="pub_name">@Html.DisplayNameFor(model => model.publisher.pub_name)</label>
                 <select name="pub_name" class="form-control">
                     <option value="">-- All --</option>
                     @foreach (var item in ViewBag.pub_names)
