@@ -9,6 +9,7 @@
     <form class="form" asp-controller="Discount" asp-action="Index" method="get">
         <div class="form-row">
             <div class="form-group col-md-3">
+                <label for="discounttype">@Html.DisplayNameFor(model => model.discounttype)</label>
                 <select name="discounttype" class="form-control">
                     <option value="">-- All --</option>
                     @foreach (var item in ViewBag.discounttypes)
@@ -21,11 +22,12 @@
                         {
                             <option>@item</option>
                         }
-                        
+
                     }
                 </select>
             </div>
             <div class="form-group col-md-3">
+                <label for="storename">@Html.DisplayNameFor(model => model.store.stor_name)</label>
                 <select name="storename" class="form-control">
                     <option value="">-- All --</option>
                     @foreach (var item in ViewBag.stores)
@@ -38,26 +40,30 @@
                         {
                             <option>@item</option>
                         }
-                    }  
+                    }
                 </select>
             </div> 
             <div class="form-group col-md-3">
+                <label for="discount_from">@Html.DisplayNameFor(model => model.discount1) From</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.discount1) From" value="@ViewBag.discount_from" name="discount_from" />
             </div>
             <div class="form-group col-md-3">
+                <label for="discount_to">@Html.DisplayNameFor(model => model.discount1) To</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.discount1) To" value="@ViewBag.discount_to" name="discount_to" />
             </div>
             <div class="form-group col-md-3">
+                <label for="lowqty">@Html.DisplayNameFor(model => model.lowqty)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.lowqty) From" value="@ViewBag.lowqty" name="lowqty" />
             </div>
             <div class="form-group col-md-3">
+                <label for="highqty">@Html.DisplayNameFor(model => model.highqty)</label>
                 <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.highqty) To" value="@ViewBag.highqty" name="highqty" />
             </div>
         </div>
 
 
         <div class="form-row ">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-12">
                 <input type="submit" value="Search" class="btn btn-primary">
             </div>
         </div>

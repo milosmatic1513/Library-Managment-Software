@@ -3,56 +3,126 @@
 @{
     ViewBag.Title = "Index";
 }
+<br>
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
+    <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="publisher">@Html.DisplayNameFor(model => model.publisher.pub_name)</label>
+                <select name="publisher" class="form-control">
 
-<h2>Index</h2>
+                    @foreach (var item in ViewBag.publishers)
+                    {
+                        if (item == ViewBag.publisher)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
 
+<<<<<<< Updated upstream
 <p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.logo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pr_info)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.publisher.pub_name)
-        </th>
-        <th></th>
-    </tr>
+=======
+                    }
+                </select>
+            </div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @{
-                    string imageSrc;
-                    if (item.logo == null)
-                    {
-                        imageSrc = "";
-                    }
-                    else
-                    {
-                        var imageBase64 = Convert.ToBase64String(item.logo);
-                        imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                    }
-                    <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image" />
+            <div class="form-row ">
+                <div class="form-group col-md-12">
+                    <input type="submit" value="Search" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<br>
+@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+<br>
+<br>
+<table class="table" style="table-layout:fixed">
+<tr>
+    <th>
+        <div class="btn" style="cursor: not-allowed">
+>>>>>>> Stashed changes
+            @Html.DisplayNameFor(model => model.logo)
+        </div>
+    </th>
+    <th>
+        <div class="btn" style="cursor: not-allowed">
+            @Html.DisplayNameFor(model => model.pr_info)
+        </div>
+    </th>
+    <th>
+        <div class="btn" style="cursor: not-allowed">
+            @Html.DisplayNameFor(model => model.publisher.pub_name)
+        </div>
+    </th>
+    <th></th>
+</tr>
+
+<<<<<<< Updated upstream
+@foreach (var item in Model) {
+=======
+@foreach (var item in Model)
+{
+>>>>>>> Stashed changes
+    <tr>
+        <td>
+            @{
+                string imageSrc;
+                if (item.logo == null)
+                {
+                    imageSrc = "";
                 }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.pr_info)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.publisher.pub_name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.pub_id }, new { @class = "btn btn-warning" })
-                @Html.ActionLink("Details", "Details", new { id = item.pub_id }, new { @class = "btn btn-info" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.pub_id }, new { @class = "btn btn-danger" })
-            </td>
-        </tr>
-    }
+                else
+                {
+                    var imageBase64 = Convert.ToBase64String(item.logo);
+                    imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                }
+<<<<<<< Updated upstream
+                <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image"/>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pr_info)
+=======
+                <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image" />
+            }
+        </td>
+        <td>
+            @{
+                string info_text = item.pr_info;
+                if (info_text.Length > 100)
+                {
+                    info_text = info_text.Substring(0, 100) + "...";
+                }
+            }
+            @info_text
+>>>>>>> Stashed changes
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.publisher.pub_name)
+        </td>
+        <td>
+<<<<<<< Updated upstream
+            @Html.ActionLink("Edit", "Edit", new { id=item.pub_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.pub_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.pub_id })
+=======
+            @Html.ActionLink("Edit", "Edit", new { id = item.pub_id }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Details", "Details", new { id = item.pub_id }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.pub_id }, new { @class = "btn btn-danger" })
+>>>>>>> Stashed changes
+        </td>
+    </tr>
+}
 
 </table>

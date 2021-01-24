@@ -1,27 +1,201 @@
 ﻿@model IEnumerable<ClassProject.Models.roysched>
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>Index</h2>
+<br>
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
+    <form class="form" asp-controller="Employee" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="title">@Html.DisplayNameFor(model => model.title.title1)</label>
+                <select name="title" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.titles)
+                    {
+                        if (item == ViewBag.title)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
 
+                    }
+
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="low_range_from">@Html.DisplayNameFor(model => model.lorange) From</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.lorange) From" value="@ViewBag.low_range_from" name="low_range_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="low_range_to">@Html.DisplayNameFor(model => model.lorange) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.lorange) To" value="@ViewBag.low_range_to" name="low_range_to" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="high_range_from">@Html.DisplayNameFor(model => model.hirange) From</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.hirange)" value="@ViewBag.high_range_from" name="high_range_from" />
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="form-group col-md-3">
+                <label for="high_range_to">@Html.DisplayNameFor(model => model.hirange) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.hirange) To" value="@ViewBag.high_range_to" name="high_range_to" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="royalty_from">@Html.DisplayNameFor(model => model.royalty) From </label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.royalty)" value="@ViewBag.royalty_from" name="royalty_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="royalty_to">@Html.DisplayNameFor(model => model.royalty) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.royalty)" value="@ViewBag.royalty_to" name="royalty_to" />
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="form-group col-md-12">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+</div>
+<br>
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
+<br>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.title.title1)
+            <form class="form" asp-controller="Roysheds" asp-action="Index" method="get">
+
+                <input type="text" value="title" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.high_range_from" hidden name="high_range_from" />
+                <input type="text" value="@ViewBag.high_range_to" hidden name="high_range_to" />
+                <input type="text" value="@ViewBag.low_range_from" hidden name="low_range_from" />
+                <input type="text" value="@ViewBag.low_range_to" hidden name="low_range_to" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.title.title1) ">
+
+                    @if (ViewBag.orderby == "title")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.lorange)
+            <form class="form" asp-controller="Roysheds" asp-action="Index" method="get">
+
+                <input type="text" value="low_range" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.high_range_from" hidden name="high_range_from" />
+                <input type="text" value="@ViewBag.high_range_to" hidden name="high_range_to" />
+                <input type="text" value="@ViewBag.low_range_from" hidden name="low_range_from" />
+                <input type="text" value="@ViewBag.low_range_to" hidden name="low_range_to" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.lorange) ">
+
+                    @if (ViewBag.orderby == "low_range")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.hirange)
+            <form class="form" asp-controller="Roysheds" asp-action="Index" method="get">
+
+                <input type="text" value="high_range" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.high_range_from" hidden name="high_range_from" />
+                <input type="text" value="@ViewBag.high_range_to" hidden name="high_range_to" />
+                <input type="text" value="@ViewBag.low_range_from" hidden name="low_range_from" />
+                <input type="text" value="@ViewBag.low_range_to" hidden name="low_range_to" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.hirange) ">
+
+                    @if (ViewBag.orderby == "high_range")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>        
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.royalty)
+            <form class="form" asp-controller="Roysheds" asp-action="Index" method="get">
+
+                <input type="text" value="royalty" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.high_range_from" hidden name="high_range_from" />
+                <input type="text" value="@ViewBag.high_range_to" hidden name="high_range_to" />
+                <input type="text" value="@ViewBag.low_range_from" hidden name="low_range_from" />
+                <input type="text" value="@ViewBag.low_range_to" hidden name="low_range_to" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.royalty) ">
+
+                    @if (ViewBag.orderby == "royalty")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th></th>
     </tr>

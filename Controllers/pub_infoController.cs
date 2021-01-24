@@ -14,12 +14,19 @@ namespace ClassProject.Controllers
     public class pub_infoController : Controller
     {
         private pubsEntities db = new pubsEntities();
-
+        
         // GET: pub_info
-        public ActionResult Index()
+        public ActionResult Index(string publisher)
         {
-            var pub_info = db.pub_info.Include(p => p.publisher);
-            return View(pub_info.ToList());
+            var pub_info = db.pub_info.Include(p => p.publisher).ToList();
+            var publishers = pub_info.Select(p => p.publisher.pub_name).Distinct().ToList();
+            ViewBag.publishers = publishers;
+            if (!String.IsNullOrEmpty(publisher))
+            {
+                pub_info = pub_info.Where(p => p.publisher.pub_name.Contains(publisher)).ToList();
+                ViewBag.publisher = publisher;
+            }
+            return View(pub_info);
         }
 
         // GET: pub_info/Details/5

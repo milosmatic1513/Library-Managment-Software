@@ -3,9 +3,67 @@
 @{
     ViewBag.Title = "Index";
 }
+<style>
+    label {
+        color:white;
+    }
 
-<h2>Index</h2>
+</style>
+<br>
 
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
+    <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3 align-self-start">
+                <label for="job_desc">@Html.DisplayNameFor(model => model.job_desc)</label>
+                <select name="job_desc" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.job_descs)
+                    {
+                        if (item == ViewBag.job_desc)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="job_desc">@Html.DisplayNameFor(model => model.min_lvl) From</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.min_lvl) From" value="@ViewBag.min_lvl_from" name="min_lvl_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="job_desc">@Html.DisplayNameFor(model => model.min_lvl) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.min_lvl) To" value="@ViewBag.min_lvl_to" name="min_lvl_to" />
+            </div>
+            
+        
+        
+            <div class="form-group col-md-3 align-self-start">
+                <label for="job_desc">@Html.DisplayNameFor(model => model.max_lvl) From</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.max_lvl) From" value="@ViewBag.max_lvl_from" name="max_lvl_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="job_desc">@Html.DisplayNameFor(model => model.max_lvl) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.max_lvl) To" value="@ViewBag.max_lvl_to" name="max_lvl_to" />
+            </div>
+            <div class="form-group col-md-12">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </div>
+   
+
+
+       
+            
+       
+    </form>
+</div>
+<br>
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
