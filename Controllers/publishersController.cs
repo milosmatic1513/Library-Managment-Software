@@ -15,10 +15,42 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: publishers
-        public ActionResult Index()
+        public ActionResult Index(string name,string city ,string country, string state)
         {
-            var publishers = db.publishers.Include(p => p.pub_info);
-            return View(publishers.ToList());
+            var publishers = db.publishers.Include(p => p.pub_info).ToList();
+      
+            var publisher_names= publishers.Select(p => p.pub_name).Distinct().ToList();
+            var publisher_cities = publishers.Select(p => p.city).Distinct().ToList();
+            var publisher_states = publishers.Select(p => p.state).Distinct().ToList();
+            var publisher_countries = publishers.Select(p => p.country).Distinct().ToList();
+
+            ViewBag.publisher_names = publisher_names;
+            ViewBag.publisher_cities = publisher_cities;
+            ViewBag.publisher_states = publisher_states;
+            ViewBag.publisher_countries = publisher_countries;
+
+            if (!String.IsNullOrEmpty(name))
+            {
+                publishers = publishers.Where(p => p.pub_name.Contains(name)).ToList();
+                ViewBag.name = name;
+            }
+            if (!String.IsNullOrEmpty(city))
+            {
+                publishers = publishers.Where(p => p.city.Contains(city)).ToList();
+                ViewBag.city = city;
+            }
+            if (!String.IsNullOrEmpty(country))
+            {
+                publishers = publishers.Where(p => p.country.Contains(country)).ToList();
+                ViewBag.country = country;
+            }
+            if (!String.IsNullOrEmpty(state))
+            {
+                publishers = publishers.Where(p => p.state.Contains(state)).ToList();
+                ViewBag.state = state;
+            }
+          
+            return View(publishers);
         }
 
         // GET: publishers/Details/5

@@ -10,7 +10,7 @@
             <div class="form-group col-md-3">
                 <label for="publisher">@Html.DisplayNameFor(model => model.publisher.pub_name)</label>
                 <select name="publisher" class="form-control">
-
+                    <option value="">--All--</option>
                     @foreach (var item in ViewBag.publishers)
                     {
                         if (item == ViewBag.publisher)
@@ -22,14 +22,6 @@
                             <option>@item</option>
                         }
 
-<<<<<<< Updated upstream
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-=======
                     }
                 </select>
             </div>
@@ -51,7 +43,7 @@
 <tr>
     <th>
         <div class="btn" style="cursor: not-allowed">
->>>>>>> Stashed changes
+
             @Html.DisplayNameFor(model => model.logo)
         </div>
     </th>
@@ -68,12 +60,10 @@
     <th></th>
 </tr>
 
-<<<<<<< Updated upstream
+
 @foreach (var item in Model) {
-=======
-@foreach (var item in Model)
-{
->>>>>>> Stashed changes
+
+
     <tr>
         <td>
             @{
@@ -87,16 +77,11 @@
                     var imageBase64 = Convert.ToBase64String(item.logo);
                     imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
                 }
-<<<<<<< Updated upstream
+
                 <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image"/>
             }
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pr_info)
-=======
-                <img src="@imageSrc" style="max-width: 250px; max-height: 250px; width: auto; height: auto;" alt="No Image" />
-            }
-        </td>
+        
         <td>
             @{
                 string info_text = item.pr_info;
@@ -106,21 +91,17 @@
                 }
             }
             @info_text
->>>>>>> Stashed changes
+
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.publisher.pub_name)
         </td>
         <td>
-<<<<<<< Updated upstream
-            @Html.ActionLink("Edit", "Edit", new { id=item.pub_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.pub_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.pub_id })
-=======
+
             @Html.ActionLink("Edit", "Edit", new { id = item.pub_id }, new { @class = "btn btn-warning" })
             @Html.ActionLink("Details", "Details", new { id = item.pub_id }, new { @class = "btn btn-info" })
             @Html.ActionLink("Delete", "Delete", new { id = item.pub_id }, new { @class = "btn btn-danger" })
->>>>>>> Stashed changes
+
         </td>
     </tr>
 }
