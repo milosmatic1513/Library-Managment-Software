@@ -117,32 +117,7 @@
         <th></th>
     </tr>
 
-<<<<<<< Updated upstream
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.pub_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.city)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.state)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pub_info.pr_info)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.pub_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.pub_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.pub_id })
-        </td>
-    </tr>
-}
-=======
+
     @foreach (var item in Model)
     {
         <tr>
@@ -175,6 +150,6 @@
             </td>
         </tr>
     }
->>>>>>> Stashed changes
+
 
 </table>

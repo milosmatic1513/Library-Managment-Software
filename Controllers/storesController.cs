@@ -16,9 +16,69 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: stores
-        public ActionResult Index()
+        public ActionResult Index(string store,string address,string state,string city,string zip,string orderby ,string order)
         {
-            return View(db.stores.ToList());
+            var stores = db.stores.ToList();
+          
+            //Get all cities 
+            var cities = stores.Select(s => s.city).Distinct().ToList();
+            //Get all states
+            var states = stores.Select(s => s.state).Distinct().ToList();
+
+            //add values to viewbag
+            ViewBag.cities = cities;
+            ViewBag.states = states;
+
+            if (!String.IsNullOrEmpty(store))
+            {
+                stores = stores.Where(c => c.stor_name.Contains(store)).ToList();
+                ViewBag.store = store;
+            }
+            if (!String.IsNullOrEmpty(address))
+            {
+                stores = stores.Where(c => c.stor_address.Contains(address)).ToList();
+                ViewBag.address = address;
+            }
+            if (!String.IsNullOrEmpty(state))
+            {
+                stores = stores.Where(c => c.state.Contains(state)).ToList();
+                ViewBag.state = state;
+            }
+            if (!String.IsNullOrEmpty(city))
+            {
+                stores = stores.Where(c => c.city.Contains(city)).ToList();
+                ViewBag.city = city;
+            }
+            if (zip!=null)
+            {
+                stores = stores.Where(c => c.zip.Contains(zip)).ToList();
+                ViewBag.zip = zip;
+            }
+
+            if (orderby == "store")
+            {
+                stores = stores.OrderBy(s => s.stor_name).ToList();
+            }
+            else if (orderby == "state")
+            {
+                stores = stores.OrderBy(s => s.state).ToList();
+            }
+            else if (orderby == "city")
+            {
+                stores = stores.OrderBy(s => s.city).ToList();
+            }
+            else if (orderby == "zip")
+            {
+                stores = stores.OrderBy(s => s.zip).ToList();
+            }
+            if (order =="desc")
+            {
+                stores.Reverse();
+            }
+
+            ViewBag.orderby = orderby;
+            ViewBag.order = order;
+            return View(stores);
         }
 
         // GET: stores/Details/5

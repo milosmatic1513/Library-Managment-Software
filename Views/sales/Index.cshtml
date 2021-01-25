@@ -1,30 +1,252 @@
 ﻿@model IEnumerable<ClassProject.Models.sale>
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>Index</h2>
+<br>
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
+    <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label name="ord_date_from">@Html.DisplayNameFor(model => model.ord_date) From</label>
+                <input class="form-control" type="date" name="ord_date_from" placeholder ="@Html.DisplayNameFor(model => model.ord_date) From" value="@ViewBag.ord_date_from">
+            </div>
+            <div class="form-group col-md-3">
+                <label name="ord_date_to">@Html.DisplayNameFor(model => model.ord_date) To</label>
+                <input class="form-control" type="date" name="ord_date_to" placeholder ="@Html.DisplayNameFor(model => model.ord_date) To" value="@ViewBag.ord_date_to">
+            </div>
+            <div class="form-group col-md-3">
+                <label name="quantity_from">@Html.DisplayNameFor(model => model.qty) From</label>
+                <input class="form-control" type="number" name="quantity_from" placeholder ="@Html.DisplayNameFor(model => model.qty) From" value="@ViewBag.quantity_from">
+            </div>
+            <div class="form-group col-md-3">
+                <label name="quantity_to">@Html.DisplayNameFor(model => model.qty) To</label>
+                <input class="form-control" type="number" name="quantity_to" placeholder ="@Html.DisplayNameFor(model => model.qty) To" value="@ViewBag.quantity_to">
+            </div>
 
+        </div>
+        <div class="form-row ">
+            <div class="form-group col-md-3">
+                <label name="payterms">@Html.DisplayNameFor(model => model.payterms)</label>
+                <select name="payterms" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.payterms_list)
+                    {
+                        if (item == ViewBag.payterms)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label name="store">@Html.DisplayNameFor(model => model.store.stor_name)</label>
+                <select name="store" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.stores)
+                    {
+                        if (item == ViewBag.store)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label name="title">@Html.DisplayNameFor(model => model.title.title1)</label>
+                <input class="form-control" type="text" name="title" placeholder="@Html.DisplayNameFor(model => model.title.title1)" value="@ViewBag.title">
+            </div>
+            
+        </div>
+        <div class="form-row ">
+            <div class="form-group col-md-12">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </div>
+        
+    </form>
+</div>
+<br>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<br>
+<table class="table" style="table-layout:fixed">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ord_date)
+            <form class="form" asp-controller="sales" asp-action="Index" method="get">
+
+                <input type="text" value="ord_date" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="date" value="@ViewBag.ord_date_from" hidden name="ord_date_from" />
+                <input type="date" value="@ViewBag.ord_date_to" hidden name="ord_date_to" />
+                <input type="number" value="@ViewBag.quantity_from" hidden name="quantity_from" />
+                <input type="number" value="@ViewBag.quantity_to" hidden name="quantity_to" />
+                <input type="text" value="@ViewBag.payterms" hidden name="payterms" />
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.ord_date) ">
+
+                    @if (ViewBag.orderby == "ord_date")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.qty)
+            <form class="form" asp-controller="sales" asp-action="Index" method="get">
+
+                <input type="text" value="quantity" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="date" value="@ViewBag.ord_date_from" hidden name="ord_date_from" />
+                <input type="date" value="@ViewBag.ord_date_to" hidden name="ord_date_to" />
+                <input type="number" value="@ViewBag.quantity_from" hidden name="quantity_from" />
+                <input type="number" value="@ViewBag.quantity_to" hidden name="quantity_to" />
+                <input type="text" value="@ViewBag.payterms" hidden name="payterms" />
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.qty) ">
+
+                    @if (ViewBag.orderby == "quantity")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.payterms)
+            <form class="form" asp-controller="sales" asp-action="Index" method="get">
+
+                <input type="text" value="payterms" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="date" value="@ViewBag.ord_date_from" hidden name="ord_date_from" />
+                <input type="date" value="@ViewBag.ord_date_to" hidden name="ord_date_to" />
+                <input type="number" value="@ViewBag.quantity_from" hidden name="quantity_from" />
+                <input type="number" value="@ViewBag.quantity_to" hidden name="quantity_to" />
+                <input type="text" value="@ViewBag.payterms" hidden name="payterms" />
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.payterms) ">
+
+                    @if (ViewBag.orderby == "payterms")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.store.stor_name)
+            <form class="form" asp-controller="sales" asp-action="Index" method="get">
+
+                <input type="text" value="store" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="date" value="@ViewBag.ord_date_from" hidden name="ord_date_from" />
+                <input type="date" value="@ViewBag.ord_date_to" hidden name="ord_date_to" />
+                <input type="number" value="@ViewBag.quantity_from" hidden name="quantity_from" />
+                <input type="number" value="@ViewBag.quantity_to" hidden name="quantity_to" />
+                <input type="text" value="@ViewBag.payterms" hidden name="payterms" />
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.store.stor_name) ">
+
+                    @if (ViewBag.orderby == "store")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.title.title1)
+            <form class="form" asp-controller="sales" asp-action="Index" method="get">
+
+                <input type="text" value="title" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="date" value="@ViewBag.ord_date_from" hidden name="ord_date_from" />
+                <input type="date" value="@ViewBag.ord_date_to" hidden name="ord_date_to" />
+                <input type="number" value="@ViewBag.quantity_from" hidden name="quantity_from" />
+                <input type="number" value="@ViewBag.quantity_to" hidden name="quantity_to" />
+                <input type="text" value="@ViewBag.payterms" hidden name="payterms" />
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.title.title1) ">
+
+                    @if (ViewBag.orderby == "title")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th></th>
     </tr>
