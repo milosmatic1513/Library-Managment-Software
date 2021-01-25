@@ -17,7 +17,6 @@ namespace ClassProject.Controllers
         // GET: sales
         public ActionResult Index(string ord_date_from,string ord_date_to,int? quantity_from, int? quantity_to, string payterms,string store,string title,string orderby ,string order)
         {
-            var sales = db.sales.Include(s => s.store).Include(s => s.title);
             var sales = db.sales.Include(s => s.store).Include(s => s.title).ToList();
             
             //set a list of payterms
