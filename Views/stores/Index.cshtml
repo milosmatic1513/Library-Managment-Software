@@ -1,30 +1,209 @@
 ﻿@model IEnumerable<ClassProject.Models.store>
 
-@{
-    ViewBag.Title = "Index";
-}
+<br>
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
+    <form class="form" asp-controller="Stores" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label name="store">@Html.DisplayNameFor(model => model.stor_name)</label>
+                <input class="form-control" type="text" name="store" placeholder="@Html.DisplayNameFor(model => model.stor_name)" value="@ViewBag.store">
+            </div>
+            <div class="form-group col-md-3">
+                <label name="address">@Html.DisplayNameFor(model => model.stor_address)</label>
+                <input class="form-control" type="text" name="address" placeholder="@Html.DisplayNameFor(model => model.stor_address)" value="@ViewBag.address">
+            </div>
+            <div class="form-group col-md-3">
+                <label name="city">@Html.DisplayNameFor(model => model.city)</label>
+                <select name="city" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.cities)
+                    {
+                        if (item == ViewBag.city)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
 
-<h2>Index</h2>
+                    }
 
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label name="state">@Html.DisplayNameFor(model => model.state)</label>
+                <select name="state" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.states)
+                    {
+                        if (item == ViewBag.state)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
+
+                    }
+
+                </select>
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="form-group col-md-3">
+                <label name="zip">@Html.DisplayNameFor(model => model.zip)</label>
+                <input class="form-control" type="number" name="zip" placeholder="@Html.DisplayNameFor(model => model.zip)" value="@ViewBag.zip">
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="form-group col-md-12">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+
+   
+</div>
+<br>
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.stor_name)
+            <form class="form" asp-controller="stores" asp-action="Index" method="get">
+
+                <input type="text" value="store" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.address" hidden name="address" />
+                <input type="text" value="@ViewBag.state" hidden name="state" />
+                <input type="text" value="@ViewBag.city" hidden name="city" />
+                <input type="text" value="@ViewBag.zip" hidden name="zip" />
+
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.stor_name) ">
+
+                    @if (ViewBag.orderby == "store")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.stor_address)
+            <div class="btn" style="cursor: not-allowed">
+                @Html.DisplayNameFor(model => model.stor_address)
+            </div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.city)
+            <form class="form" asp-controller="stores" asp-action="Index" method="get">
+
+                <input type="text" value="city" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.address" hidden name="address" />
+                <input type="text" value="@ViewBag.state" hidden name="state" />
+                <input type="text" value="@ViewBag.city" hidden name="city" />
+                <input type="text" value="@ViewBag.zip" hidden name="zip" />
+
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.city) ">
+
+                    @if (ViewBag.orderby == "city")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.state)
+            <form class="form" asp-controller="stores" asp-action="Index" method="get">
+
+                <input type="text" value="state" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.address" hidden name="address" />
+                <input type="text" value="@ViewBag.state" hidden name="state" />
+                <input type="text" value="@ViewBag.city" hidden name="city" />
+                <input type="text" value="@ViewBag.zip" hidden name="zip" />
+
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.state) ">
+
+                    @if (ViewBag.orderby == "state")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.zip)
+            <form class="form" asp-controller="stores" asp-action="Index" method="get">
+
+                <input type="text" value="zip" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.store" hidden name="store" />
+                <input type="text" value="@ViewBag.address" hidden name="address" />
+                <input type="text" value="@ViewBag.state" hidden name="state" />
+                <input type="text" value="@ViewBag.city" hidden name="city" />
+                <input type="text" value="@ViewBag.zip" hidden name="zip" />
+
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.zip) ">
+
+                    @if (ViewBag.orderby == "zip")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th></th>
     </tr>

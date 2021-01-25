@@ -15,10 +15,89 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: sales
-        public ActionResult Index()
+        public ActionResult Index(string ord_date_from,string ord_date_to,int? quantity_from, int? quantity_to, string payterms,string store,string title,string orderby ,string order)
         {
-            var sales = db.sales.Include(s => s.store).Include(s => s.title);
-            return View(sales.ToList());
+            var sales = db.sales.Include(s => s.store).Include(s => s.title).ToList();
+            
+            //set a list of payterms
+            var payterms_list = sales.Select(s=>s.payterms).Distinct().ToList();
+            //set a list of payterms
+            var stores = sales.Select(s => s.store.stor_name).Distinct().ToList();
+
+            //Add Selections to Viewbag	
+            ViewBag.payterms_list = payterms_list;
+            ViewBag.stores = stores;
+
+            //Apply filters
+            if (!String.IsNullOrEmpty(ord_date_from))
+            {
+                DateTime date = DateTime.ParseExact(ord_date_from, "yyyy-MM-dd", null);
+                sales = sales.Where(s => DateTime.Compare(s.ord_date, date) >= 0).ToList();  // s.hire_date is later or the same date as hire_date
+                ViewBag.ord_date_from = ord_date_from;
+
+            }
+            if (!String.IsNullOrEmpty(ord_date_to))
+            {
+                DateTime date = DateTime.ParseExact(ord_date_to, "yyyy-MM-dd", null);
+                sales = sales.Where(s => DateTime.Compare(s.ord_date, date) <= 0).ToList();  // s.hire_date is earlier or the same date as hire_date
+                ViewBag.ord_date_to = ord_date_to;
+            }
+            if (quantity_from != null)
+            {
+                sales = sales.Where(s => s.qty>= quantity_from).ToList();
+                ViewBag.quantity_from = quantity_from;
+            }
+            if (quantity_to != null)
+            {
+                sales = sales.Where(s => s.qty <= quantity_to).ToList();
+                ViewBag.quantity_to = quantity_to;
+            }
+            if (!String.IsNullOrEmpty(payterms))
+            {
+                sales = sales.Where(s => s.payterms.Contains(payterms)).ToList();  
+                ViewBag.payterms = payterms;
+            }
+            if (!String.IsNullOrEmpty(store))
+            {
+                sales = sales.Where(s => s.store.stor_name.Contains(store)).ToList();
+                ViewBag.store = store;
+            }
+            if (!String.IsNullOrEmpty(title))
+            {
+                sales = sales.Where(s => s.title.title1.Contains(title)).ToList();
+                ViewBag.title = title;
+            }
+
+            //Order list
+            if (orderby == "ord_date")
+            {
+                sales.OrderBy(s => s.ord_date);
+            }
+            else if (orderby == "quantity")
+            {
+                sales.OrderBy(s => s.qty);
+            }
+            else if (orderby == "payterms")
+            {
+                sales.OrderBy(s => s.payterms);
+            }
+            else if (orderby == "store")
+            {
+                sales.OrderBy(s => s.store);
+            }
+            else if (orderby == "title")
+            {
+                sales.OrderBy(s => s.title.title1);
+            }
+            // Save orderby value
+            ViewBag.orderby = orderby;
+            //Save order value
+            ViewBag.order = order;
+            if (order == "desc")
+            {
+                sales.Reverse();
+            }
+            return View(sales);
         }
 
         // GET: sales/Details/5
