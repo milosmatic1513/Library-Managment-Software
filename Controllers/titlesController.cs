@@ -16,11 +16,121 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: titles
-        public ActionResult Index()
+        public ActionResult Index(string title , string type,int? price_from ,int? price_to,int? advance_from , int? advance_to,int? royalty_from,int? royalty_to,int? sales_from,int? sales_to,string date_from,string date_to,string publisher,string orderby,string order)
         {
-            var titles = db.titles.Include(t => t.publisher).Include(t => t.roysched);
-            return View(titles.ToList());
+            var titles = db.titles.Include(t => t.publisher).Include(t => t.roysched).ToList();
+            //add distinct types to a list
+            var types = titles.Select(t => t.type).Distinct().ToList();
+            //add values to ViewBag
+            ViewBag.types = types;
+            //apply filters
+            if (!String.IsNullOrEmpty(title))
+            {
+                titles = titles.Where(t => t.title1.ToLower().Contains(title.ToLower())).ToList();
+                ViewBag.title = title;
+            }
+            if (!String.IsNullOrEmpty(type))
+            {
+                titles = titles.Where(t => t.type.ToLower().Contains(type.ToLower())).ToList();
+                ViewBag.type = type;
+            }
+            if (price_from != null)
+            {
+                titles = titles.Where(t => t.price >= price_from).ToList();
+                ViewBag.price_from = price_from;
+            }
+            if (price_to != null)
+            {
+                titles = titles.Where(t => t.price <= price_to).ToList();
+                ViewBag.price_to = price_to;
+            }
+            if (advance_from != null)
+            {
+                titles = titles.Where(t => t.advance >= advance_from).ToList();
+                ViewBag.advance_from = advance_from;
+            }
+            if (advance_to != null)
+            {
+                titles = titles.Where(t => t.advance <= advance_to).ToList();
+                ViewBag.advance_to = advance_to;
+            }
+            if (royalty_from != null)
+            {
+                titles = titles.Where(t => t.royalty >= royalty_from).ToList();
+                ViewBag.royalty_from = royalty_from;
+            }
+            if (royalty_to != null)
+            {
+                titles = titles.Where(t => t.royalty <= royalty_to).ToList();
+                ViewBag.royalty_to = royalty_to;
+            }
+            if (sales_from != null)
+            {
+                titles = titles.Where(t => t.ytd_sales >= sales_from).ToList();
+                ViewBag.sales_from = sales_from;
+            }
+            if (sales_to != null)
+            {
+                titles = titles.Where(t => t.ytd_sales <= sales_to).ToList();
+                ViewBag.sales_to = sales_to;
+            }
+            if (!String.IsNullOrEmpty(date_from))
+            {
+                titles = titles.Where(t => DateTime.Compare(t.pubdate,DateTime.ParseExact(date_from, "yyyy-MM-dd", null)) >= 0).ToList();
+                ViewBag.date_from = date_from;
+            }
+            if (!String.IsNullOrEmpty(date_to))
+            {
+                titles = titles.Where(t => DateTime.Compare(t.pubdate, DateTime.ParseExact(date_to, "yyyy-MM-dd", null)) <= 0).ToList();
+                ViewBag.date_to = date_to;
+            }
+            if (!String.IsNullOrEmpty(publisher))
+            {
+                titles = titles.Where(t => t.publisher.pub_name.ToLower().Contains(publisher.ToLower())).ToList();
+                ViewBag.date_to = date_to;
+            }
+            //Order the list
+            if (orderby == "title")
+            {
+                titles = titles.OrderBy(t=>t.title1).ToList();
+
+            }
+            else if (orderby == "price")
+            {
+                titles = titles.OrderBy(t => t.price).ToList();
+            }
+            else if (orderby == "advance")
+            {
+                titles = titles.OrderBy(t => t.advance).ToList();
+            }
+            else if (orderby == "royalty")
+            {
+                titles = titles.OrderBy(t => t.royalty).ToList();
+            }
+            else if (orderby == "sales")
+            {
+                titles = titles.OrderBy(t => t.ytd_sales).ToList();
+            }
+            else if (orderby == "date")
+            {
+                titles = titles.OrderBy(t => t.pubdate).ToList();
+
+            }
+
+            if (order == "desc")
+            {
+                titles.Reverse();
+            }
+
+            //add order values to viewbag
+            ViewBag.order = order;
+            ViewBag.orderby = orderby;
+
+
+
+            return View(titles);
         }
+
 
         // GET: titles/Details/5
         public ActionResult Details(string id)

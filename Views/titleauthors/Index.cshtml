@@ -1,27 +1,176 @@
 ﻿@model IEnumerable<ClassProject.Models.titleauthor>
-
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+<br>
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
+    <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="au_ord">@Html.DisplayNameFor(model => model.au_ord)</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.au_ord)" value="@ViewBag.au_ord" name="au_ord" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="royaltyper_from">@Html.DisplayNameFor(model => model.royaltyper) From</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.royaltyper)" value="@ViewBag.royaltyper_from" name="royaltyper_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="royaltyper_to">@Html.DisplayNameFor(model => model.royaltyper) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.royaltyper)" value="@ViewBag.royaltyper_to" name="royaltyper_to" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="lastname">@Html.DisplayNameFor(model => model.author.au_lname)</label>
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.author.au_lname)" value="@ViewBag.lastname" name="lastname" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="title">@Html.DisplayNameFor(model => model.title.title1)</label>
+                <input class="form-control" type="text" placeholder=" @Html.DisplayNameFor(model => model.title.title1)" value="@ViewBag.title" name="title" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+</div>
+<br>
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
-<table class="table">
+<br>
+<table class="table" style="table-layout:fixed">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.au_ord)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
+                <input type="text" value="au_ord" hidden name="orderby" />
+
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+
+                <input type="text" value="@ViewBag.au_ord" hidden name="au_ord" />
+                <input type="text" value="@ViewBag.royaltyper_from" hidden name="royaltyper_from" />
+                <input type="text" value="@ViewBag.royaltyper_to" hidden name="royaltyper_to" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.au_ord) ">
+
+                    @if (ViewBag.orderby == "au_ord")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.royaltyper)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
+                <input type="text" value="royaltyper" hidden name="orderby" />
+
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+
+                <input type="text" value="@ViewBag.au_ord" hidden name="au_ord" />
+                <input type="text" value="@ViewBag.royaltyper_from" hidden name="royaltyper_from" />
+                <input type="text" value="@ViewBag.royaltyper_to" hidden name="royaltyper_to" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.royaltyper) ">
+
+                    @if (ViewBag.orderby == "royaltyper")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.author.au_lname)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
+                <input type="text" value="lastname" hidden name="orderby" />
+
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+
+                <input type="text" value="@ViewBag.au_ord" hidden name="au_ord" />
+                <input type="text" value="@ViewBag.royaltyper_from" hidden name="royaltyper_from" />
+                <input type="text" value="@ViewBag.royaltyper_to" hidden name="royaltyper_to" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.author.au_lname) ">
+
+                    @if (ViewBag.orderby == "lastname")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.title.title1)
+            <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+
+                <input type="text" value="title" hidden name="orderby" />
+
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+
+                <input type="text" value="@ViewBag.au_ord" hidden name="au_ord" />
+                <input type="text" value="@ViewBag.royaltyper_from" hidden name="royaltyper_from" />
+                <input type="text" value="@ViewBag.royaltyper_to" hidden name="royaltyper_to" />
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
+
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.title.title1) ">
+
+                    @if (ViewBag.orderby == "title")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th></th>
     </tr>
