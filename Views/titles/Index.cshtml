@@ -1,46 +1,384 @@
 ﻿@model IEnumerable<ClassProject.Models.title>
+<br>
+<div class="container" style="border-radius:5px;background-color:#88BDBC;padding:20px;padding-top:30px">
 
-@{
-    ViewBag.Title = "Index";
-}
+    <form class="form" asp-controller="Authors" asp-action="Index" method="get">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="title">@Html.DisplayNameFor(model => model.title1)</label>
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.title1)" value="@ViewBag.title" name="title" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="type">@Html.DisplayNameFor(model => model.type) </label>
+                <select name="type" class="form-control">
+                    <option value="">-- All --</option>
+                    @foreach (var item in ViewBag.types)
+                    {
+                        if (item == ViewBag.type)
+                        {
+                            <option selected>@item</option>
+                        }
+                        else
+                        {
+                            <option>@item</option>
+                        }
 
-<h2>Index</h2>
+                    }
 
+                </select>
+
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="price_from">@Html.DisplayNameFor(model => model.price) From</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.price) From" value="@ViewBag.price_from" name="price_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="price_to">@Html.DisplayNameFor(model => model.price) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.price) To" value="@ViewBag.price_to" name="price_to" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="advance_from">@Html.DisplayNameFor(model => model.advance) From</label>
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.advance) From" value="@ViewBag.advance_from" name="advance_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="advance_to">@Html.DisplayNameFor(model => model.advance) To</label>
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.advance) To" value="@ViewBag.advance_to" name="advance_to" />
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="royalty_from">@Html.DisplayNameFor(model => model.royalty) From</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.royalty) From" value="@ViewBag.royalty_from" name="royalty_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="royalty_to">@Html.DisplayNameFor(model => model.royalty) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.royalty) To" value="@ViewBag.royalty_to" name="royalty_to" />
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="sales_from">@Html.DisplayNameFor(model => model.ytd_sales) From</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.ytd_sales) From" value="@ViewBag.sales_from" name="sales_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="sales_to">@Html.DisplayNameFor(model => model.ytd_sales) To</label>
+                <input class="form-control" type="number" placeholder="@Html.DisplayNameFor(model => model.ytd_sales) To" value="@ViewBag.sales_to" name="sales_to" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="date_from">@Html.DisplayNameFor(model => model.pubdate) From</label>
+                <input class="form-control" type="date" placeholder="@Html.DisplayNameFor(model => model.pubdate) From" value="@ViewBag.date_from" name="date_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="date_to">@Html.DisplayNameFor(model => model.pubdate) To</label>
+                <input class="form-control" type="date" placeholder="@Html.DisplayNameFor(model => model.pubdate) To" value="@ViewBag.date_to" name="date_to" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="publisher">@Html.DisplayNameFor(model => model.publisher.pub_name) </label>
+                <input class="form-control" type="text" placeholder="@Html.DisplayNameFor(model => model.publisher.pub_name) " value="@ViewBag.publisher" name="publisher" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <input type="submit" value="Search" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+</div>
+<br>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<br>
+
+
+
+<table class="table" >
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.title1)
+            <form class="form" asp-controller="title" asp-action="Index" method="get">
+
+                <input type="text" value="title" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.type" hidden name="type" />
+                <input type="text" value="@ViewBag.price_from" hidden name="price_from" />
+                <input type="text" value="@ViewBag.price_to" hidden name="price_to" />
+                <input type="text" value="@ViewBag.advance_from" hidden name="advance_from" />
+                <input type="text" value="@ViewBag.advance_to" hidden name="advance_to" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.sales_from" hidden name="sales_from" />
+                <input type="text" value="@ViewBag.sales_to" hidden name="sales_to" />
+                <input type="text" value="@ViewBag.date_from" hidden name="date_from" />
+                <input type="text" value="@ViewBag.date_to" hidden name="date_to" />
+                <input type="text" value="@ViewBag.publisher" hidden name="publisher" />
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.title1) ">
+
+                    @if (ViewBag.orderby == "title")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.type)
+            <div class="btn" style="cursor: not-allowed">
+                @Html.DisplayNameFor(model => model.type)
+            </div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.price)
+            <form class="form" asp-controller="title" asp-action="Index" method="get">
+
+                <input type="text" value="price" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.type" hidden name="type" />
+                <input type="text" value="@ViewBag.price_from" hidden name="price_from" />
+                <input type="text" value="@ViewBag.price_to" hidden name="price_to" />
+                <input type="text" value="@ViewBag.advance_from" hidden name="advance_from" />
+                <input type="text" value="@ViewBag.advance_to" hidden name="advance_to" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.sales_from" hidden name="sales_from" />
+                <input type="text" value="@ViewBag.sales_to" hidden name="sales_to" />
+                <input type="text" value="@ViewBag.date_from" hidden name="date_from" />
+                <input type="text" value="@ViewBag.date_to" hidden name="date_to" />
+                <input type="text" value="@ViewBag.publisher" hidden name="publisher" />
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.price) ">
+
+                    @if (ViewBag.orderby == "price")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.advance)
+            <form class="form" asp-controller="title" asp-action="Index" method="get">
+
+                <input type="text" value="advance" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.type" hidden name="type" />
+                <input type="text" value="@ViewBag.price_from" hidden name="price_from" />
+                <input type="text" value="@ViewBag.price_to" hidden name="price_to" />
+                <input type="text" value="@ViewBag.advance_from" hidden name="advance_from" />
+                <input type="text" value="@ViewBag.advance_to" hidden name="advance_to" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.sales_from" hidden name="sales_from" />
+                <input type="text" value="@ViewBag.sales_to" hidden name="sales_to" />
+                <input type="text" value="@ViewBag.date_from" hidden name="date_from" />
+                <input type="text" value="@ViewBag.date_to" hidden name="date_to" />
+                <input type="text" value="@ViewBag.publisher" hidden name="publisher" />
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.advance) ">
+
+                    @if (ViewBag.orderby == "advance")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.royalty)
+            <form class="form" asp-controller="title" asp-action="Index" method="get">
+
+                <input type="text" value="royalty" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.type" hidden name="type" />
+                <input type="text" value="@ViewBag.price_from" hidden name="price_from" />
+                <input type="text" value="@ViewBag.price_to" hidden name="price_to" />
+                <input type="text" value="@ViewBag.advance_from" hidden name="advance_from" />
+                <input type="text" value="@ViewBag.advance_to" hidden name="advance_to" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.sales_from" hidden name="sales_from" />
+                <input type="text" value="@ViewBag.sales_to" hidden name="sales_to" />
+                <input type="text" value="@ViewBag.date_from" hidden name="date_from" />
+                <input type="text" value="@ViewBag.date_to" hidden name="date_to" />
+                <input type="text" value="@ViewBag.publisher" hidden name="publisher" />
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.royalty) ">
+
+                    @if (ViewBag.orderby == "royalty")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ytd_sales)
+            <form class="form" asp-controller="title" asp-action="Index" method="get">
+
+                <input type="text" value="sales" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.type" hidden name="type" />
+                <input type="text" value="@ViewBag.price_from" hidden name="price_from" />
+                <input type="text" value="@ViewBag.price_to" hidden name="price_to" />
+                <input type="text" value="@ViewBag.advance_from" hidden name="advance_from" />
+                <input type="text" value="@ViewBag.advance_to" hidden name="advance_to" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.sales_from" hidden name="sales_from" />
+                <input type="text" value="@ViewBag.sales_to" hidden name="sales_to" />
+                <input type="text" value="@ViewBag.date_from" hidden name="date_from" />
+                <input type="text" value="@ViewBag.date_to" hidden name="date_to" />
+                <input type="text" value="@ViewBag.publisher" hidden name="publisher" />
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.ytd_sales) ">
+
+                    @if (ViewBag.orderby == "sales")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.notes)
+            <div class="btn" style="cursor: not-allowed">
+                @Html.DisplayNameFor(model => model.notes)
+            </div>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.pubdate)
+            <form class="form" asp-controller="title" asp-action="Index" method="get">
+
+                <input type="text" value="date" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.type" hidden name="type" />
+                <input type="text" value="@ViewBag.price_from" hidden name="price_from" />
+                <input type="text" value="@ViewBag.price_to" hidden name="price_to" />
+                <input type="text" value="@ViewBag.advance_from" hidden name="advance_from" />
+                <input type="text" value="@ViewBag.advance_to" hidden name="advance_to" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.sales_from" hidden name="sales_from" />
+                <input type="text" value="@ViewBag.sales_to" hidden name="sales_to" />
+                <input type="text" value="@ViewBag.date_from" hidden name="date_from" />
+                <input type="text" value="@ViewBag.date_to" hidden name="date_to" />
+                <input type="text" value="@ViewBag.publisher" hidden name="publisher" />
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.pubdate) ">
+
+                    @if (ViewBag.orderby == "date")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.publisher.pub_name)
+            <form class="form" asp-controller="title" asp-action="Index" method="get">
+
+                <input type="text" value="publisher" hidden name="orderby" />
+                @if (ViewBag.order == "asc")
+                {
+                    <input type="text" value="desc" hidden name="order" />
+                }
+                else
+                {
+                    <input type="text" value="asc" hidden name="order" />
+                }
+                <input type="text" value="@ViewBag.title" hidden name="title" />
+                <input type="text" value="@ViewBag.type" hidden name="type" />
+                <input type="text" value="@ViewBag.price_from" hidden name="price_from" />
+                <input type="text" value="@ViewBag.price_to" hidden name="price_to" />
+                <input type="text" value="@ViewBag.advance_from" hidden name="advance_from" />
+                <input type="text" value="@ViewBag.advance_to" hidden name="advance_to" />
+                <input type="text" value="@ViewBag.royalty_from" hidden name="royalty_from" />
+                <input type="text" value="@ViewBag.royalty_to" hidden name="royalty_to" />
+                <input type="text" value="@ViewBag.sales_from" hidden name="sales_from" />
+                <input type="text" value="@ViewBag.sales_to" hidden name="sales_to" />
+                <input type="text" value="@ViewBag.date_from" hidden name="date_from" />
+                <input type="text" value="@ViewBag.date_to" hidden name="date_to" />
+                <input type="text" value="@ViewBag.publisher" hidden name="publisher" />
+                <div>
+
+                    <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.publisher.pub_name) ">
+
+                    @if (ViewBag.orderby == "publisher")
+                    {
+                        @Html.Partial("../Shared/SortArrows")
+                    }
+
+
+                </div>
+            </form>
         </th>
         <th></th>
     </tr>
 
+<<<<<<< Updated upstream
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -77,5 +415,44 @@
         </td>
     </tr>
 }
+=======
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.advance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.royalty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ytd_sales)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pubdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.publisher.pub_name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.title_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Details", "Details", new { id = item.title_id }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.title_id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+>>>>>>> Stashed changes
 
 </table>

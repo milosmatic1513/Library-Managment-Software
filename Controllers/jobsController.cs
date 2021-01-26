@@ -15,13 +15,14 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: jobs
-        public ActionResult Index(string job_desc,string min_lvl_from,string min_lvl_to,string max_lvl_from,string max_lvl_to )
+        public ActionResult Index(string job_desc,string min_lvl_from,string min_lvl_to,string max_lvl_from,string max_lvl_to ,string orderby, string order)
         {
 
             var jobs = db.jobs.ToList();
             var job_descs = jobs.Select(j => j.job_desc).Distinct().ToList();
 
             ViewBag.job_descs = job_descs;
+            //apply filters
             if (!String.IsNullOrEmpty(job_desc))
             {
                 jobs = jobs.Where(j => j.job_desc.Contains(job_desc)).ToList();
@@ -47,6 +48,28 @@ namespace ClassProject.Controllers
                 jobs = jobs.Where(j => j.max_lvl <= Int32.Parse(max_lvl_to)).ToList();
                 ViewBag.max_lvl_to = max_lvl_to;
             }
+            //order list
+            if (orderby == "job_desc")
+            {
+                jobs = jobs.OrderBy(s => s.job_desc).ToList();
+            }
+            else if (orderby == "min_lvl")
+            {
+                jobs = jobs.OrderBy(s => s.min_lvl).ToList();
+            }
+            else if (orderby == "max_lvl")
+            {
+                jobs = jobs.OrderBy(s => s.max_lvl).ToList();
+            }
+
+            if (order == "desc")
+            {
+                jobs.Reverse();
+            }
+
+            ViewBag.order = order;
+            ViewBag.orderby = orderby;
+
             return View(jobs);
         }
 

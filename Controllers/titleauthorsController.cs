@@ -15,10 +15,63 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: titleauthors
-        public ActionResult Index()
+        public ActionResult Index(int? au_ord , int? royaltyper_from,int? royaltyper_to,string lastname,string title,string orderby,string order)
         {
-            var titleauthors = db.titleauthors.Include(t => t.author).Include(t => t.title);
-            return View(titleauthors.ToList());
+            var titleauthors = db.titleauthors.Include(t => t.author).Include(t => t.title).ToList();
+
+            //apply Filters 
+            if (au_ord != null)
+            {
+                titleauthors=titleauthors.Where(t => t.au_ord == au_ord).ToList();
+                ViewBag.au_ord = au_ord;
+            }
+            if (royaltyper_from != null)
+            {
+                titleauthors=titleauthors.Where(t => t.royaltyper >= royaltyper_from).ToList();
+                ViewBag.royaltyper_from = royaltyper_from;
+            }
+            if (royaltyper_to != null)
+            {
+                titleauthors=titleauthors.Where(t => t.royaltyper <= royaltyper_to).ToList();
+                ViewBag.royaltyper_to = royaltyper_to;
+            }
+            if (!String.IsNullOrEmpty(lastname))
+            {
+                titleauthors = titleauthors.Where(t => t.author.au_lname.ToLower().Contains(lastname.ToLower())).ToList();
+                ViewBag.lastname = lastname;
+            }
+            if (!String.IsNullOrEmpty(title))
+            {
+                titleauthors = titleauthors.Where(t => t.title.title1.ToLower().Contains(title.ToLower())).ToList();
+                ViewBag.title = title;
+            }
+            //Order results 
+            if (orderby == "au_ord")
+            {
+                titleauthors = titleauthors.OrderBy(t => t.au_ord).ToList();
+            }
+            else if (orderby == "royaltyper")
+            {
+                titleauthors = titleauthors.OrderBy(t => t.royaltyper).ToList();
+            }
+            else if (orderby == "lastname")
+            {
+                titleauthors = titleauthors.OrderBy(t => t.author.au_lname).ToList();
+            }
+            else if (orderby == "title")
+            {
+                titleauthors = titleauthors.OrderBy(t => t.title.title1).ToList();
+            }
+            if (order == "desc")
+            {
+                titleauthors.Reverse();
+            }
+            //add order values to viewbags
+
+            ViewBag.order = order;
+            ViewBag.orderby = orderby;
+
+            return View(titleauthors);
         }
 
         // GET: titleauthors/Details/5
