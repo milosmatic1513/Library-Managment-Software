@@ -71,23 +71,23 @@ namespace ClassProject.Controllers
             //Order list
             if (orderby == "ord_date")
             {
-                sales.OrderBy(s => s.ord_date);
+                sales=sales.OrderBy(s => s.ord_date).ToList();
             }
             else if (orderby == "quantity")
             {
-                sales.OrderBy(s => s.qty);
+                sales = sales.OrderBy(s => s.qty).ToList(); 
             }
             else if (orderby == "payterms")
             {
-                sales.OrderBy(s => s.payterms);
+                sales = sales.OrderBy(s => s.payterms).ToList();
             }
             else if (orderby == "store")
             {
-                sales.OrderBy(s => s.store);
+                sales = sales.OrderBy(s => s.store).ToList(); 
             }
             else if (orderby == "title")
             {
-                sales.OrderBy(s => s.title.title1);
+                sales = sales.OrderBy(s => s.title.title1).ToList();
             }
             // Save orderby value
             ViewBag.orderby = orderby;
