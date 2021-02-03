@@ -64,7 +64,7 @@ namespace ClassProject.Controllers
             }
             if (!String.IsNullOrEmpty(title))
             {
-                sales = sales.Where(s => s.title.title1.Contains(title)).ToList();
+                sales = sales.Where(s => s.title.title1.ToLower().Contains(title.ToLower())).ToList();
                 ViewBag.title = title;
             }
 

@@ -15,7 +15,7 @@ namespace ClassProject.Controllers
         private pubsEntities db = new pubsEntities();
 
         // GET: employees
-        public ActionResult Index(string firstname, string minit, string lastname, string job_lvl, string hire_date, string job_desc, string pub_name, string orderby, string order)
+        public ActionResult Index(string firstname, string minit, string lastname, string job_lvl, string hire_date_from,string hire_date_to, string job_desc, string pub_name, string orderby, string order)
         {
             List<employee> employees = db.employees.Include(e => e.job).Include(e => e.publisher).ToList();
             //set a list of available minit
@@ -38,7 +38,7 @@ namespace ClassProject.Controllers
             //Apply Filters 	
             if (!String.IsNullOrEmpty(firstname))
             {
-                employees = employees.Where(s => s.fname.Contains(firstname)).ToList();
+                employees = employees.Where(s => s.fname.ToLower().Contains(firstname.ToLower())).ToList();
                 ViewBag.firstname = firstname;
             }
             if (!String.IsNullOrEmpty(minit))
@@ -49,7 +49,7 @@ namespace ClassProject.Controllers
             }
             if (!String.IsNullOrEmpty(lastname))
             {
-                employees = employees.Where(s => s.lname.Contains(lastname)).ToList();
+                employees = employees.Where(s => s.lname.ToLower().Contains(lastname.ToLower())).ToList();
                 ViewBag.lastname = lastname;
             }
             if (!String.IsNullOrEmpty(job_lvl))
@@ -57,10 +57,15 @@ namespace ClassProject.Controllers
                 employees = employees.Where(s => s.job_lvl == Int32.Parse(job_lvl)).ToList();
                 ViewBag.job_lvl = job_lvl;
             }
-            if (!String.IsNullOrEmpty(hire_date))
+            if (!String.IsNullOrEmpty(hire_date_from))
             {
-                employees = employees.Where(s => DateTime.Compare(s.hire_date, DateTime.ParseExact(hire_date, "yyyy-MM-dd", null)) >= 0 ).ToList();  // s.hire_date is later or the same date as hire_date
-                ViewBag.hire_date = hire_date;
+                employees = employees.Where(s => DateTime.Compare(s.hire_date, DateTime.ParseExact(hire_date_from, "yyyy-MM-dd", null)) >= 0 ).ToList();  // s.hire_date is later or the same date as hire_date
+                ViewBag.hire_date_from = hire_date_from;
+            }
+            if (!String.IsNullOrEmpty(hire_date_to))
+            {
+                employees = employees.Where(s => DateTime.Compare(s.hire_date, DateTime.ParseExact(hire_date_to, "yyyy-MM-dd", null)) <= 0).ToList();  // s.hire_date is later or the same date as hire_date
+                ViewBag.hire_date_to = hire_date_to;
             }
             if (!String.IsNullOrEmpty(job_desc))
             {

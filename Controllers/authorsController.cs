@@ -38,12 +38,12 @@ namespace ClassProject.Controllers
             if (!String.IsNullOrEmpty(firstname))
             {
                 ViewBag.firstname = firstname;
-                authors = authors.Where(s => s.au_fname.Contains(firstname)).ToList();
+                authors = authors.Where(s => s.au_fname.ToLower().Contains(firstname.ToLower())).ToList();
             }
             if (!String.IsNullOrEmpty(lastname))
             {
                 ViewBag.lastname = lastname;
-                authors = authors.Where(s => s.au_lname.Contains(lastname)).ToList();
+                authors = authors.Where(s => s.au_lname.ToLower().Contains(lastname.ToLower())).ToList();
             }
             if (!String.IsNullOrEmpty(phone))
             {
@@ -53,17 +53,17 @@ namespace ClassProject.Controllers
             if (!String.IsNullOrEmpty(address))
             {
                 ViewBag.address = address;
-                authors = authors.Where(s => s.address.Contains(address)).ToList();
+                authors = authors.Where(s => s.address.ToLower().Contains(address.ToLower())).ToList();
             }
             if (!String.IsNullOrEmpty(city))
             {
                 ViewBag.city = city;
-                authors = authors.Where(s => s.city.Contains(city)).ToList();
+                authors = authors.Where(s => s.city.ToLower().Contains(city.ToLower())).ToList();
             }
             if (!String.IsNullOrEmpty(state))
             {
                 ViewBag.state = state;
-                authors = authors.Where(s => s.state.Contains(state)).ToList();
+                authors = authors.Where(s => s.state.ToLower().Contains(state.ToLower())).ToList();
             }
             if (!String.IsNullOrEmpty(zip))
             {

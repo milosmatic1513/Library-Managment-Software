@@ -42,8 +42,12 @@
         </div>
         <div class="form-row ">
             <div class="form-group col-md-3">
-                <label for="hire_date">@Html.DisplayNameFor(model => model.hire_date)</label>
-                <input class="form-control" type="date" placeholder="@Html.DisplayNameFor(model => model.hire_date)" value="@ViewBag.hire_date" name="hire_date" />
+                <label for="hire_date_from">@Html.DisplayNameFor(model => model.hire_date) From</label>
+                <input class="form-control" type="date" placeholder="@Html.DisplayNameFor(model => model.hire_date) From" value="@ViewBag.hire_date_from" name="hire_date_from" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="hire_date_to">@Html.DisplayNameFor(model => model.hire_date) To</label>
+                <input class="form-control" type="date" placeholder="@Html.DisplayNameFor(model => model.hire_date) To" value="@ViewBag.hire_date_to" name="hire_date_to" />
             </div>
             <div class="form-group col-md-3">
                 <label for="job_desc">@Html.DisplayNameFor(model => model.job.job_desc)</label>
@@ -118,7 +122,8 @@
                 <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
                 <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
                 <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
-
+                <input type="text" value="@ViewBag.hire_date_from" hidden name="hire_date_from" />
+                <input type="text" value="@ViewBag.hire_date_to" hidden name="hire_date_to" />
                 <div>
 
                     <input type="submit" class="btn btn-default" value="@Html.DisplayNameFor(model => model.fname) ">
@@ -150,6 +155,8 @@
                 <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
                 <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
                 <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+                <input type="text" value="@ViewBag.hire_date_from" hidden name="hire_date_from" />
+                <input type="text" value="@ViewBag.hire_date_to" hidden name="hire_date_to" />
 
                 <div>
 
@@ -180,9 +187,10 @@
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
                 <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
-                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
                 <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
                 <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+                <input type="text" value="@ViewBag.hire_date_from" hidden name="hire_date_from" />
+                <input type="text" value="@ViewBag.hire_date_to" hidden name="hire_date_to" />
 
                 <div>
 
@@ -213,9 +221,10 @@
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
                 <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
-                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
                 <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
                 <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+                <input type="text" value="@ViewBag.hire_date_from" hidden name="hire_date_from" />
+                <input type="text" value="@ViewBag.hire_date_to" hidden name="hire_date_to" />
 
                 <div>
 
@@ -246,9 +255,10 @@
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
                 <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
-                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
                 <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
                 <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+                <input type="text" value="@ViewBag.hire_date_from" hidden name="hire_date_from" />
+                <input type="text" value="@ViewBag.hire_date_to" hidden name="hire_date_to" />
 
                 <div>
 
@@ -279,9 +289,10 @@
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
                 <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
-                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
                 <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
                 <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+                <input type="text" value="@ViewBag.hire_date_from" hidden name="hire_date_from" />
+                <input type="text" value="@ViewBag.hire_date_to" hidden name="hire_date_to" />
 
                 <div>
 
@@ -312,9 +323,10 @@
                 <input type="text" value="@ViewBag.lastname" hidden name="lastname" />
                 <input type="text" value="@ViewBag.minit" hidden name="minit" />
                 <input type="text" value="@ViewBag.job_lvl" hidden name="job_lvl" />
-                <input type="text" value="@ViewBag.hire_date" hidden name="hire_date" />
                 <input type="text" value="@ViewBag.job_desc" hidden name="job_desc" />
                 <input type="text" value="@ViewBag.pub_name" hidden name="pub_name" />
+                <input type="text" value="@ViewBag.hire_date_from" hidden name="hire_date_from" />
+                <input type="text" value="@ViewBag.hire_date_to" hidden name="hire_date_to" />
 
                 <div>
 

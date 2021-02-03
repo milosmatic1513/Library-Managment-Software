@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "Details";
 }
-
+<style>
+    .editText {
+        width:600px;
+        height:200px;
+    }
+</style>
 <h2>Details</h2>
 
 <div>
@@ -35,7 +40,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.pr_info)
+               @Html.EditorFor(model => model.pr_info, new { htmlAttributes = new {disabled = "disabled",@class = "editText" }})
         </dd>
 
         <dt>

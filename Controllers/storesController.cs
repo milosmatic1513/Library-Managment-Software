@@ -31,12 +31,12 @@ namespace ClassProject.Controllers
 
             if (!String.IsNullOrEmpty(store))
             {
-                stores = stores.Where(c => c.stor_name.Contains(store)).ToList();
+                stores = stores.Where(c => c.stor_name.ToLower().Contains(store.ToLower())).ToList();
                 ViewBag.store = store;
             }
             if (!String.IsNullOrEmpty(address))
             {
-                stores = stores.Where(c => c.stor_address.Contains(address)).ToList();
+                stores = stores.Where(c => c.stor_address.ToLower().Contains(address.ToLower())).ToList();
                 ViewBag.address = address;
             }
             if (!String.IsNullOrEmpty(state))
